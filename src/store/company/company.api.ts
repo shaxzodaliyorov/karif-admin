@@ -1,0 +1,63 @@
+import { API_ROUTES } from "@/constants";
+import baseApi from "../api";
+import type { LoginResponse } from "../auth/auth";
+
+import type {
+  GetCompanyRequest,
+  GetCompanyResponse,
+  VerifyCompanyRequest,
+  VerifyCompanyResponse,
+} from "./types";
+
+export const companyApi = baseApi.injectEndpoints({
+  endpoints: (builder) => ({
+    getCompanies: builder.query<GetCompanyResponse, GetCompanyRequest>({
+      query: (params) => ({
+        url: API_ROUTES.company.getAll,
+        method: "GET",
+        params,
+      }),
+      providesTags: ["company"],
+    }),
+    verifyCompany: builder.mutation<
+      VerifyCompanyResponse,
+      VerifyCompanyRequest
+    >({
+      query: (body) => ({
+        url: API_ROUTES.company.verifyCompany,
+        method: "POST",
+        body,
+      }),
+      invalidatesTags: ["company"],
+    }),
+    loginCompanyWithAdmin: builder.mutation<
+      LoginResponse,
+      { companyId: number }
+    >({
+      query: (body) => ({
+        url: API_ROUTES.company.loginCompanyWithAdmin,
+        method: "POST",
+        body,
+      }),
+      invalidatesTags: ["company"],
+    }),
+    companySetStatusDocument: builder.mutation<
+      void,
+      { id: number; status: string; documentStatusMessage?: string }
+    >({
+      query: ({ id, status, documentStatusMessage }) => ({
+        url: `/company/set-document-status/${id}`,
+        method: "PUT",
+        body: { status, documentStatusMessage },
+      }),
+      invalidatesTags: ["company"],
+    }),
+  }),
+});
+
+export const {
+  useGetCompaniesQuery,
+  useVerifyCompanyMutation,
+  useLoginCompanyWithAdminMutation,
+  useCompanySetStatusDocumentMutation,
+} = companyApi;
