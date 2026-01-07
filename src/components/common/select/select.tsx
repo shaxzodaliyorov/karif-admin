@@ -1,6 +1,3 @@
-"use client";
-
-import React from "react";
 import { Check, ChevronsUpDown, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 import {
@@ -71,7 +68,7 @@ export const FormSelect = <TFormValues extends Record<string, unknown>>({
       <FormField
         control={form.control}
         name={name}
-        render={({ field }) => (
+        render={({}) => (
           <FormItem>
             <FormLabel>{label}</FormLabel>
             <Popover>

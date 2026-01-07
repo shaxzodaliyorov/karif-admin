@@ -1,6 +1,5 @@
 import { UserAvatar } from "@/components/common/avatar";
 import { Button } from "@/components/common/button/button";
-import { DropdownMenu } from "@/components/ui/dropdown-menu";
 import { HEADER_LINKS } from "@/constants";
 import { useGetUser } from "@/hooks/use-get-user";
 import { useLogout } from "@/hooks/use-logout";

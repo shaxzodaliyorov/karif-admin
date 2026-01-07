@@ -1,16 +1,16 @@
-import { configureStore } from '@reduxjs/toolkit';
+import { configureStore } from "@reduxjs/toolkit";
 
-import baseApi from './api';
-import userSlice from './slices/user.slice';
+import baseApi from "./api";
+import userSlice from "./slices/user.slice";
 
 const store = configureStore({
   reducer: {
     [baseApi.reducerPath]: baseApi.reducer,
     user: userSlice,
   },
-  middleware: getDefaultMiddleware =>
+  middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(baseApi.middleware),
-  devTools: process.env.NODE_ENV !== 'production',
+  devTools: true,
 });
 
 export type RootState = ReturnType<typeof store.getState>;

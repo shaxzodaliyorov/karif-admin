@@ -5,8 +5,6 @@ import {
   Users,
   Settings,
   Package,
-  Users2Icon,
-  Users2,
   UserSearch,
   UserCheck,
 } from "lucide-react";

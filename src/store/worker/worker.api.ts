@@ -1,40 +1,40 @@
-import { API_ROUTES } from '../../constants/API_ROUTES';
-import baseApi from '../api';
-import type { LoginResponse } from '../auth/auth';
+import { API_ROUTES } from "@/constants";
+import baseApi from "../api";
+import type { LoginResponse } from "../auth/auth";
 
 import type {
   GetAllWorkersRequest,
   GetAllWorkersResponse,
   VerifyWorkerRequest,
   VerifyWorkerResponse,
-} from './types';
+} from "./types";
 
 export const workerApi = baseApi.injectEndpoints({
-  endpoints: builder => ({
+  endpoints: (builder) => ({
     getAllWorkers: builder.query<GetAllWorkersResponse, GetAllWorkersRequest>({
-      query: params => ({
+      query: (params) => ({
         url: API_ROUTES.worker.getAll,
-        method: 'GET',
+        method: "GET",
         params,
       }),
-      providesTags: ['worker'],
+      providesTags: ["worker"],
     }),
     verifyWorker: builder.mutation<VerifyWorkerResponse, VerifyWorkerRequest>({
-      query: body => ({
+      query: (body) => ({
         url: API_ROUTES.agency.verifyAgency,
-        method: 'POST',
+        method: "POST",
         body,
       }),
-      invalidatesTags: ['worker'],
+      invalidatesTags: ["worker"],
     }),
     loginWorkerWithAdmin: builder.mutation<LoginResponse, { workerId: number }>(
       {
-        query: body => ({
+        query: (body) => ({
           url: API_ROUTES.worker.loginWorkerWithAdmin,
-          method: 'POST',
+          method: "POST",
           body,
         }),
-        invalidatesTags: ['worker'],
+        invalidatesTags: ["worker"],
       }
     ),
   }),
