@@ -1,8 +1,7 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 import { getAccessToken } from "../utils/tokenStorage";
-
-import { SERVER_URL } from "@/constants/SERVER_URL";
+import { SERVER_URL } from "@/constants";
 
 const baseApi = createApi({
   reducerPath: "baseApi",

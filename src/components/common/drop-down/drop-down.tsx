@@ -48,7 +48,7 @@ export function Dropdown({
         {children}
       </DropdownMenuTrigger>
 
-      <DropdownMenuContent align={align} className="w-48">
+      <DropdownMenuContent align={align} className="w-48 z-[999]">
         {options.map((option, index) => (
           <DropdownMenuItem
             key={index}

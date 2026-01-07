@@ -37,7 +37,7 @@ export const Button: React.FC<ButtonProps> = ({
       size={size}
       disabled={isDisabled}
       onClick={onClick}
-      className={`relative ${className}`}
+      className={`relative cursor-pointer ${className}`}
       {...props}
     >
       {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}

@@ -1,10 +1,10 @@
+import { PublicHeader } from "@/components";
 import { Outlet } from "react-router-dom";
-import { Header } from "./header";
 
 export const PublicLayout = () => {
   return (
     <>
-      <Header />
+      <PublicHeader />
       <main>
         <Outlet />
       </main>
