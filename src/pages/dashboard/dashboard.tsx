@@ -1,3 +1,9 @@
+import { useGetUser } from "@/hooks/use-get-user";
+import { AdminDashboard } from "./components";
+
 export const DashboardPage = () => {
-  return <div>DashboardPage</div>;
+  const user = useGetUser();
+  if (user?.role === "admin") {
+    return <AdminDashboard />;
+  }
 };

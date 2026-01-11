@@ -6,7 +6,7 @@ export const DashboardLayout = () => {
     <>
       <DashboardHeader />
       <DashboardSidebar />
-      <main className="pl-[350px] pt-[100px]">
+      <main className="pr-[50px] pl-[350px]  pt-[100px]">
         <Outlet />
       </main>
     </>
