@@ -17,6 +17,7 @@ import { useHandleRequest } from "@/hooks/use-handle-request";
 import { useSignUpCompanyMutation } from "@/store/auth/auth.api";
 import type { SignUpCompanyRequest } from "@/store/auth/auth.d.ts";
 import { toast } from "sonner";
+import { useNavigate } from "react-router-dom";
 
 export const RegisterCompany = () => {
   const form = useForm<RegisterCompanyFormValues>({
@@ -29,6 +30,7 @@ export const RegisterCompany = () => {
 
   const handleRequest = useHandleRequest();
   const [registerCompany, { isLoading }] = useSignUpCompanyMutation();
+  const navigate = useNavigate();
 
   const onSubmit = async (data: RegisterCompanyFormValues) => {
     const payload: SignUpCompanyRequest = {
@@ -64,6 +66,7 @@ export const RegisterCompany = () => {
       },
       onSuccess: async () => {
         toast.success("Company registered successfully");
+        navigate("/login");
       },
     });
   };

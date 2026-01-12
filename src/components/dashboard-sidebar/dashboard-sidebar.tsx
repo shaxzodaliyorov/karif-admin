@@ -126,7 +126,7 @@ export const DashboardSidebar = () => {
   );
 
   return (
-    <div className="w-[300px] bg-white border-r h-[calc(100vh-60px)] fixed top-0 left-0 z-[11] overflow-y-auto">
+    <div className="w-[300px] bg-white border-r h-screen fixed top-0 left-0 z-11">
       <div>
         <div className="flex pt-5 items-center justify-center">
           <Link to="/dashboard">

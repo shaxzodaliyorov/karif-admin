@@ -1,5 +1,3 @@
-"use client";
-
 import * as React from "react";
 import { format } from "date-fns";
 import { CalendarIcon } from "lucide-react";
@@ -16,7 +14,7 @@ import type { DateRange } from "react-day-picker";
 
 export interface DatePickerProps {
   mode?: "single" | "range";
-  value?: Date | DateRange | undefined;
+  value?: Date | DateRange | undefined | string;
   onChange?: (value: Date | DateRange | undefined) => void;
   placeholder?: string;
   className?: string;
@@ -52,7 +50,17 @@ export function DatePicker({
       return format(value, "dd MMM yyyy");
     }
 
-    if (mode === "range" && "from" in value && value.from) {
+    if (mode === "single" && typeof value === "string") {
+      return format(new Date(value), "dd MMM yyyy");
+    }
+
+    if (
+      mode === "range" &&
+      value &&
+      typeof value === "object" &&
+      "from" in value &&
+      value.from
+    ) {
       const from = format(value.from, "dd MMM yyyy");
       const to = value.to ? format(value.to, "dd MMM yyyy") : "...";
 
@@ -84,6 +92,7 @@ export function DatePicker({
           mode={mode}
           selected={value as any}
           onSelect={handleSelect as any}
+          captionLayout="dropdown-buttons"
           initialFocus
           numberOfMonths={mode === "range" ? 2 : 1}
           {...(calendarProps as any)}

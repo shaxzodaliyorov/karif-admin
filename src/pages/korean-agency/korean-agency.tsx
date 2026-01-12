@@ -9,19 +9,17 @@ import {
   FormItem,
   FormMessage,
 } from "@/components/ui/form";
+import { FormSelect } from "@/components/common/select";
 import { useForm } from "react-hook-form";
 import { useHandleRequest } from "@/hooks/use-handle-request";
-import { useSignUpAgencyMutation } from "@/store/auth/auth.api";
-import type { SignUpAgencyRequest } from "@/store/auth/auth.d.ts";
+import { useSignUpKoreanAgencyMutation } from "@/store/auth/auth.api";
 import { toast } from "sonner";
-import type { RegisterAgencyFormValues } from "./types";
-import { FormSelect } from "@/components/common/select";
 import { COUNTRIES } from "@/constants";
-import { useGetAllKoreanAgenciesQuery } from "@/store/agency/agency.api";
 import { useNavigate } from "react-router-dom";
+import type { RegisterKoreanAgencyFormValues } from "./types";
 
-export const RegisterAgencyPage = () => {
-  const form = useForm<RegisterAgencyFormValues>({
+export const RegisterKoreanAgencyPage = () => {
+  const form = useForm<RegisterKoreanAgencyFormValues>({
     defaultValues: {
       email: "",
       password: "",
@@ -31,21 +29,16 @@ export const RegisterAgencyPage = () => {
       representativeMobilePhone: "",
       representativeBusinessPhone: "",
       representativeAddress: "",
-      koreanAgencyId: undefined,
     },
     mode: "onChange",
   });
 
   const handleRequest = useHandleRequest();
-  const [registerAgency, { isLoading }] = useSignUpAgencyMutation();
-
-  const { data: { data: koreanAgencies } = {} } = useGetAllKoreanAgenciesQuery({
-    per_page: 1000,
-    page: 1,
-  });
+  const [registerKoreanAgency, { isLoading }] = useSignUpKoreanAgencyMutation();
   const navigate = useNavigate();
-  const onSubmit = async (data: RegisterAgencyFormValues) => {
-    const payload: SignUpAgencyRequest = {
+
+  const onSubmit = async (data: RegisterKoreanAgencyFormValues) => {
+    const payload: any = {
       email: data.email,
       password: data.password,
       agencyName: data.agencyName,
@@ -54,21 +47,13 @@ export const RegisterAgencyPage = () => {
       representativeMobilePhone: data.representativeMobilePhone,
       representativeBusinessPhone: data.representativeBusinessPhone,
       representativeAddress: data.representativeAddress,
-      country: data.country,
-      koreanAgencyId: data.koreanAgencyId
-        ? Number(data.koreanAgencyId)
-        : undefined,
       businessRegistrationCertificate: data.businessRegistrationCertificate,
-      license: data.license as string,
     };
 
     await handleRequest({
-      request: async () => {
-        const response = await registerAgency(payload);
-        return response;
-      },
+      request: async () => registerKoreanAgency(payload),
       onSuccess: () => {
-        toast.success("Agency successfully registered!");
+        toast.success("Korean agency successfully registered!");
         navigate("/login");
       },
       onError: (error) => {
@@ -79,12 +64,11 @@ export const RegisterAgencyPage = () => {
 
   return (
     <div className="min-h-[90vh] pt-32 pb-20 container mx-auto">
-      <h1 className="text-3xl mt-2 md:text-4xl font-bold text-gray-900">
-        Register Your Agency
+      <h1 className="text-3xl md:text-4xl font-bold text-gray-900">
+        Register Korean Agency
       </h1>
       <p className="text-gray-600 mt-4 mb-8 max-w-2xl">
-        Fill in the information below to register your agency. Please prepare
-        business registration certificate and license documents in advance.
+        Please fill in the information below to register your Korean agency.
       </p>
 
       <Card className="shadow-lg my-4">
@@ -98,7 +82,7 @@ export const RegisterAgencyPage = () => {
                   form={form}
                   name="agencyName"
                   label="Agency Name"
-                  placeholder="Your Agency Name"
+                  placeholder="Agency name"
                   rules={{ required: "Agency name is required" }}
                 />
 
@@ -136,7 +120,7 @@ export const RegisterAgencyPage = () => {
                   form={form}
                   name="businessRegistrationNumber"
                   label="Business Registration Number"
-                  placeholder="1234567890123"
+                  placeholder="Business registration number"
                   rules={{
                     required: "Business registration number is required",
                   }}
@@ -154,11 +138,11 @@ export const RegisterAgencyPage = () => {
                   form={form}
                   name="representativeMobilePhone"
                   label="Mobile Phone"
-                  placeholder="+998901234567"
+                  placeholder="+821012345678"
                   rules={{
                     required: "Mobile phone is required",
                     pattern: {
-                      value: /^[+]?[0-9]{9,16}$/,
+                      value: /^[+]?[0-9]{9,15}$/,
                       message: "Invalid phone format",
                     },
                   }}
@@ -168,11 +152,11 @@ export const RegisterAgencyPage = () => {
                   form={form}
                   name="representativeBusinessPhone"
                   label="Business Phone"
-                  placeholder="+998712345678"
+                  placeholder="+82212345678"
                   rules={{
                     required: "Business phone is required",
                     pattern: {
-                      value: /^[+]?[0-9]{9,16}$/,
+                      value: /^[+]?[0-9]{9,15}$/,
                       message: "Invalid phone format",
                     },
                   }}
@@ -182,30 +166,8 @@ export const RegisterAgencyPage = () => {
                   form={form}
                   name="representativeAddress"
                   label="Representative Address"
-                  placeholder="Tashkent, Chilanzar district..."
+                  placeholder="Seoul, Gangnam-gu..."
                   rules={{ required: "Address is required" }}
-                />
-
-                <FormSelect
-                  form={form}
-                  name="country"
-                  label="Country"
-                  placeholder="Select a country"
-                  rules={{ required: "Country is required" }}
-                  options={COUNTRIES}
-                />
-
-                <FormSelect
-                  form={form}
-                  name="koreanAgencyId"
-                  label="Korean Agency"
-                  placeholder="Select a korean agency"
-                  options={
-                    koreanAgencies?.map((agency) => ({
-                      value: agency.id.toString(),
-                      label: agency.agencyName,
-                    })) || []
-                  }
                 />
               </div>
 
@@ -232,34 +194,11 @@ export const RegisterAgencyPage = () => {
                     </FormItem>
                   )}
                 />
-
-                <FormField
-                  control={form.control}
-                  name="license"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormControl>
-                        <FileUpload
-                          name="license"
-                          label="Agency License *"
-                          onChange={field.onChange}
-                          value={field.value || ""}
-                          accept={[
-                            "application/pdf",
-                            "image/jpeg",
-                            "image/png",
-                          ]}
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
               </div>
 
               <div className="flex justify-end pt-8">
                 <Button type="submit" loading={isLoading} size="lg">
-                  Register Agency
+                  Register Korean Agency
                 </Button>
               </div>
             </form>

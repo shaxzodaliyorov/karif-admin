@@ -30,7 +30,7 @@ export interface SignUpWorkerRequest {
   photoRegistration: string;
   graduationCertificate: string;
   qualification: string;
-  agencyId: number;
+  agencyId?: number;
 }
 
 export interface SignUpAgencyResponse {}

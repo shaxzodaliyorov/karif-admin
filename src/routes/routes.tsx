@@ -7,8 +7,10 @@ import {
   LoginPage,
   RegisterAgencyPage,
   RegisterCompany,
+  RegisterWorkerPage,
   SelectRolePage,
 } from "@/pages";
+import { RegisterKoreanAgencyPage } from "@/pages/korean-agency/korean-agency";
 import { Route, Routes as RouterRoutes, useLocation } from "react-router-dom";
 
 export const AppRoutes = () => {
@@ -23,6 +25,11 @@ export const AppRoutes = () => {
         <Route path="/role" element={<SelectRolePage />} />
         <Route path="/register-company" element={<RegisterCompany />} />
         <Route path="/register-agency" element={<RegisterAgencyPage />} />
+        <Route path="/register-worker" element={<RegisterWorkerPage />} />
+        <Route
+          path="/register-korean-agency"
+          element={<RegisterKoreanAgencyPage />}
+        />
       </Route>
       <Route element={<DashboardLayout />}>
         <Route path="/dashboard" element={<DashboardPage />} />
