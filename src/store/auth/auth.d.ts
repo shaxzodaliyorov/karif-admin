@@ -75,8 +75,8 @@ export interface SignUpCompanyRequest {
 }
 
 export interface UpdatePasswordRequest {
-  currentPassword: string;
-  newPassword: string;
+  current_password: string;
+  new_password: string;
 }
 
 export interface UpdatePasswordResponse {

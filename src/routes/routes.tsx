@@ -13,6 +13,7 @@ import {
   RegisterCompany,
   RegisterWorkerPage,
   SelectRolePage,
+  SettingsPage,
 } from "@/pages";
 import { RegisterKoreanAgencyPage } from "@/pages/korean-agency/korean-agency";
 import { Route, Routes as RouterRoutes, useLocation } from "react-router-dom";
@@ -40,6 +41,7 @@ export const AppRoutes = () => {
         <Route path="/employment" element={<EmploymentPage />} />
         <Route path="/my-applications" element={<MyApplicantsPage />} />
         <Route path="/my-information" element={<MyInformationPage />} />
+        <Route path="/settings" element={<SettingsPage />} />
       </Route>
       <Route path="*" element={<NotFoundPage />} />
     </RouterRoutes>

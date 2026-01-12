@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog"; // Assuming shadcn/ui is installed and configured
+import { cn } from "@/lib/utils";
 
 export interface ImageProps {
   src: string;
@@ -24,7 +25,16 @@ export const Image: React.FC<ImageProps> = ({
   };
 
   const imageElement = (
-    <img src={imageSrc} alt={alt} onError={handleError} className={className} />
+    <img
+      src={imageSrc}
+      alt={alt}
+      onError={handleError}
+      className={cn(
+        className,
+        isPreview &&
+          "cursor-pointer hover:scale-105 transition-transform hover:brightness-75"
+      )}
+    />
   );
 
   if (isPreview) {

@@ -9,3 +9,4 @@ export * from "./employment";
 export * from "./my-applications";
 export * from "./my-information";
 export * from "./404";
+export * from "./settings";
