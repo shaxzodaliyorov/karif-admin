@@ -11,7 +11,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { FormSelect } from "@/components/common/select";
-import { Controller, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { useHandleRequest } from "@/hooks/use-handle-request";
 import { useSignUpWorkerMutation } from "@/store/auth/auth.api";
 import type { SignUpWorkerRequest } from "@/store/auth/auth.d.ts";

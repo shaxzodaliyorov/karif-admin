@@ -7,7 +7,6 @@ import {
   Package,
   UserSearch,
   UserCheck,
-  Loader,
   Loader2,
 } from "lucide-react";
 import { IoGrid } from "react-icons/io5";

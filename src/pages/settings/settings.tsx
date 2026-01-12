@@ -16,7 +16,6 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Separator } from "@/components/ui/separator";
 import { useHandleRequest } from "@/hooks/use-handle-request";
 import { useUpdatePasswordMutation } from "@/store/auth/auth.api";
 import { PageHeader } from "@/components/page-header";

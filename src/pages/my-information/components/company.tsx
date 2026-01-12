@@ -1,15 +1,7 @@
 import { PageHeader } from "@/components/page-header";
-import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import {
-  Building2,
-  CheckCircle2,
-  MapPin,
-  Phone,
-  User,
-  Users,
-} from "lucide-react";
+import { Building2, MapPin, Phone, User, Users } from "lucide-react";
 import { InfoCard } from "./info-card";
 import { DocumentItem } from "./document-item";
 import { useGetUser } from "@/hooks/use-get-user";

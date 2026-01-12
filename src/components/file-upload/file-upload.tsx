@@ -5,7 +5,6 @@ import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
-import { useFileUpload } from "@/hooks/use-upload-file";
 import { usePublicFileUpload } from "@/hooks/use-public-file-uplaod";
 
 const MAX_FILE_SIZE = 50 * 1024 * 1024;

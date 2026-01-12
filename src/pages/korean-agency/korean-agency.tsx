@@ -9,12 +9,10 @@ import {
   FormItem,
   FormMessage,
 } from "@/components/ui/form";
-import { FormSelect } from "@/components/common/select";
 import { useForm } from "react-hook-form";
 import { useHandleRequest } from "@/hooks/use-handle-request";
 import { useSignUpKoreanAgencyMutation } from "@/store/auth/auth.api";
 import { toast } from "sonner";
-import { COUNTRIES } from "@/constants";
 import { useNavigate } from "react-router-dom";
 import type { RegisterKoreanAgencyFormValues } from "./types";
 

@@ -32,7 +32,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 
-import type { UseFormReturn, Path, RegisterOptions } from "react-hook-form";
+import type { Path, RegisterOptions } from "react-hook-form";
 
 interface Option {
   label: string;
@@ -70,7 +70,7 @@ export const FormSelect = <TFormValues extends Record<string, unknown>>({
         control={form.control}
         name={name}
         rules={rules}
-        render={({ field }) => (
+        render={({}) => (
           <FormItem className="w-full">
             <FormLabel>{label}</FormLabel>
             <Popover>
