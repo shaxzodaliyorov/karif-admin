@@ -65,6 +65,7 @@ export const PublicHeader = () => {
                     {
                       label: "Profile",
                       icon: <IoPerson />,
+                      onClick: () => navigate("/my-information"),
                     },
                     {
                       label: "Settings",

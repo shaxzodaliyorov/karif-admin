@@ -7,3 +7,5 @@ export * from "./register-agency";
 export * from "./register-worker";
 export * from "./employment";
 export * from "./my-applications";
+export * from "./my-information";
+export * from "./404";

@@ -7,6 +7,8 @@ import {
   HomePage,
   LoginPage,
   MyApplicantsPage,
+  MyInformationPage,
+  NotFoundPage,
   RegisterAgencyPage,
   RegisterCompany,
   RegisterWorkerPage,
@@ -37,7 +39,9 @@ export const AppRoutes = () => {
         <Route path="/dashboard" element={<DashboardPage />} />
         <Route path="/employment" element={<EmploymentPage />} />
         <Route path="/my-applications" element={<MyApplicantsPage />} />
+        <Route path="/my-information" element={<MyInformationPage />} />
       </Route>
+      <Route path="*" element={<NotFoundPage />} />
     </RouterRoutes>
   );
 };
