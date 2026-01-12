@@ -8,10 +8,10 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import type { Path, RegisterOptions, UseFormReturn } from "react-hook-form";
+import type { Path, RegisterOptions } from "react-hook-form";
 
 interface FormInputProps<TFormValues extends Record<string, unknown>> {
-  form: UseFormReturn<TFormValues>;
+  form: any;
   name: Path<TFormValues>;
   label: string;
   type?: string;

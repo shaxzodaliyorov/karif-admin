@@ -73,7 +73,7 @@ export const LoginPage = () => {
                 name="password"
                 label="Password"
                 type="password"
-                placeholder="example@gmail.com"
+                placeholder="****"
                 rules={{
                   required: "Password required",
                   minLength: {
@@ -91,7 +91,7 @@ export const LoginPage = () => {
           <CardFooter className="flex justify-center pt-5">
             <span className="text-sm flex items-center justify-center text-gray-500">
               Don't have an account?{" "}
-              <Link to="/register" className="text-primary">
+              <Link to="/role" className="text-primary">
                 Register
               </Link>
             </span>

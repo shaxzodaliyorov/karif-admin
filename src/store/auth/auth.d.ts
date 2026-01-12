@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-empty-object-type */
-import type { User } from '../../@types/user';
+import type { User } from "../../@types/user";
 
 export type LoginRequest = {
   email: string;
@@ -46,6 +46,7 @@ export interface SignUpAgencyRequest {
   koreanAgencyId?: number;
   country?: string;
   businessRegistrationCertificate?: string;
+  license?: string;
 }
 
 export interface SignUpCompanyResponse {}

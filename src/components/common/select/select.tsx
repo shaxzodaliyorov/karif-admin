@@ -32,7 +32,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 
-import type { UseFormReturn, Path } from "react-hook-form";
+import type { UseFormReturn, Path, RegisterOptions } from "react-hook-form";
 
 interface Option {
   label: string;
@@ -40,7 +40,7 @@ interface Option {
 }
 
 interface FormSelectProps<TFormValues extends Record<string, unknown>> {
-  form: UseFormReturn<TFormValues>;
+  form: any;
   name: Path<TFormValues>;
   label: string;
   options: Option[];
@@ -48,6 +48,7 @@ interface FormSelectProps<TFormValues extends Record<string, unknown>> {
   mode?: "single" | "multiple";
   disabled?: boolean;
   className?: string;
+  rules?: RegisterOptions<TFormValues, Path<TFormValues>>;
 }
 
 export const FormSelect = <TFormValues extends Record<string, unknown>>({
@@ -55,12 +56,12 @@ export const FormSelect = <TFormValues extends Record<string, unknown>>({
   name,
   label,
   options,
-  placeholder = "Tanlang...",
+  placeholder = "Select...",
   mode = "single",
   disabled = false,
   className = "",
+  rules,
 }: FormSelectProps<TFormValues>) => {
-  // ==================== MULTIPLE MODE ====================
   if (mode === "multiple") {
     const fieldValue = (form.watch(name) as string[]) || [];
 
@@ -68,12 +69,13 @@ export const FormSelect = <TFormValues extends Record<string, unknown>>({
       <FormField
         control={form.control}
         name={name}
-        render={({}) => (
-          <FormItem>
+        rules={rules}
+        render={({ field }) => (
+          <FormItem className="w-full">
             <FormLabel>{label}</FormLabel>
             <Popover>
               <PopoverTrigger asChild>
-                <FormControl>
+                <FormControl className="w-full">
                   <Button
                     variant="outline"
                     role="combobox"
@@ -163,8 +165,9 @@ export const FormSelect = <TFormValues extends Record<string, unknown>>({
     <FormField
       control={form.control}
       name={name}
+      rules={rules}
       render={({ field }) => (
-        <FormItem>
+        <FormItem className="w-full">
           <FormLabel>{label}</FormLabel>
           <Select
             onValueChange={field.onChange}
@@ -172,7 +175,7 @@ export const FormSelect = <TFormValues extends Record<string, unknown>>({
             disabled={disabled}
           >
             <FormControl>
-              <SelectTrigger className={className}>
+              <SelectTrigger className={cn("w-full", className)}>
                 <SelectValue placeholder={placeholder} />
               </SelectTrigger>
             </FormControl>
