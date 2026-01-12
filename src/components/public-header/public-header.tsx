@@ -4,7 +4,7 @@ import { HEADER_LINKS } from "@/constants";
 import { useGetUser } from "@/hooks/use-get-user";
 import { useLogout } from "@/hooks/use-logout";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { AlertModal } from "../common/alert-modal";
 import { IoGrid, IoLogOut, IoPerson, IoSettings } from "react-icons/io5";
 import { Dropdown } from "../common/drop-down";
@@ -13,6 +13,7 @@ export const PublicHeader = () => {
   const user = useGetUser();
   const { logout } = useLogout();
   const [isOpen, setIsOpen] = useState(false);
+  const navigate = useNavigate();
   return (
     <header className="w-full fixed top-0 left-0 bg-white z-[999] border-b">
       <div className="container mx-auto px-4">
@@ -59,6 +60,7 @@ export const PublicHeader = () => {
                     {
                       label: "Dashboard",
                       icon: <IoGrid />,
+                      onClick: () => navigate("/dashboard"),
                     },
                     {
                       label: "Profile",

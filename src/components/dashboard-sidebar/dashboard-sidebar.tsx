@@ -42,13 +42,13 @@ const menuItems: MenuItem[] = [
   },
   {
     label: "New Employment",
-    href: "/new-employment",
+    href: "/employment",
     icon: PiBagSimpleFill,
     roles: ["company"],
   },
   {
-    label: "My Application Status",
-    href: "/my-applications-status",
+    label: "My Applications",
+    href: "/my-applications",
     icon: FaListCheck,
     roles: ["company"],
   },

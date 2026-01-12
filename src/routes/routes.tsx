@@ -3,8 +3,10 @@ import { DashboardLayout } from "@/layout/dashboard-layout";
 import { PublicLayout } from "@/layout/public-layout";
 import {
   DashboardPage,
+  EmploymentPage,
   HomePage,
   LoginPage,
+  MyApplicantsPage,
   RegisterAgencyPage,
   RegisterCompany,
   RegisterWorkerPage,
@@ -33,6 +35,8 @@ export const AppRoutes = () => {
       </Route>
       <Route element={<DashboardLayout />}>
         <Route path="/dashboard" element={<DashboardPage />} />
+        <Route path="/employment" element={<EmploymentPage />} />
+        <Route path="/my-applications" element={<MyApplicantsPage />} />
       </Route>
     </RouterRoutes>
   );
