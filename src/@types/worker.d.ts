@@ -6,7 +6,6 @@ export interface Worker {
   phoneNumber: string;
   alternativePhoneNumber: string;
   age: number;
-  gender: 'male' | 'female' | 'other';
   address: string;
   country: string;
   photoRegistration: string;
@@ -20,7 +19,7 @@ export interface Worker {
   height: number | null;
   weight: number | null;
   religion: string | null;
-  marital: 'single' | 'married' | 'divorced' | 'widowed' | null;
+  marital: "single" | "married" | "divorced" | "widowed" | null;
   shoeSize: number | null;
   bloodGroup: string | null;
   relationship: string | null;
@@ -39,8 +38,17 @@ export interface Worker {
   foreignExperiences: string | null;
   languageProficiencies: string | null;
   professionalCertificates: string | null;
-  workplaceInformation: string | null;
+  workplaceInformation: {
+    companyName: string;
+    startDate: string;
+    workingPeriod: string;
+    field: string;
+    position: string;
+    file: string;
+  }[];
   interviewVideo: string | null;
   skillsVerificationVideo: string | null;
   experienceVideo: string | null;
+  dateOfBirth: string | null;
+  gender: string;
 }

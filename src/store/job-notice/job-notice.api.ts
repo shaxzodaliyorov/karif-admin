@@ -3,6 +3,8 @@ import baseApi from "../api";
 import type {
   AddJobNoticeRequest,
   AddJobNoticeResponse,
+  GetAllJobNoticesOwnRequest,
+  GetAllJobNoticesOwnResponse,
   GetJobNoticeApplicationByIdRequest,
   GetJobNoticeApplicationByIdResponse,
   GetJobNoticeApplicationIndividualByIdRequest,
@@ -52,6 +54,17 @@ export const JobNoticeApi = baseApi.injectEndpoints({
         invalidatesTags: ["job-notice-list"],
       }
     ),
+    getAllJobNoticesOwn: builder.query<
+      GetAllJobNoticesOwnResponse,
+      GetAllJobNoticesOwnRequest
+    >({
+      query: (params) => ({
+        url: "/recruitment-notice/get-all-by-worker-own",
+        method: "GET",
+        params,
+      }),
+      providesTags: ["job-notice-list"],
+    }),
     deleteJobNotice: builder.mutation<void, number>({
       query: (id) => ({
         url: `/recruitment-notice/delete/${id}`,
@@ -188,4 +201,5 @@ export const {
   useUpdateJobNoticeAssignmentsMutation,
   useGetJobNoticeAssignmentsQuery,
   useGetJobNoticeListQuery,
+  useGetAllJobNoticesOwnQuery,
 } = JobNoticeApi;

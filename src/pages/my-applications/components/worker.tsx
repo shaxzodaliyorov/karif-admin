@@ -1,6 +1,4 @@
 import { PageHeader } from "@/components/page-header";
-import { useQuery } from "@/hooks/useQuery";
-import { useRecruitmentNoticeQuery } from "@/store/RecruitmentNotice/RecruitmentNotice.api";
 import {
   Table,
   TableBody,
@@ -10,25 +8,20 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import dayjs from "dayjs";
-import { Check, Loader2 } from "lucide-react";
-import { Status } from "@/components/common/status";
+import { Loader2 } from "lucide-react";
 import { TableNotFound } from "@/components/table-not-found";
 import { Pagination } from "@/components/common/pagination";
-import { Button } from "@/components/common/button/button";
-import { useState } from "react";
-import { ApplyModal } from "./apply-modal";
-import { useGetUser } from "@/hooks/use-get-user";
+import { Status } from "@/components/common/status";
+import dayjs from "dayjs";
+import { useQuery } from "@/hooks/useQuery";
+import { useGetAllJobNoticesOwnQuery } from "@/store/job-notice/job-notice.api";
 
-export const CompanyEmployment = () => {
+export const WorkerApplicants = () => {
   const query = useQuery();
-  const user = useGetUser();
-  const [isApplyModalOpen, setIsApplyModalOpen] = useState<null | any>(null);
   const { data: { data: employments = [], page_count = 0 } = {}, isLoading } =
-    useRecruitmentNoticeQuery({
+    useGetAllJobNoticesOwnQuery({
       page: Number(query.get("page")) || 1,
       per_page: 10,
-      status: user?.role === "company" ? "openForCompany" : "openForWorker",
     });
 
   const handlePageChange = (page: number) => {
@@ -36,10 +29,10 @@ export const CompanyEmployment = () => {
   };
 
   return (
-    <section>
+    <div>
       <PageHeader
-        title="Employment"
-        description="Here you can apply for works as company. Fill the form and wait for confirmation."
+        title="My Applicants"
+        description="View and manage all job applicants here."
       />
       <div className="hidden md:block rounded-lg border">
         <Table>
@@ -54,7 +47,6 @@ export const CompanyEmployment = () => {
               <TableHead>Registered company</TableHead>
               <TableHead>Type</TableHead>
               <TableHead>Status</TableHead>
-              <TableHead className="text-right">Action</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -88,21 +80,16 @@ export const CompanyEmployment = () => {
                   <TableCell>
                     <Status
                       label={
-                        c.status === "openForCompany"
-                          ? "Open for Company"
-                          : "Closed"
+                        c?.applicationStatus?.status === "selected"
+                          ? "Selected"
+                          : "Pending"
                       }
                       variant={
-                        c.status === "openForCompany"
+                        c?.applicationStatus?.status === "selected"
                           ? "verified"
-                          : "unverified"
+                          : "pending"
                       }
                     />
-                  </TableCell>
-                  <TableCell className="text-right">
-                    <Button onClick={() => setIsApplyModalOpen(c)} size={"sm"}>
-                      <Check /> Apply
-                    </Button>
                   </TableCell>
                 </TableRow>
               ))
@@ -129,11 +116,6 @@ export const CompanyEmployment = () => {
           </TableFooter>
         </Table>
       </div>
-      <ApplyModal
-        isOpen={isApplyModalOpen !== null}
-        onClose={() => setIsApplyModalOpen(null)}
-        selectedJob={isApplyModalOpen}
-      />
-    </section>
+    </div>
   );
 };

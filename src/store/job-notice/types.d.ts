@@ -472,3 +472,18 @@ export interface GetJobNoticeAssignmentsRequest {
   workerId: number;
   recruitmentNoticeId: number;
 }
+
+export type GetAllJobNoticesOwnResponse = {
+  success: boolean;
+  page_count: number;
+  current_page: number;
+  next_page: number | null;
+  after_filtering_count: number;
+  data: Notices[];
+};
+export type GetAllJobNoticesOwnRequest = {
+  search?: string;
+  page?: number;
+  per_page?: number;
+  status?: "openForCompany" | "openForWorker" | "closed";
+};

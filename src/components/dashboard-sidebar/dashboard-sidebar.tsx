@@ -43,13 +43,13 @@ const menuItems: MenuItem[] = [
     label: "New Employment",
     href: "/employment",
     icon: PiBagSimpleFill,
-    roles: ["company"],
+    roles: ["company", "worker"],
   },
   {
     label: "My Applications",
     href: "/my-applications",
     icon: FaListCheck,
-    roles: ["company"],
+    roles: ["company", "worker"],
   },
   {
     label: "Workers",
@@ -74,12 +74,6 @@ const menuItems: MenuItem[] = [
     href: "/foreign-agency",
     icon: TbWorldDownload,
     roles: ["korean_agency"],
-  },
-  {
-    label: "Application Status",
-    href: "/application-status",
-    icon: TbWorldDown,
-    roles: ["worker"],
   },
   {
     label: "My Information",

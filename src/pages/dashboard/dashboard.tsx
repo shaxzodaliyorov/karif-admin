@@ -1,5 +1,9 @@
 import { useGetUser } from "@/hooks/use-get-user";
-import { AdminDashboard, CompanyDashboard } from "./components";
+import {
+  AdminDashboard,
+  CompanyDashboard,
+  WorkerDashboard,
+} from "./components";
 
 export const DashboardPage = () => {
   const user = useGetUser();
@@ -9,5 +13,10 @@ export const DashboardPage = () => {
   if (user?.role === "company") {
     return <CompanyDashboard />;
   }
+
+  if (user?.role === "worker") {
+    return <WorkerDashboard />;
+  }
+
   return null;
 };
