@@ -22,7 +22,7 @@ export const WorkplaceInformationInfo = () => {
   const [deleteIndex, setDeleteIndex] = useState<number | null>(null);
   const handleRequest = useHandleRequest();
 
-  const [updateUser, { isLoading }] = useWorkerUserUpdateMutation();
+  const [updateUser] = useWorkerUserUpdateMutation();
 
   const experiences = user?.workplaceInformation ?? [];
 

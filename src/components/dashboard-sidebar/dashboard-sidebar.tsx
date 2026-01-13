@@ -15,7 +15,6 @@ type Role = "admin" | "agency" | "worker" | "company" | "korean_agency";
 import { FaListCheck } from "react-icons/fa6";
 import { FaInfoCircle } from "react-icons/fa";
 import { PiBagSimpleFill } from "react-icons/pi";
-import { TbWorldDown } from "react-icons/tb";
 import { TbWorldDownload } from "react-icons/tb";
 import { useUserQuery } from "@/store/auth/auth.api";
 

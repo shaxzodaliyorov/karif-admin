@@ -5,7 +5,6 @@ import {
   Globe,
   Calendar,
   Check,
-  X,
   Scale,
   Weight,
   Footprints,
