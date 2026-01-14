@@ -12,6 +12,8 @@ import type {
   SignUpWorkerResponse,
   UpdatePasswordRequest,
   UpdatePasswordResponse,
+  UpdateUserRequest,
+  UpdateUserResponse,
   UserResponse,
 } from "./auth";
 import type { Worker } from "@/@types/worker";
@@ -86,6 +88,17 @@ const authApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["user"],
     }),
+    koreanAgencyUpdateUser: builder.mutation<
+      UpdateUserResponse,
+      UpdateUserRequest
+    >({
+      query: (credentials) => ({
+        url: "/korean-agency/update",
+        method: "PUT",
+        body: credentials,
+      }),
+      invalidatesTags: ["user"],
+    }),
   }),
 });
 
@@ -99,4 +112,5 @@ export const {
   useUpdatePasswordMutation,
   useSignUpKoreanAgencyMutation,
   useWorkerUserUpdateMutation,
+  useKoreanAgencyUpdateUserMutation,
 } = authApi;

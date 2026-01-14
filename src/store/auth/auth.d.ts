@@ -83,3 +83,14 @@ export interface UpdatePasswordResponse {
   success: boolean;
   message: string;
 }
+
+export interface UpdateUserResponse {}
+export interface UpdateUserRequest {
+  agencyName: string;
+  businessRegistrationNumber: string;
+  businessType: string;
+  representativeName: string;
+  representativeMobilePhone: string;
+  representativeBusinessPhone: string;
+  representativeAddress: string;
+}

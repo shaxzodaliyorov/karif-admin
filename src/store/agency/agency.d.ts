@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-empty-object-type */
-import type { Agency } from '../../@types/agency';
+import type { Agency } from "../../@types/agency";
 
 export type GetAgenciesResponse = {
   success: boolean;
@@ -13,6 +13,7 @@ export type GetAgenciesRequest = {
   search?: string;
   page: number;
   per_page: number;
+  status?: string;
 };
 
 export interface VerifyAgencyRequest {

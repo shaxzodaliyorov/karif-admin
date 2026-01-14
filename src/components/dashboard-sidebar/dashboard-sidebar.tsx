@@ -1,21 +1,11 @@
 import { useGetUser } from "@/hooks/use-get-user";
 import { Link, useLocation } from "react-router-dom";
-import {
-  Home,
-  Users,
-  Settings,
-  Package,
-  UserSearch,
-  UserCheck,
-  Loader2,
-} from "lucide-react";
+import { Home, Settings, Package, Loader2 } from "lucide-react";
 import { IoGrid } from "react-icons/io5";
-import { TbWorld } from "react-icons/tb";
 type Role = "admin" | "agency" | "worker" | "company" | "korean_agency";
 import { FaListCheck } from "react-icons/fa6";
 import { FaInfoCircle } from "react-icons/fa";
 import { PiBagSimpleFill } from "react-icons/pi";
-import { TbWorldDownload } from "react-icons/tb";
 import { useUserQuery } from "@/store/auth/auth.api";
 
 interface MenuItem {
@@ -50,30 +40,30 @@ const menuItems: MenuItem[] = [
     icon: FaListCheck,
     roles: ["company", "worker"],
   },
-  {
-    label: "Workers",
-    href: "/workers",
-    icon: Users,
-    roles: ["agency"],
-  },
-  {
-    label: "Recruitment Notice",
-    href: "/recruitment-notice",
-    icon: UserSearch,
-    roles: ["agency"],
-  },
-  {
-    label: "Applied Recruitment Notice",
-    href: "/applied-recruitment-notice",
-    icon: UserCheck,
-    roles: ["agency"],
-  },
-  {
-    label: "Foreign Agency",
-    href: "/foreign-agency",
-    icon: TbWorldDownload,
-    roles: ["korean_agency"],
-  },
+  // {
+  //   label: "Workers",
+  //   href: "/workers",
+  //   icon: Users,
+  //   roles: ["agency"],
+  // },
+  // {
+  //   label: "Recruitment Notice",
+  //   href: "/recruitment-notice",
+  //   icon: UserSearch,
+  //   roles: ["agency"],
+  // },
+  // {
+  //   label: "Applied Recruitment Notice",
+  //   href: "/applied-recruitment-notice",
+  //   icon: UserCheck,
+  //   roles: ["agency"],
+  // },
+  // {
+  //   label: "Foreign Agency",
+  //   href: "/foreign-agency",
+  //   icon: TbWorldDownload,
+  //   roles: ["korean_agency"],
+  // },
   {
     label: "My Information",
     href: "/my-information",
@@ -86,18 +76,18 @@ const menuItems: MenuItem[] = [
     icon: Package,
     roles: ["worker"],
   },
-  {
-    label: "My Inbox",
-    href: "/inbox ",
-    icon: Package,
-    roles: ["worker", "company", "korean_agency"],
-  },
-  {
-    label: "My consultation",
-    href: "/consultation",
-    icon: TbWorld,
-    roles: ["worker", "company"],
-  },
+  // {
+  //   label: "My Inbox",
+  //   href: "/inbox",
+  //   icon: Package,
+  //   roles: ["worker", "company", "korean_agency"],
+  // },
+  // {
+  //   label: "My consultation",
+  //   href: "/consultation",
+  //   icon: TbWorld,
+  //   roles: ["worker", "company"],
+  // },
   {
     label: "Settings",
     href: "/settings",
