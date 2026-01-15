@@ -1,4 +1,3 @@
-import { Button } from "@/components/common/button/button";
 import { PageHeader } from "@/components/page-header";
 
 export const ForeignAgencyDashboard = () => {
