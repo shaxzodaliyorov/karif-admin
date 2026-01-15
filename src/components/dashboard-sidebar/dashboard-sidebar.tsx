@@ -1,6 +1,14 @@
 import { useGetUser } from "@/hooks/use-get-user";
 import { Link, useLocation } from "react-router-dom";
-import { Home, Settings, Package, Loader2 } from "lucide-react";
+import {
+  Home,
+  Settings,
+  Package,
+  Loader2,
+  Users,
+  UserSearch,
+  UserCheck,
+} from "lucide-react";
 import { IoGrid } from "react-icons/io5";
 type Role = "admin" | "agency" | "worker" | "company" | "korean_agency";
 import { FaListCheck } from "react-icons/fa6";
@@ -29,6 +37,12 @@ const menuItems: MenuItem[] = [
     roles: ["admin", "agency", "worker", "company", "korean_agency"],
   },
   {
+    label: "Workers",
+    href: "/workers",
+    icon: Users,
+    roles: ["agency"],
+  },
+  {
     label: "New Employment",
     href: "/employment",
     icon: PiBagSimpleFill,
@@ -46,18 +60,18 @@ const menuItems: MenuItem[] = [
   //   icon: Users,
   //   roles: ["agency"],
   // },
-  // {
-  //   label: "Recruitment Notice",
-  //   href: "/recruitment-notice",
-  //   icon: UserSearch,
-  //   roles: ["agency"],
-  // },
-  // {
-  //   label: "Applied Recruitment Notice",
-  //   href: "/applied-recruitment-notice",
-  //   icon: UserCheck,
-  //   roles: ["agency"],
-  // },
+  {
+    label: "Recruitment Notice",
+    href: "/recruitment-notice",
+    icon: UserSearch,
+    roles: ["agency"],
+  },
+  {
+    label: "Applied Recruitment Notice",
+    href: "/applied-recruitment-notice",
+    icon: UserCheck,
+    roles: ["agency"],
+  },
   // {
   //   label: "Foreign Agency",
   //   href: "/foreign-agency",
@@ -68,7 +82,7 @@ const menuItems: MenuItem[] = [
     label: "My Information",
     href: "/my-information",
     icon: FaInfoCircle,
-    roles: ["worker", "company", "korean_agency"],
+    roles: ["worker", "company", "korean_agency", "agency"],
   },
   {
     label: "New Application",

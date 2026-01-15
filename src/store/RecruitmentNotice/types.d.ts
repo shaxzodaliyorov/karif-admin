@@ -129,3 +129,16 @@ export interface GetRecruitmentNoticeSeeMoreInfoResponse {
   success: boolean;
   data: RecruitmentNotice;
 }
+
+export interface GetRecruitmentNoticeByAgencyOwnResponse {
+  success: boolean;
+  data: RecruitmentNoticeByAgencyOwn[];
+  page_count: number;
+}
+
+export interface GetRecruitmentNoticeByAgencyOwnRequest {
+  search?: string;
+  page?: number;
+  per_page?: number;
+  status?: "openForCompany" | "openForWorker" | "closed";
+}

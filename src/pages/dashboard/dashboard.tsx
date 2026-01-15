@@ -2,6 +2,7 @@ import { useGetUser } from "@/hooks/use-get-user";
 import {
   AdminDashboard,
   CompanyDashboard,
+  ForeignAgencyDashboard,
   KoreanAgencyDashboard,
   WorkerDashboard,
 } from "./components";
@@ -23,6 +24,10 @@ export const DashboardPage = () => {
 
   if (user?.role === "korean_agency") {
     return <KoreanAgencyDashboard />;
+  }
+
+  if (user?.role === "agency") {
+    return <ForeignAgencyDashboard />;
   }
 
   return null;

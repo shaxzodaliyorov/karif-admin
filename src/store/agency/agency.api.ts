@@ -47,6 +47,20 @@ export const agencyApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["agency"],
     }),
+    verifyWorker: builder.mutation<
+      VerifyAgencyResponse,
+      {
+        workerId: number;
+        status: "verified" | "unverified";
+      }
+    >({
+      query: (body) => ({
+        url: "/worker/verify-worker/",
+        method: "POST",
+        body,
+      }),
+      invalidatesTags: ["agency", "worker"],
+    }),
     getAllKoreanAgencies: builder.query<
       GetAgenciesResponse,
       GetAgenciesRequest
@@ -102,4 +116,5 @@ export const {
   useVerifyKoreanAgencyMutation,
   useGetAllKoreanAgenciesQuery,
   useGetAllPublicAgenciesQuery,
+  useVerifyWorkerMutation,
 } = agencyApi;

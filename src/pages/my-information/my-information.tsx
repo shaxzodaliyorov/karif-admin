@@ -13,7 +13,7 @@ export const MyInformationPage = () => {
     return <WorkerMyInformation />;
   }
 
-  if (user?.role === "korean_agency") {
+  if (user?.role === "korean_agency" || user?.role === "agency") {
     return <KoreanAgency />;
   }
 

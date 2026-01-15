@@ -99,6 +99,14 @@ const authApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["user"],
     }),
+    agencyUpdateUser: builder.mutation<UpdateUserResponse, UpdateUserRequest>({
+      query: (credentials) => ({
+        url: "/agency/update",
+        method: "PUT",
+        body: credentials,
+      }),
+      invalidatesTags: ["user"],
+    }),
   }),
 });
 
@@ -113,4 +121,5 @@ export const {
   useSignUpKoreanAgencyMutation,
   useWorkerUserUpdateMutation,
   useKoreanAgencyUpdateUserMutation,
+  useAgencyUpdateUserMutation,
 } = authApi;

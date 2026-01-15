@@ -2,6 +2,7 @@ import { AuthLayout } from "@/layout";
 import { DashboardLayout } from "@/layout/dashboard-layout";
 import { PublicLayout } from "@/layout/public-layout";
 import {
+  AppliedRecruitmentNoticePage,
   DashboardPage,
   EmploymentPage,
   HomePage,
@@ -9,6 +10,7 @@ import {
   MyApplicantsPage,
   MyInformationPage,
   NotFoundPage,
+  RecruitmentNoticePage,
   RegisterAgencyPage,
   RegisterCompany,
   RegisterWorkerPage,
@@ -16,6 +18,7 @@ import {
   SettingsPage,
 } from "@/pages";
 import { RegisterKoreanAgencyPage } from "@/pages/korean-agency/korean-agency";
+import { WorkersPage } from "@/pages/workers";
 import { Route, Routes as RouterRoutes, useLocation } from "react-router-dom";
 
 export const AppRoutes = () => {
@@ -42,6 +45,12 @@ export const AppRoutes = () => {
         <Route path="/my-applications" element={<MyApplicantsPage />} />
         <Route path="/my-information" element={<MyInformationPage />} />
         <Route path="/settings" element={<SettingsPage />} />
+        <Route path="/workers" element={<WorkersPage />} />
+        <Route path="/recruitment-notice" element={<RecruitmentNoticePage />} />
+        <Route
+          path="/applied-recruitment-notice"
+          element={<AppliedRecruitmentNoticePage />}
+        />
       </Route>
       <Route path="*" element={<NotFoundPage />} />
     </RouterRoutes>

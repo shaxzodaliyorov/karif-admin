@@ -10,3 +10,5 @@ export * from "./my-applications";
 export * from "./my-information";
 export * from "./404";
 export * from "./settings";
+export * from "./recruitment-notice";
+export * from "./applied-recruitment-notice";

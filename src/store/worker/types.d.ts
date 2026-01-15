@@ -5,7 +5,11 @@ export interface GetAllWorkersResponse {
   data: Worker[];
   page_count: number;
 }
-export interface GetAllWorkersRequest {}
+export interface GetAllWorkersRequest {
+  page: number;
+  per_page: number;
+  status?: "verified" | "unverified";
+}
 
 export interface VerifyWorkerResponse {}
 export interface VerifyWorkerRequest {
