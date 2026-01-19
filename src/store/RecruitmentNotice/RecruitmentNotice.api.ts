@@ -1,5 +1,7 @@
 import baseApi from "@/store/api";
 import type {
+  ApplyJobNoticeRequest,
+  ApplyJobNoticeResponse,
   GetRecruitmentNoticeByAgencyOwnRequest,
   GetRecruitmentNoticeByAgencyOwnResponse,
   GetRecruitmentNoticeSeeMoreInfoResponse,
@@ -86,6 +88,17 @@ export const recruitmentNoticeApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["recruitment-notice"],
     }),
+    applyWorkerJobNotice: builder.mutation<
+      ApplyJobNoticeResponse,
+      ApplyJobNoticeRequest
+    >({
+      query: ({ workerId, jobNoticeId }) => ({
+        url: "/recruitment-notice/apply-worker/" + jobNoticeId,
+        method: "POST",
+        body: { workerId },
+      }),
+      invalidatesTags: ["recruitment-notice"],
+    }),
   }),
 });
 
@@ -100,4 +113,5 @@ export const {
   useLazyGetRecruitmentNoticeByAgencyOwnQuery,
   useGetRecruitmentNoticeByAgencyOwnQuery,
   useRecruitmentNoticeApplyWorkersMutation,
+  useApplyWorkerJobNoticeMutation,
 } = recruitmentNoticeApi;

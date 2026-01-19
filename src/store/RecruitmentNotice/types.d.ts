@@ -142,3 +142,12 @@ export interface GetRecruitmentNoticeByAgencyOwnRequest {
   per_page?: number;
   status?: "openForCompany" | "openForWorker" | "closed";
 }
+
+export type ApplyJobNoticeResponse = {
+  success: boolean;
+};
+
+export type ApplyJobNoticeRequest = {
+  workerId: number;
+  jobNoticeId: number;
+};

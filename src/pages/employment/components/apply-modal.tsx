@@ -19,7 +19,11 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { useHandleRequest } from "@/hooks/use-handle-request";
-import { useRecruitmentNoticeApplyMutation } from "@/store/RecruitmentNotice/RecruitmentNotice.api";
+import {
+  useApplyWorkerJobNoticeMutation,
+  useRecruitmentNoticeApplyMutation,
+} from "@/store/RecruitmentNotice/RecruitmentNotice.api";
+import { useGetUser } from "@/hooks/use-get-user";
 
 type ApplyModalProps = {
   isOpen: boolean;
@@ -36,8 +40,28 @@ export const ApplyModal = ({
   const [recruitmentNoticeApply, { isLoading }] =
     useRecruitmentNoticeApplyMutation();
   const handleRequest = useHandleRequest();
+  const user = useGetUser();
+  const [applyWorkerJobNotice, { isLoading: applyWorkerJobNoticeLoading }] =
+    useApplyWorkerJobNoticeMutation();
 
   const handleSubmit = async () => {
+    if (user?.role === "worker") {
+      await handleRequest({
+        request: async () => {
+          const response = await applyWorkerJobNotice({
+            workerId: user?.id as number,
+            jobNoticeId: selectedJob.id,
+          });
+          return response;
+        },
+        onSuccess: () => {
+          onClose();
+          toast.success("Successfully applied");
+        },
+      });
+      return;
+    }
+
     await handleRequest({
       request: async () => {
         const response = await recruitmentNoticeApply({
@@ -63,23 +87,25 @@ export const ApplyModal = ({
         </DialogHeader>
         <div className="p-3">
           <div className="space-y-6 ">
-            <div className="flex flex-col justify-start items-start">
-              <p className="text-muted-foreground flex-1">
-                Number of Applicants
-              </p>
-              <Select value={applicants} onValueChange={setApplicants}>
-                <SelectTrigger className="flex-3 w-full">
-                  <SelectValue placeholder="Select number of applicants" />
-                </SelectTrigger>
-                <SelectContent>
-                  {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((num) => (
-                    <SelectItem key={num} value={num.toString()}>
-                      {num}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
+            {user?.role === "company" && (
+              <div className="flex flex-col justify-start items-start">
+                <p className="text-muted-foreground flex-1">
+                  Number of Applicants
+                </p>
+                <Select value={applicants} onValueChange={setApplicants}>
+                  <SelectTrigger className="flex-3 w-full">
+                    <SelectValue placeholder="Select number of applicants" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((num) => (
+                      <SelectItem key={num} value={num.toString()}>
+                        {num}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+            )}
             <div className="flex justify-end gap-3 pt-2">
               <Button type="button" variant="destructive" onClick={onClose}>
                 <XIcon />
@@ -90,7 +116,7 @@ export const ApplyModal = ({
                 onClick={handleSubmit}
                 type="button"
               >
-                {isLoading ? (
+                {isLoading || applyWorkerJobNoticeLoading ? (
                   <div className="flex items-center">
                     <Loader2 className="mr-2 animate-spin" />
                   </div>
