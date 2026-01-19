@@ -46,7 +46,7 @@ export default function ProfessionalCertificates() {
   };
 
   return (
-    <div className="mx-auto">
+    <div>
       <Card className="shadow-none border-none">
         <CardHeader className="border-b bg-white px-0">
           <div className="flex items-center justify-between">

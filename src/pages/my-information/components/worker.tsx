@@ -18,6 +18,7 @@ import { WorkplaceInformationInfo } from "@/components";
 import { CollegeInformation } from "@/components/college-information";
 import { LanguageProficiency } from "@/components/language-proficiency";
 import ProfessionalCertificates from "@/components/professional-certificate/professional-certificate";
+import { VideoUpload } from "@/components/video-upload/video-upload";
 
 export const WorkerMyInformation = () => {
   const query = useQuery();
@@ -114,6 +115,9 @@ export const WorkerMyInformation = () => {
             </TabsContent>
             <TabsContent value="professional-certificate" className="mt-0">
               <ProfessionalCertificates />
+            </TabsContent>
+            <TabsContent value="video" className="mt-0">
+              <VideoUpload />
             </TabsContent>
           </div>
         </Tabs>
