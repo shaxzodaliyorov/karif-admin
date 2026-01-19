@@ -13,3 +13,5 @@ export * from "./settings";
 export * from "./recruitment-notice";
 export * from "./applied-recruitment-notice";
 export * from "./worker";
+export * from "./agency";
+export * from "./company";

@@ -21,6 +21,7 @@ import {
   useGetAllKoreanAgenciesQuery,
   useVerifyKoreanAgencyMutation,
 } from "@/store/agency/agency.api";
+import { Link, useNavigate } from "react-router-dom";
 
 export const KoreanAgencies = () => {
   const query = useQuery();
@@ -36,6 +37,8 @@ export const KoreanAgencies = () => {
   const [verifyKoreanAgency] = useVerifyKoreanAgencyMutation();
 
   const handleRequest = useHandleRequest();
+
+  const navigate = useNavigate();
 
   const handleVerify = async (id: number, val: boolean) => {
     await handleRequest({
@@ -84,9 +87,14 @@ export const KoreanAgencies = () => {
               agencies?.map((c) => (
                 <TableRow
                   key={c.id}
-                  className={`${!c.isVerified ? "opacity-50" : ""}`}
+                  className={`${!c.isVerified ? "opacity-50" : ""} cursor-pointer`}
+                  onClick={() => navigate(`/agency/${c.id}?agencyType=korean`)}
                 >
-                  <TableCell className="font-medium">{c.agencyName}</TableCell>
+                  <TableCell className="font-medium">
+                    <Link to={`/agency/${c.id}?agencyType=korean`}>
+                      {c.agencyName}
+                    </Link>
+                  </TableCell>
                   <TableCell>{c.email}</TableCell>
                   <TableCell>{c.representativeName}</TableCell>
                   <TableCell>{c.representativeAddress}</TableCell>

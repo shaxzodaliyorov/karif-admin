@@ -7,22 +7,32 @@ import { Edit } from "lucide-react";
 import { EditKoreanAgencyModal } from "./edit-korean-agency-modal";
 import { useState } from "react";
 
-export const KoreanAgency = () => {
-  const agency: any = useGetUser();
+interface KoreanAgencyProps {
+  agencyInfo?: any;
+  hideActions?: boolean;
+}
+
+export const KoreanAgency = ({
+  agencyInfo,
+  hideActions = false,
+}: KoreanAgencyProps) => {
+  const agency: any = agencyInfo || useGetUser();
   const [open, setOpen] = useState(false);
   return (
     <div>
-      <PageHeader
-        title="Korean Agency Information"
-        description="Manage your korean agency information"
-        actions={
-          <div>
-            <Button variant="outline" onClick={() => setOpen(true)}>
-              <Edit />
-            </Button>
-          </div>
-        }
-      />
+      {!hideActions && (
+        <PageHeader
+          title="Korean Agency Information"
+          description="Manage your korean agency information"
+          actions={
+            <div>
+              <Button variant="outline" onClick={() => setOpen(true)}>
+                <Edit />
+              </Button>
+            </div>
+          }
+        />
+      )}
       <div className="space-y-6">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>

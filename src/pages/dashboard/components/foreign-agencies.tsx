@@ -21,6 +21,7 @@ import {
   useGetAgenciesQuery,
   useVerifyAgencyMutation,
 } from "@/store/agency/agency.api";
+import { Link, useNavigate } from "react-router-dom";
 
 export const ForeignAgencies = () => {
   const query = useQuery();
@@ -34,6 +35,8 @@ export const ForeignAgencies = () => {
   });
 
   const [verifyAgency] = useVerifyAgencyMutation();
+
+  const navigate = useNavigate();
 
   const handleRequest = useHandleRequest();
 
@@ -84,9 +87,14 @@ export const ForeignAgencies = () => {
               agencies?.map((c) => (
                 <TableRow
                   key={c.id}
-                  className={`${!c.isVerified ? "opacity-50" : ""}`}
+                  className={`${!c.isVerified ? "opacity-50" : ""} cursor-pointer`}
+                  onClick={() => navigate(`/agency/${c.id}?agencyType=foreign`)}
                 >
-                  <TableCell className="font-medium">{c.agencyName}</TableCell>
+                  <TableCell className="font-medium hover:underline">
+                    <Link to={`/agency/${c.id}?agencyType=foreign`}>
+                      {c.agencyName}
+                    </Link>
+                  </TableCell>
                   <TableCell>{c.email}</TableCell>
                   <TableCell>{c.representativeName}</TableCell>
                   <TableCell>{c.representativeAddress}</TableCell>

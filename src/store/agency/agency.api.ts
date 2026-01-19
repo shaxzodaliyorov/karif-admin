@@ -102,8 +102,22 @@ export const agencyApi = baseApi.injectEndpoints({
           body,
         }),
         invalidatesTags: ["agency"],
-      }
+      },
     ),
+    getAgencyById: builder.query<any, number>({
+      query: (id) => ({
+        url: `/agency/get/${id}`,
+        method: "GET",
+      }),
+      providesTags: ["agency"],
+    }),
+    getKoreanAgencyById: builder.query<any, number>({
+      query: (id) => ({
+        url: `/korean-agency/get/${id}`,
+        method: "GET",
+      }),
+      providesTags: ["agency"],
+    }),
   }),
 });
 
@@ -117,4 +131,6 @@ export const {
   useGetAllKoreanAgenciesQuery,
   useGetAllPublicAgenciesQuery,
   useVerifyWorkerMutation,
+  useGetAgencyByIdQuery,
+  useGetKoreanAgencyByIdQuery,
 } = agencyApi;

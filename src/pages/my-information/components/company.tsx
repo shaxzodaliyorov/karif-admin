@@ -8,14 +8,24 @@ import { useGetUser } from "@/hooks/use-get-user";
 import { Image } from "@/components/common/image";
 import { Status } from "@/components/common/status";
 
-export const CompanyMyInformation = () => {
-  const companyData: any = useGetUser();
+interface CompanyMyInformationProps {
+  companyInfo?: any;
+  hideActions?: boolean;
+}
+
+export const CompanyMyInformation = ({
+  companyInfo,
+  hideActions,
+}: CompanyMyInformationProps) => {
+  const companyData: any = companyInfo || useGetUser();
   return (
     <div>
-      <PageHeader
-        title="Company Information"
-        description="Manage your company information"
-      />
+      {!hideActions && (
+        <PageHeader
+          title="Company Information"
+          description="Manage your company information"
+        />
+      )}
       <div>
         <Card className="mb-8 border shadow-none">
           <CardHeader className="border-b border-border pb-8">
@@ -93,7 +103,7 @@ export const CompanyMyInformation = () => {
                       {
                         label: "Founded",
                         value: new Date(
-                          companyData.createdAt
+                          companyData.createdAt,
                         ).toLocaleDateString(),
                       },
                     ]}

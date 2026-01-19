@@ -52,6 +52,13 @@ export const companyApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["company"],
     }),
+    getCompanyById: builder.query<any, number>({
+      query: (id) => ({
+        url: `/company/get/${id}`,
+        method: "GET",
+      }),
+      providesTags: ["company"],
+    }),
   }),
 });
 
@@ -60,4 +67,5 @@ export const {
   useVerifyCompanyMutation,
   useLoginCompanyWithAdminMutation,
   useCompanySetStatusDocumentMutation,
+  useGetCompanyByIdQuery,
 } = companyApi;

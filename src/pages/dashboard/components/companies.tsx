@@ -21,6 +21,7 @@ import { useQuery } from "@/hooks/useQuery";
 import { useHandleRequest } from "@/hooks/use-handle-request";
 import { toast } from "sonner";
 import { Button } from "@/components/common/button/button";
+import { Link, useNavigate } from "react-router-dom";
 
 export const Companies = () => {
   const query = useQuery();
@@ -37,6 +38,8 @@ export const Companies = () => {
 
   const handleRequest = useHandleRequest();
 
+  const navigate = useNavigate();
+
   const handleVerify = async (id: number, val: boolean) => {
     await handleRequest({
       request: async () => {
@@ -48,7 +51,7 @@ export const Companies = () => {
       },
       onSuccess: () => {
         toast.success(
-          `Company ${val ? "verified" : "unverified"} successfully`
+          `Company ${val ? "verified" : "unverified"} successfully`,
         );
       },
     });
@@ -86,9 +89,12 @@ export const Companies = () => {
               companies?.map((c) => (
                 <TableRow
                   key={c.id}
-                  className={`${!c.isVerified ? "opacity-50" : ""}`}
+                  className={`${!c.isVerified ? "opacity-50" : ""} cursor-pointer`}
+                  onClick={() => navigate(`/company/${c.id}`)}
                 >
-                  <TableCell className="font-medium">{c.companyName}</TableCell>
+                  <TableCell className="font-medium hover:cursor-pointer hover:underline">
+                    <Link to={`/company/${c.id}`}>{c.companyName}</Link>
+                  </TableCell>
                   <TableCell>{c.email}</TableCell>
                   <TableCell>{c.representativeName}</TableCell>
                   <TableCell>{c.region}</TableCell>
