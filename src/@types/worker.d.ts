@@ -36,7 +36,7 @@ export interface Worker {
   remarried: boolean | null;
   universities: string | null;
   foreignExperiences: string | null;
-  languageProficiencies: string | null;
+  languageProficiencies: string | null | any[];
   professionalCertificates: string | null;
   workplaceInformation: {
     companyName: string;

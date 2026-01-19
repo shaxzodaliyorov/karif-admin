@@ -16,6 +16,8 @@ import { EditPersonalModal } from "./edit-personal-modal";
 import { EditEmergencyContactModal } from "./edit-emergency-contact-modal";
 import { WorkplaceInformationInfo } from "@/components";
 import { CollegeInformation } from "@/components/college-information";
+import { LanguageProficiency } from "@/components/language-proficiency";
+import ProfessionalCertificates from "@/components/professional-certificate/professional-certificate";
 
 export const WorkerMyInformation = () => {
   const query = useQuery();
@@ -106,6 +108,12 @@ export const WorkerMyInformation = () => {
             </TabsContent>
             <TabsContent value="college-information" className="mt-0">
               <CollegeInformation />
+            </TabsContent>
+            <TabsContent value="language-proficiency" className="mt-0">
+              <LanguageProficiency />
+            </TabsContent>
+            <TabsContent value="professional-certificate" className="mt-0">
+              <ProfessionalCertificates />
             </TabsContent>
           </div>
         </Tabs>
