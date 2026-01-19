@@ -75,6 +75,17 @@ export const recruitmentNoticeApi = baseApi.injectEndpoints({
       }),
       providesTags: ["recruitment-notice"],
     }),
+    recruitmentNoticeApplyWorkers: builder.mutation<
+      void,
+      { id: number; workerIds: number[] }
+    >({
+      query: ({ id, workerIds }) => ({
+        url: `/recruitment-notice/apply-agency-workers/${id}`,
+        method: "POST",
+        body: { workerIds },
+      }),
+      invalidatesTags: ["recruitment-notice"],
+    }),
   }),
 });
 
@@ -88,4 +99,5 @@ export const {
   useRecruitmentNoticeByCompanyQuery,
   useLazyGetRecruitmentNoticeByAgencyOwnQuery,
   useGetRecruitmentNoticeByAgencyOwnQuery,
+  useRecruitmentNoticeApplyWorkersMutation,
 } = recruitmentNoticeApi;

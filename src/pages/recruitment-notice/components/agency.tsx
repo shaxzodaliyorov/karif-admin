@@ -100,7 +100,10 @@ export const Agency = () => {
                     />
                   </TableCell>
                   <TableCell className="text-right">
-                    <Button onClick={() => setIsApplyModalOpen(c)} size={"sm"}>
+                    <Button
+                      onClick={() => setIsApplyModalOpen(c.id)}
+                      size={"sm"}
+                    >
                       <Check /> Apply
                     </Button>
                   </TableCell>
@@ -132,7 +135,7 @@ export const Agency = () => {
       <ApplyModal
         isOpen={isApplyModalOpen !== null}
         onClose={() => setIsApplyModalOpen(null)}
-        selectedJob={isApplyModalOpen}
+        recruitmentNoticeId={isApplyModalOpen}
       />
     </section>
   );
