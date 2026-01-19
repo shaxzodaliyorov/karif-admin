@@ -5,7 +5,6 @@ import type {
   AddWorkerAdResponse,
   GetAllWorkerAdsRequest,
   GetAllWorkerAdsResponse,
-  GetWorkerAdByIdRequest,
   GetWorkerAdByIdResponse,
   UpdateWorkerAdRequest,
   UpdateWorkerAdResponse,

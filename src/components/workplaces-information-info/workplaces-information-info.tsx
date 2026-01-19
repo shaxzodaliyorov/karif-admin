@@ -5,7 +5,6 @@ import { TbInfoCircle } from "react-icons/tb";
 
 import { useGetUser } from "@/hooks/use-get-user";
 import { WorkplaceCard } from "../workplace-card/workplace-card";
-import type { Worker } from "@/@types/worker";
 import { AddWorkplaceInfoModal } from "./add-workplace-info-modal";
 import { useState } from "react";
 import { EditWorkplaceInfoModal } from "./edit-workplace-info-modal";
