@@ -5,8 +5,17 @@ import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { VideoCard } from "./video-card";
 import { useGetUser } from "@/hooks/use-get-user";
 import { EditVideos } from "./edit-videos";
-export const VideoUpload = () => {
-  const user: any = useGetUser();
+
+interface VideoUploadProps {
+  userInfo?: any;
+  hideActions?: boolean;
+}
+
+export const VideoUpload = ({
+  userInfo,
+  hideActions = false,
+}: VideoUploadProps) => {
+  const user: any = userInfo || useGetUser();
 
   const [editData, setEditData] = useState<{
     type: "interviewVideo" | "experienceVideo" | "skillsVerificationVideo";
@@ -15,7 +24,7 @@ export const VideoUpload = () => {
 
   const handleEdit = (
     type: "interviewVideo" | "experienceVideo" | "skillsVerificationVideo",
-    url: string = ""
+    url: string = "",
   ) => {
     setEditData({ type, url });
   };
@@ -64,6 +73,7 @@ export const VideoUpload = () => {
                   color={section.color}
                   type={section.type}
                   onEdit={handleEdit}
+                  hideActions={hideActions}
                 />
               ))}
             </div>

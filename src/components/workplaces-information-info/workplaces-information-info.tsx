@@ -13,9 +13,20 @@ import { AlertModal } from "../common/alert-modal";
 import { useWorkerUserUpdateMutation } from "@/store/auth/auth.api";
 import { useHandleRequest } from "@/hooks/use-handle-request";
 import { toast } from "sonner";
+import type { Workerad } from "@/@types/workerad";
 
-export const WorkplaceInformationInfo = () => {
-  const user: Worker | null = useGetUser() as Worker | null;
+interface WorkplaceInformationInfoProps {
+  userInfo?: Workerad;
+  hideActions?: boolean;
+}
+
+export const WorkplaceInformationInfo = ({
+  userInfo,
+  hideActions,
+}: WorkplaceInformationInfoProps) => {
+  const userData = useGetUser();
+
+  const user: any = userInfo || userData;
 
   const [open, setOpen] = useState(false);
   const [editIndex, setEditIndex] = useState<number | null>(null);
@@ -52,10 +63,12 @@ export const WorkplaceInformationInfo = () => {
               Work Experience
             </CardTitle>
 
-            <Button onClick={() => setOpen(true)} className="gap-1.5">
-              <Plus className="h-4 w-4" />
-              Add Experience
-            </Button>
+            {!hideActions && (
+              <Button onClick={() => setOpen(true)} className="gap-1.5">
+                <Plus className="h-4 w-4" />
+                Add Experience
+              </Button>
+            )}
           </div>
         </CardHeader>
 
@@ -81,6 +94,7 @@ export const WorkplaceInformationInfo = () => {
                   onDelete={() => {
                     setDeleteIndex(index);
                   }}
+                  hideActions={hideActions}
                 />
               ))}
             </div>

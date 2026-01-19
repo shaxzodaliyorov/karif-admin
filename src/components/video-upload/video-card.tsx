@@ -21,6 +21,7 @@ type VideoCardProps = {
   color: string;
   type: VideoType;
   onEdit: (type: VideoType, url?: string) => void;
+  hideActions?: boolean;
 };
 
 export const VideoCard = ({
@@ -29,6 +30,7 @@ export const VideoCard = ({
   color,
   type,
   onEdit,
+  hideActions = false,
 }: VideoCardProps) => {
   return (
     <Card className={`border-l-4 ${color}`}>
@@ -45,9 +47,13 @@ export const VideoCard = ({
               </div>
             </div>
 
-            <div className="aspect-video overflow-hidden bg-gray-100 rounded-lg flex items-center justify-center border-2 border-dashed border-gray-300">
+            <div className="aspect-video overflow-hidden bg-gray-100 rounded-lg flex items-center justify-center border border-gray-300">
               {videoUrl ? (
                 <VideoPlayer url={videoUrl} />
+              ) : hideActions ? (
+                <div>
+                  <p className="text-sm text-gray-500">Not Found Video</p>
+                </div>
               ) : (
                 <Button variant="outline" onClick={() => onEdit(type, "")}>
                   <Plus className="h-4 w-4 mr-1" />
@@ -58,7 +64,7 @@ export const VideoCard = ({
           </div>
         </CardContent>
 
-        {videoUrl && (
+        {videoUrl && !hideActions && (
           <div className="absolute top-0 right-2">
             <DropdownMenu>
               <DropdownMenuTrigger asChild>

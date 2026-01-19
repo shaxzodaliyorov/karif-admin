@@ -19,6 +19,7 @@ interface EducationCardProps {
   index: number;
   onEdit: (index: number) => void;
   onDelete: (index: number) => void;
+  hideActions?: boolean;
 }
 
 const calculateDuration = (start: string, end: string) => {
@@ -52,6 +53,7 @@ export const EducationCard = ({
   index,
   onEdit,
   onDelete,
+  hideActions = false,
 }: EducationCardProps) => {
   return (
     <Card className="border-l-4 border-l-blue-500">
@@ -84,7 +86,7 @@ export const EducationCard = ({
                   <p className="text-sm text-gray-900">
                     {calculateDuration(
                       education.startDate,
-                      education.graduationDate
+                      education.graduationDate,
                     )}
                   </p>
                 </div>
@@ -115,27 +117,29 @@ export const EducationCard = ({
           </div>
         </div>
 
-        <div className="absolute top-3 right-3">
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="ghost" size="icon">
-                <PiDotsThreeOutlineVerticalFill />
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="start" className="mr-4">
-              <DropdownMenuGroup>
-                <DropdownMenuItem onClick={() => onDelete(index)}>
-                  <RiDeleteBinLine size={16} />
-                  <span className="ml-2">Delete</span>
-                </DropdownMenuItem>
-                <DropdownMenuItem onClick={() => onEdit(index)}>
-                  <Pencil size={16} />
-                  <span className="ml-2">Edit</span>
-                </DropdownMenuItem>
-              </DropdownMenuGroup>
-            </DropdownMenuContent>
-          </DropdownMenu>
-        </div>
+        {!hideActions && (
+          <div className="absolute top-3 right-3">
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="ghost" size="icon">
+                  <PiDotsThreeOutlineVerticalFill />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="start" className="mr-4">
+                <DropdownMenuGroup>
+                  <DropdownMenuItem onClick={() => onDelete(index)}>
+                    <RiDeleteBinLine size={16} />
+                    <span className="ml-2">Delete</span>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem onClick={() => onEdit(index)}>
+                    <Pencil size={16} />
+                    <span className="ml-2">Edit</span>
+                  </DropdownMenuItem>
+                </DropdownMenuGroup>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </div>
+        )}
       </CardContent>
     </Card>
   );

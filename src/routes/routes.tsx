@@ -16,6 +16,7 @@ import {
   RegisterWorkerPage,
   SelectRolePage,
   SettingsPage,
+  WorkerPage,
 } from "@/pages";
 import { RegisterKoreanAgencyPage } from "@/pages/korean-agency/korean-agency";
 import { WorkersPage } from "@/pages/workers";
@@ -46,6 +47,7 @@ export const AppRoutes = () => {
         <Route path="/my-information" element={<MyInformationPage />} />
         <Route path="/settings" element={<SettingsPage />} />
         <Route path="/workers" element={<WorkersPage />} />
+        <Route path="/worker/:id" element={<WorkerPage />} />
         <Route path="/recruitment-notice" element={<RecruitmentNoticePage />} />
         <Route
           path="/applied-recruitment-notice"

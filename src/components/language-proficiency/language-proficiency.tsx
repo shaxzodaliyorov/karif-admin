@@ -26,11 +26,20 @@ import { useWorkerUserUpdateMutation } from "@/store/auth/auth.api";
 import { useHandleRequest } from "@/hooks/use-handle-request";
 import { AlertModal } from "../common/alert-modal";
 
-export const LanguageProficiency = () => {
+interface LanguageProficiencyProps {
+  userInfo?: any;
+  hideActions?: boolean;
+}
+
+export const LanguageProficiency = ({
+  userInfo,
+  hideActions,
+}: LanguageProficiencyProps) => {
   const [isAddDialogOpen, setIsAddDialogOpen] = useState(false);
   const [isEditIndex, setIsEditIndex] = useState<number | null>(null);
   const [deleteIndex, setDeleteIndex] = useState<null | number>(null);
-  const user: any = useGetUser();
+  const userData: any = useGetUser();
+  const user: any = userInfo || userData;
   const [updateUser, { isLoading: loading }] = useWorkerUserUpdateMutation();
   const handleRequest = useHandleRequest();
 
@@ -62,9 +71,14 @@ export const LanguageProficiency = () => {
                 Language Proficiency
               </CardTitle>
             </div>
-            <Button onClick={() => setIsAddDialogOpen(true)} variant="outline">
-              <Plus className="h-4 w-4 mr-1" /> Add Language
-            </Button>
+            {!hideActions && (
+              <Button
+                onClick={() => setIsAddDialogOpen(true)}
+                variant="outline"
+              >
+                <Plus className="h-4 w-4 mr-1" /> Add Language
+              </Button>
+            )}
           </div>
         </CardHeader>
 
@@ -117,17 +131,17 @@ export const LanguageProficiency = () => {
                                   <Badge
                                     variant="outline"
                                     className={getProficiencyColor(
-                                      language.speakingLevel
+                                      language.speakingLevel,
                                     )}
                                   >
                                     {getProficiencyFullName(
-                                      language.speakingLevel
+                                      language.speakingLevel,
                                     )}
                                   </Badge>
                                 </div>
                                 <Progress
                                   value={getProficiencyProgress(
-                                    language.speakingLevel
+                                    language.speakingLevel,
                                   )}
                                   className="h-2"
                                 />
@@ -142,17 +156,17 @@ export const LanguageProficiency = () => {
                                   <Badge
                                     variant="outline"
                                     className={getProficiencyColor(
-                                      language?.writingAndReadingLevel
+                                      language?.writingAndReadingLevel,
                                     )}
                                   >
                                     {getProficiencyFullName(
-                                      language?.writingAndReadingLevel
+                                      language?.writingAndReadingLevel,
                                     )}
                                   </Badge>
                                 </div>
                                 <Progress
                                   value={getProficiencyProgress(
-                                    language?.writingAndReadingLevel
+                                    language?.writingAndReadingLevel,
                                   )}
                                   className="h-2"
                                 />
@@ -167,57 +181,59 @@ export const LanguageProficiency = () => {
                                   <Badge
                                     variant="outline"
                                     className={getProficiencyColor(
-                                      language.proficiencyLevel
+                                      language.proficiencyLevel,
                                     )}
                                   >
                                     {getProficiencyFullName(
-                                      language.proficiencyLevel
+                                      language.proficiencyLevel,
                                     )}
                                   </Badge>
                                 </div>
                                 <Progress
                                   value={getProficiencyProgress(
-                                    language.proficiencyLevel
+                                    language.proficiencyLevel,
                                   )}
                                   className="h-2"
                                 />
                               </div>
                             </div>
                           </div>
-                          <div className="absolute top-[-15px] right-1">
-                            <div className="absolute right-3 top-3">
-                              <DropdownMenu>
-                                <DropdownMenuTrigger asChild>
-                                  <Button
-                                    variant="ghost"
-                                    size="icon"
-                                    className="h-8 w-8"
-                                  >
-                                    <PiDotsThreeOutlineVerticalFill className="h-4 w-4" />
-                                  </Button>
-                                </DropdownMenuTrigger>
-                                <DropdownMenuContent align="end">
-                                  <DropdownMenuItem
-                                    onClick={() => setIsEditIndex(index)}
-                                  >
-                                    <TbEdit className="mr-2 h-4 w-4" />
-                                    Edit
-                                  </DropdownMenuItem>
-                                  <DropdownMenuItem
-                                    onClick={() => setDeleteIndex(index)}
-                                    className="text-red-600 focus:text-red-600"
-                                  >
-                                    <RiDeleteBinLine className="mr-2 h-4 w-4" />
-                                    Delete
-                                  </DropdownMenuItem>
-                                </DropdownMenuContent>
-                              </DropdownMenu>
+                          {!hideActions && (
+                            <div className="absolute top-[-15px] right-1">
+                              <div className="absolute right-3 top-3">
+                                <DropdownMenu>
+                                  <DropdownMenuTrigger asChild>
+                                    <Button
+                                      variant="ghost"
+                                      size="icon"
+                                      className="h-8 w-8"
+                                    >
+                                      <PiDotsThreeOutlineVerticalFill className="h-4 w-4" />
+                                    </Button>
+                                  </DropdownMenuTrigger>
+                                  <DropdownMenuContent align="end">
+                                    <DropdownMenuItem
+                                      onClick={() => setIsEditIndex(index)}
+                                    >
+                                      <TbEdit className="mr-2 h-4 w-4" />
+                                      Edit
+                                    </DropdownMenuItem>
+                                    <DropdownMenuItem
+                                      onClick={() => setDeleteIndex(index)}
+                                      className="text-red-600 focus:text-red-600"
+                                    >
+                                      <RiDeleteBinLine className="mr-2 h-4 w-4" />
+                                      Delete
+                                    </DropdownMenuItem>
+                                  </DropdownMenuContent>
+                                </DropdownMenu>
+                              </div>
                             </div>
-                          </div>
+                          )}
                         </div>
                       </CardContent>
                     </Card>
-                  )
+                  ),
                 )
               )}
             </div>

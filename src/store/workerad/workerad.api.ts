@@ -1,4 +1,4 @@
-import baseApi from '../api';
+import baseApi from "../api";
 
 import type {
   AddWorkerAdRequest,
@@ -9,56 +9,52 @@ import type {
   GetWorkerAdByIdResponse,
   UpdateWorkerAdRequest,
   UpdateWorkerAdResponse,
-} from './types';
+} from "./types";
 
 export const workeradApi = baseApi.injectEndpoints({
-  endpoints: builder => ({
+  endpoints: (builder) => ({
     getAllWorkerAds: builder.query<
       GetAllWorkerAdsResponse,
       GetAllWorkerAdsRequest
     >({
       query: () => ({
-        url: '/worker-ad/get-all',
-        method: 'GET',
+        url: "/worker-ad/get-all",
+        method: "GET",
       }),
-      providesTags: ['WorkerAds'],
+      providesTags: ["WorkerAds"],
     }),
     addWorkerAd: builder.mutation<AddWorkerAdResponse, AddWorkerAdRequest>({
-      query: body => ({
-        url: '/worker-ad/add',
-        method: 'POST',
+      query: (body) => ({
+        url: "/worker-ad/add",
+        method: "POST",
         body,
       }),
-      invalidatesTags: ['WorkerAds'],
+      invalidatesTags: ["WorkerAds"],
     }),
     updateWorkerAd: builder.mutation<
       UpdateWorkerAdResponse,
       UpdateWorkerAdRequest
     >({
       query: ({ body, id }) => ({
-        url: '/worker-ad/update/' + id,
-        method: 'PUT',
+        url: "/worker-ad/update/" + id,
+        method: "PUT",
         body,
       }),
-      invalidatesTags: ['WorkerAds'],
+      invalidatesTags: ["WorkerAds"],
     }),
     deleteWorkerAd: builder.mutation<void, number>({
-      query: id => ({
-        url: '/worker-ad/delete/' + id,
-        method: 'DELETE',
+      query: (id) => ({
+        url: "/worker-ad/delete/" + id,
+        method: "DELETE",
       }),
-      invalidatesTags: ['WorkerAds'],
+      invalidatesTags: ["WorkerAds"],
     }),
-    getWorkerAdById: builder.query<
-      GetWorkerAdByIdResponse,
-      GetWorkerAdByIdRequest
-    >({
-      query: body => ({
-        url: '/worker-ad/getById',
-        method: 'POST',
-        body,
+    getWorkerAdById: builder.query<GetWorkerAdByIdResponse, number>({
+      query: (id) => ({
+        url: `/worker/get/${id}`,
+        method: "GET",
       }),
-      providesTags: ['WorkerAds'],
+      providesTags: ["WorkerAds"],
     }),
   }),
 });

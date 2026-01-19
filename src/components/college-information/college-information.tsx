@@ -12,9 +12,21 @@ import { AlertModal } from "../common/alert-modal";
 import { useWorkerUserUpdateMutation } from "@/store/auth/auth.api";
 import { useHandleRequest } from "@/hooks/use-handle-request";
 import { toast } from "sonner";
+import type { Workerad } from "@/@types/workerad";
 
-export const CollegeInformation = () => {
-  const user: any = useGetUser();
+interface CollegeInformationProps {
+  userInfo?: Workerad;
+  hideActions?: boolean;
+}
+
+export const CollegeInformation = ({
+  userInfo,
+  hideActions = false,
+}: CollegeInformationProps) => {
+  const userData: any = useGetUser();
+
+  const user: any = userInfo || userData;
+
   const educations = user?.universities ?? [];
 
   const [addOpen, setAddOpen] = useState(false);
@@ -59,10 +71,12 @@ export const CollegeInformation = () => {
               </div>
             </div>
 
-            <Button onClick={() => setAddOpen(true)} className="gap-1.5">
-              <Plus className="h-4 w-4" />
-              Add College
-            </Button>
+            {!hideActions && (
+              <Button onClick={() => setAddOpen(true)} className="gap-1.5">
+                <Plus className="h-4 w-4" />
+                Add College
+              </Button>
+            )}
           </div>
         </CardHeader>
 
@@ -71,9 +85,11 @@ export const CollegeInformation = () => {
             <div className="flex min-h-[280px] flex-col items-center justify-center gap-4 text-center text-gray-500">
               <TbInfoCircle className="h-10 w-10 text-gray-400" />
               <p className="text-base">No education history added yet</p>
-              <Button variant="outline" onClick={() => setAddOpen(true)}>
-                Add your first education
-              </Button>
+              {!hideActions && (
+                <Button variant="outline" onClick={() => setAddOpen(true)}>
+                  Add your first education
+                </Button>
+              )}
             </div>
           ) : (
             <div className="space-y-6">
@@ -84,6 +100,7 @@ export const CollegeInformation = () => {
                   index={index}
                   onEdit={setEditIndex}
                   onDelete={setDeleteIndex}
+                  hideActions={hideActions}
                 />
               ))}
             </div>

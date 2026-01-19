@@ -24,6 +24,7 @@ interface WorkplaceCardProps {
   index: number;
   onEdit?: (index: number | null) => void;
   onDelete?: (index: number | null) => void;
+  hideActions?: boolean;
 }
 
 export const WorkplaceCard = ({
@@ -31,6 +32,7 @@ export const WorkplaceCard = ({
   index,
   onEdit,
   onDelete,
+  hideActions,
 }: WorkplaceCardProps) => {
   const { companyName, position, field, workingPeriod, file } = experience;
 
@@ -98,28 +100,30 @@ export const WorkplaceCard = ({
           </div>
         </div>
 
-        <div className="absolute right-3 top-3">
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="ghost" size="icon" className="h-8 w-8">
-                <PiDotsThreeOutlineVerticalFill className="h-4 w-4" />
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
-              <DropdownMenuItem onClick={() => onEdit?.(index)}>
-                <TbEdit className="mr-2 h-4 w-4" />
-                Edit
-              </DropdownMenuItem>
-              <DropdownMenuItem
-                className="text-red-600 focus:text-red-600"
-                onClick={() => onDelete?.(index)}
-              >
-                <RiDeleteBinLine className="mr-2 h-4 w-4" />
-                Delete
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
-        </div>
+        {!hideActions && (
+          <div className="absolute right-3 top-3">
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="ghost" size="icon" className="h-8 w-8">
+                  <PiDotsThreeOutlineVerticalFill className="h-4 w-4" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end">
+                <DropdownMenuItem onClick={() => onEdit?.(index)}>
+                  <TbEdit className="mr-2 h-4 w-4" />
+                  Edit
+                </DropdownMenuItem>
+                <DropdownMenuItem
+                  className="text-red-600 focus:text-red-600"
+                  onClick={() => onDelete?.(index)}
+                >
+                  <RiDeleteBinLine className="mr-2 h-4 w-4" />
+                  Delete
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </div>
+        )}
       </CardContent>
     </Card>
   );

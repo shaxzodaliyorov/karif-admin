@@ -15,6 +15,7 @@ import { useQuery } from "@/hooks/useQuery";
 import { Button } from "@/components/common/button/button";
 
 import { useGetAllWorkersQuery } from "@/store/worker/worker.api";
+import { Link, useNavigate } from "react-router-dom";
 
 export const Workers = () => {
   const query = useQuery();
@@ -23,6 +24,8 @@ export const Workers = () => {
       page: Number(query.get("page")) || 1,
       per_page: 10,
     });
+
+  const navigate = useNavigate();
 
   const handlePageChange = (page: number) => {
     query.set("page", String(page));
@@ -53,8 +56,14 @@ export const Workers = () => {
               </TableRow>
             ) : workers?.length ? (
               workers?.map((c) => (
-                <TableRow key={c.id}>
-                  <TableCell className="font-medium">{c.name}</TableCell>
+                <TableRow
+                  key={c.id}
+                  onClick={() => navigate(`/worker/${c.id}`)}
+                  className="cursor-pointer"
+                >
+                  <TableCell className="font-medium cursor-pointer hover:underline">
+                    <Link to={`/worker/${c.id}`}>{c.name}</Link>
+                  </TableCell>
                   <TableCell>{c.email}</TableCell>
                   <TableCell>{c.phoneNumber}</TableCell>
                   <TableCell>{c.address}</TableCell>

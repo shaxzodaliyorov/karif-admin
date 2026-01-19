@@ -12,8 +12,16 @@ import { useWorkerUserUpdateMutation } from "@/store/auth/auth.api";
 import { toast } from "sonner";
 import { EditCertificateModal } from "./edit-certificate-modal";
 
-export default function ProfessionalCertificates() {
-  const user: any = useGetUser();
+interface ProfessionalCertificatesProps {
+  userInfo?: any;
+  hideActions?: boolean;
+}
+
+export default function ProfessionalCertificates({
+  userInfo,
+  hideActions,
+}: ProfessionalCertificatesProps) {
+  const user: any = userInfo || useGetUser();
   const certificates = user?.professionalCertificates ?? [];
   const [open, setOpen] = useState(false);
   const [openEditIndex, setOpenEditIndex] = useState<number | null>(null);
@@ -55,10 +63,12 @@ export default function ProfessionalCertificates() {
               Professional Certificate
             </CardTitle>
 
-            <Button variant="outline" onClick={() => setOpen(true)}>
-              <Plus className="h-4 w-4 mr-1" />
-              Add Certificate
-            </Button>
+            {!hideActions && (
+              <Button variant="outline" onClick={() => setOpen(true)}>
+                <Plus className="h-4 w-4 mr-1" />
+                Add Certificate
+              </Button>
+            )}
           </div>
         </CardHeader>
 
@@ -79,6 +89,7 @@ export default function ProfessionalCertificates() {
                   index={index}
                   onEdit={() => setOpenEditIndex(index)}
                   onDelete={() => setOpenDeleteIndex(index)}
+                  hideActions={hideActions}
                   onDownload={() => handleDownload(certificate.file)}
                 />
               ))}

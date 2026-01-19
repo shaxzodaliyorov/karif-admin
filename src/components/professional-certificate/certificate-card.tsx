@@ -25,6 +25,7 @@ type CertificateCardProps = {
   onEdit: (index: number) => void;
   onDelete: (index: number) => void;
   onDownload: (file?: string) => void;
+  hideActions?: boolean;
 };
 
 export default function CertificateCard({
@@ -33,6 +34,7 @@ export default function CertificateCard({
   onEdit,
   onDelete,
   onDownload,
+  hideActions = false,
 }: CertificateCardProps) {
   return (
     <div className="relative">
@@ -100,25 +102,27 @@ export default function CertificateCard({
             </div>
           </div>
 
-          <div className="absolute top-2 right-2">
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button variant="ghost" size="icon">
-                  <PiDotsThreeOutlineVerticalFill />
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="start" className="mr-4">
-                <DropdownMenuItem onClick={() => onEdit(index)}>
-                  <TbEdit size={16} />
-                  <span className="ml-2">Edit</span>
-                </DropdownMenuItem>
-                <DropdownMenuItem onClick={() => onDelete(index)}>
-                  <Trash2 size={16} />
-                  <span className="ml-2">Delete</span>
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
-          </div>
+          {!hideActions && (
+            <div className="absolute top-2 right-2">
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant="ghost" size="icon">
+                    <PiDotsThreeOutlineVerticalFill />
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="start" className="mr-4">
+                  <DropdownMenuItem onClick={() => onEdit(index)}>
+                    <TbEdit size={16} />
+                    <span className="ml-2">Edit</span>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem onClick={() => onDelete(index)}>
+                    <Trash2 size={16} />
+                    <span className="ml-2">Delete</span>
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            </div>
+          )}
         </CardContent>
       </Card>
     </div>
