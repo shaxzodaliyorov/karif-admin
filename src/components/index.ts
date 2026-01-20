@@ -5,3 +5,4 @@ export * from "./dashboard-sidebar";
 export * from "./workplaces-information-info";
 export * from "./personal-details";
 export * from "./professional-certificate";
+export * from "./add-worker-form";

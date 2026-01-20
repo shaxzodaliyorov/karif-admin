@@ -3,6 +3,8 @@ import baseApi from "../api";
 import type {
   AddWorkerAdRequest,
   AddWorkerAdResponse,
+  AddWorkerRequest,
+  AddWorkerResponse,
   GetAllWorkerAdsRequest,
   GetAllWorkerAdsResponse,
   GetWorkerAdByIdResponse,
@@ -55,6 +57,14 @@ export const workeradApi = baseApi.injectEndpoints({
       }),
       providesTags: ["WorkerAds"],
     }),
+    addWorker: builder.mutation<AddWorkerResponse, AddWorkerRequest>({
+      query: (body) => ({
+        url: "/worker/add",
+        method: "POST",
+        body,
+      }),
+      invalidatesTags: ["WorkerAds"],
+    }),
   }),
 });
 
@@ -64,4 +74,5 @@ export const {
   useUpdateWorkerAdMutation,
   useDeleteWorkerAdMutation,
   useGetWorkerAdByIdQuery,
+  useAddWorkerMutation,
 } = workeradApi;
