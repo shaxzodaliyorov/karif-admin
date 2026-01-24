@@ -15,3 +15,4 @@ export * from "./applied-recruitment-notice";
 export * from "./worker";
 export * from "./agency";
 export * from "./company";
+export * from "./add-recruitment-notice";

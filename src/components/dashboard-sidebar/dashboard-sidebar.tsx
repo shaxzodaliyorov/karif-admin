@@ -64,7 +64,7 @@ const menuItems: MenuItem[] = [
     label: "Recruitment Notice",
     href: "/recruitment-notice",
     icon: UserSearch,
-    roles: ["agency"],
+    roles: ["agency", "admin"],
   },
   {
     label: "Applied Recruitment Notice",
@@ -118,7 +118,7 @@ export const DashboardSidebar = () => {
   const userRole = user?.role as Role | undefined;
 
   const filteredItems = menuItems.filter((item) =>
-    userRole ? item.roles.includes(userRole) : false
+    userRole ? item.roles.includes(userRole) : false,
   );
 
   return (

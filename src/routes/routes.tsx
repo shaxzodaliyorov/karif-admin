@@ -2,6 +2,7 @@ import { AuthLayout } from "@/layout";
 import { DashboardLayout } from "@/layout/dashboard-layout";
 import { PublicLayout } from "@/layout/public-layout";
 import {
+  AddRecruitmentNoticePage,
   AgencyPage,
   AppliedRecruitmentNoticePage,
   CompanyPage,
@@ -55,6 +56,10 @@ export const AppRoutes = () => {
         <Route path="/company/:id" element={<CompanyPage />} />
         <Route path="/recruitment-notice" element={<RecruitmentNoticePage />} />
         <Route path="/add-worker" element={<AddWorkerPage />} />
+        <Route
+          path="/add-recruitment-notice"
+          element={<AddRecruitmentNoticePage />}
+        />
         <Route
           path="/applied-recruitment-notice"
           element={<AppliedRecruitmentNoticePage />}
