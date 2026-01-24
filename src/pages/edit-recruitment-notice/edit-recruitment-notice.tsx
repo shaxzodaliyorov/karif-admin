@@ -2,12 +2,12 @@ import { PageHeader } from "@/components/page-header";
 import { RecruitmentForm } from "@/components/recruitment-form/recruitment-form";
 import { useNavigate } from "react-router-dom";
 
-export const AddRecruitmentNoticePage = () => {
+export const EditRecruitmentNoticePage = () => {
   const navigate = useNavigate();
   return (
     <div>
       <PageHeader
-        title="Add Recruitment Notice"
+        title="Edit Recruitment Notice"
         showBackButton
         onBack={() => navigate("/recruitment-notice")}
       />
@@ -15,7 +15,7 @@ export const AddRecruitmentNoticePage = () => {
         onReset={() => {}}
         onSubmit={() => {}}
         isLoading={false}
-        isEdit
+        isEdit={false}
       />
     </div>
   );

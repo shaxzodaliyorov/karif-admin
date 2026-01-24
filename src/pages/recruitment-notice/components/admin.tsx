@@ -177,7 +177,8 @@ export const Admin = () => {
                           },
                           {
                             label: "Edit",
-                            onClick: () => {},
+                            onClick: () =>
+                              navigate(`/edit-recruitment-notice/${c.id}`),
                             icon: <Pencil />,
                           },
                         ]}

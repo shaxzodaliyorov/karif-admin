@@ -7,6 +7,7 @@ import {
   AppliedRecruitmentNoticePage,
   CompanyPage,
   DashboardPage,
+  EditRecruitmentNoticePage,
   EmploymentPage,
   HomePage,
   LoginPage,
@@ -59,6 +60,10 @@ export const AppRoutes = () => {
         <Route
           path="/add-recruitment-notice"
           element={<AddRecruitmentNoticePage />}
+        />
+        <Route
+          path="/edit-recruitment-notice/:id"
+          element={<EditRecruitmentNoticePage />}
         />
         <Route
           path="/applied-recruitment-notice"
