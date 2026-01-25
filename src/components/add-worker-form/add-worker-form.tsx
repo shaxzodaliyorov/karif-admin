@@ -216,6 +216,7 @@ export function AddWorkerForm() {
     const isMeaningfulValue = (value: unknown) => {
       if (value === null || value === undefined) return false;
       if (typeof value === "string") return value.trim().length > 0;
+      if (typeof value === "number") return value !== 0;
       return true;
     };
 
@@ -229,15 +230,15 @@ export function AddWorkerForm() {
 
     const payloadData = {
       ...data,
+      universities: filterEmptyItems(data?.universities || []),
       foreignExperiences: filterEmptyItems(data?.foreignExperiences || []),
       languageProficiencies: filterEmptyItems(
         data?.languageProficiencies || [],
       ),
-      professionalCertificates:
-        data?.professionalCertificates?.map((cert) => ({
-          ...cert,
-          file: cert.file,
-        })) || [],
+      professionalCertificates: filterEmptyItems(
+        data?.professionalCertificates || [],
+      ),
+      workplaceInformation: filterEmptyItems(data?.workplaceInformation || []),
     };
 
     await handleRequest({
