@@ -10,6 +10,7 @@ import type {
   GetWorkerAdByIdResponse,
   UpdateWorkerAdRequest,
   UpdateWorkerAdResponse,
+  WorkerUpdateRequest,
 } from "./types";
 
 export const workeradApi = baseApi.injectEndpoints({
@@ -45,10 +46,10 @@ export const workeradApi = baseApi.injectEndpoints({
     }),
     deleteWorkerAd: builder.mutation<void, number>({
       query: (id) => ({
-        url: "/worker-ad/delete/" + id,
+        url: "/worker/delete/" + id,
         method: "DELETE",
       }),
-      invalidatesTags: ["WorkerAds"],
+      invalidatesTags: ["WorkerAds", "worker"],
     }),
     getWorkerAdById: builder.query<GetWorkerAdByIdResponse, number>({
       query: (id) => ({
@@ -63,7 +64,15 @@ export const workeradApi = baseApi.injectEndpoints({
         method: "POST",
         body,
       }),
-      invalidatesTags: ["WorkerAds"],
+      invalidatesTags: ["WorkerAds", "worker"],
+    }),
+    workerUpdate: builder.mutation<void, WorkerUpdateRequest>({
+      query: ({ body, id }) => ({
+        url: "/worker/update-by-agency/" + id,
+        method: "PUT",
+        body,
+      }),
+      invalidatesTags: ["WorkerAds", "worker"],
     }),
   }),
 });
@@ -75,4 +84,5 @@ export const {
   useDeleteWorkerAdMutation,
   useGetWorkerAdByIdQuery,
   useAddWorkerMutation,
+  useWorkerUpdateMutation,
 } = workeradApi;

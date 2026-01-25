@@ -35,7 +35,7 @@ export const workerApi = baseApi.injectEndpoints({
           body,
         }),
         invalidatesTags: ["worker"],
-      }
+      },
     ),
   }),
 });
