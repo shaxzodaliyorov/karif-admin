@@ -121,3 +121,8 @@ export interface AddWorkerRequest {
     file?: string;
   }[];
 }
+
+export interface WorkerUpdateRequest {
+  id: number;
+  body: Partial<AddWorkerRequest>;
+}

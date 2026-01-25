@@ -1,4 +1,6 @@
+import { AlertModal } from "@/components/common/alert-modal";
 import { Button } from "@/components/common/button/button";
+import { Dropdown } from "@/components/common/drop-down";
 import { Pagination } from "@/components/common/pagination";
 import { Status } from "@/components/common/status";
 import { Switch } from "@/components/common/switch";
@@ -16,8 +18,17 @@ import { useHandleRequest } from "@/hooks/use-handle-request";
 import { useQuery } from "@/hooks/useQuery";
 import { useVerifyWorkerMutation } from "@/store/agency/agency.api";
 import { useGetAllWorkersQuery } from "@/store/worker/worker.api";
+import { useDeleteWorkerAdMutation } from "@/store/workerad/workerad.api";
 import dayjs from "dayjs";
-import { Loader2, LogIn } from "lucide-react";
+import {
+  Edit2Icon,
+  Loader2,
+  LogIn,
+  MoreVertical,
+  Trash2Icon,
+} from "lucide-react";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 
 interface WorkersListsProps {
@@ -25,7 +36,12 @@ interface WorkersListsProps {
 }
 
 export const WorkersLists = ({ status }: WorkersListsProps) => {
+  const navigate = useNavigate();
   const query = useQuery();
+  const [isOpen, setIsOpen] = useState(false);
+  const [selectedWorkerId, setSelectedWorkerId] = useState<number | null>(null);
+  const [deleteWorkerAd] = useDeleteWorkerAdMutation();
+
   const {
     data: { data: workers = [], page_count } = {},
     isLoading,
@@ -59,12 +75,25 @@ export const WorkersLists = ({ status }: WorkersListsProps) => {
     });
   };
 
+  const handleDeleteWorker = async ({ id }: { id: number }) => {
+    await handleRequest({
+      request: async () => {
+        const response = await deleteWorkerAd(id as number);
+        return response;
+      },
+      onSuccess: () => {
+        toast.success("Worker deleted successfully");
+      },
+    });
+  };
+
   return (
     <div>
       <div className="hidden md:block rounded-lg border">
         <Table>
           <TableHeader>
             <TableRow>
+              <TableHead></TableHead>
               <TableHead>Full Name</TableHead>
               <TableHead>Email</TableHead>
               <TableHead>Phone Number</TableHead>
@@ -77,7 +106,7 @@ export const WorkersLists = ({ status }: WorkersListsProps) => {
           <TableBody>
             {isLoading ? (
               <TableRow>
-                <TableCell colSpan={7} className="text-center">
+                <TableCell colSpan={8} className="text-center">
                   <div className="w-full h-40 flex justify-center items-center">
                     <Loader2 className="animate-spin" />
                   </div>
@@ -87,9 +116,22 @@ export const WorkersLists = ({ status }: WorkersListsProps) => {
               workers?.map((c) => (
                 <TableRow
                   key={c.id}
-                  className={`${!c.isVerified ? "opacity-50" : ""}`}
+                  onClick={() => navigate(`/worker/${c.id}`)}
+                  className={`cursor-pointer ${!c.isVerified ? "opacity-50" : ""}`}
                 >
-                  <TableCell className="font-medium">{c.name}</TableCell>
+                  <TableCell>
+                    <img
+                      src={
+                        c.photoRegistration ||
+                        "https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y"
+                      }
+                      alt={c.name}
+                      className="w-8 h-8 rounded-full object-cover"
+                    />
+                  </TableCell>
+                  <TableCell className="font-medium hover:underline">
+                    {c.name}
+                  </TableCell>
                   <TableCell>{c.email}</TableCell>
                   <TableCell>{c.phoneNumber}</TableCell>
                   <TableCell>{c.address}</TableCell>
@@ -112,6 +154,29 @@ export const WorkersLists = ({ status }: WorkersListsProps) => {
                         onChange={(val: boolean) => handleVerify(c.id, val)}
                         disabled={workersIsFetching}
                       />
+                      <Dropdown
+                        options={[
+                          {
+                            label: "Edit",
+                            icon: <Edit2Icon />,
+                            onClick: () => {
+                              navigate(`/add-worker?id=${c.id}`);
+                            },
+                          },
+                          {
+                            label: "Delete",
+                            icon: <Trash2Icon />,
+                            onClick: () => {
+                              setIsOpen(true);
+                              setSelectedWorkerId(c.id);
+                            },
+                          },
+                        ]}
+                      >
+                        <button className="cursor-pointer">
+                          <MoreVertical />
+                        </button>
+                      </Dropdown>
                     </div>
                   </TableCell>
                 </TableRow>
@@ -139,6 +204,22 @@ export const WorkersLists = ({ status }: WorkersListsProps) => {
           </TableFooter>
         </Table>
       </div>
+      <AlertModal
+        isOpen={isOpen}
+        onClose={() => {
+          setIsOpen(false);
+          setSelectedWorkerId(null);
+        }}
+        onConfirm={() => {
+          if (selectedWorkerId) {
+            handleDeleteWorker({ id: selectedWorkerId });
+          }
+          setIsOpen(false);
+          setSelectedWorkerId(null);
+        }}
+        title="Delete Worker"
+        description="Are you sure you want to delete this worker? This action cannot be undone."
+      />
     </div>
   );
 };

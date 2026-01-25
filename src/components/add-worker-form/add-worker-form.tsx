@@ -14,14 +14,21 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { useHandleRequest } from "@/hooks/use-handle-request";
-import { useAddWorkerMutation } from "@/store/workerad/workerad.api";
+import {
+  useAddWorkerMutation,
+  useGetWorkerAdByIdQuery,
+  useWorkerUpdateMutation,
+} from "@/store/workerad/workerad.api";
 import { toast } from "sonner";
 import { format } from "date-fns";
 import { COUNTRIES } from "@/constants/countries";
 import { Button } from "../common/button/button";
 import { useNavigate } from "react-router-dom";
+import { useGetQuery } from "@/hooks/use-get-query";
+import { useEffect } from "react";
 
 export interface FormData {
+  [x: string]: any;
   // Personal Information
   name: string;
   dateOfBirth: string;
@@ -117,7 +124,17 @@ export interface FormData {
 }
 
 export function AddWorkerForm() {
-  const { control, handleSubmit } = useForm<FormData>({
+  const handleRequest = useHandleRequest();
+  const navigate = useNavigate();
+  const [addWorker, { isLoading }] = useAddWorkerMutation();
+  const id = useGetQuery({ value: "id" });
+  const { data: worker } = useGetWorkerAdByIdQuery(id as unknown as number, {
+    skip: !id,
+  });
+  const [workerUpdate, { isLoading: isLoadingUpdate }] =
+    useWorkerUpdateMutation();
+
+  const { control, handleSubmit, reset } = useForm<FormData>({
     defaultValues: {
       universities: [
         {
@@ -161,9 +178,129 @@ export function AddWorkerForm() {
     },
   });
 
-  const handleRequest = useHandleRequest();
-  const navigate = useNavigate();
-  const [addWorker, { isLoading }] = useAddWorkerMutation();
+  useEffect(() => {
+    if (!worker?.data) return;
+
+    const w = worker.data;
+
+    reset({
+      name: w.name || "",
+      email: w.email || "",
+      dateOfBirth: w.dateOfBirth || "",
+      phoneNumber: w.phoneNumber || "",
+      alternativePhoneNumber: w.alternativePhoneNumber || "",
+      country: w.country || "",
+      address: w.address || "",
+
+      height: w.height || undefined,
+      weight: w.weight || undefined,
+      shoeSize: w.shoeSize || undefined,
+      bloodGroup: w.bloodGroup || "",
+
+      allergies: w.allergies || "",
+      dietInformation: w.dietInformation || "",
+
+      religion: w.religion || "",
+      marital: w.marital || "",
+      remarried: w.remarried ?? undefined,
+      typeOfPropertyOwned: w.typeOfPropertyOwned || "",
+
+      relFullName: w.relFullName || "",
+      relPhoneNumber: w.relPhoneNumber || "",
+      relDateOfBirth: w.relDateOfBirth || "",
+      relationship: w.relationship || "",
+
+      collegeName: w.collegeName || "",
+      collageMajor: w.collageMajor || "",
+      collageStartDate: w.collageStartDate || "",
+      collageGraduationDate: w.collageGraduationDate || "",
+      qualification: w.qualification || "",
+
+      interviewVideo: w.interviewVideo || "",
+      skillsVerificationVideo: w.skillsVerificationVideo || "",
+      experienceVideo: w.experienceVideo || "",
+
+      photoRegistration: w.photoRegistration || "",
+      graduationCertificate: w.graduationCertificate || "",
+      cv: w.cv || "",
+
+      universities: w.universities?.length
+        ? w.universities
+        : [
+            {
+              highestDegree: "",
+              universityName: "",
+              major: "",
+              startDate: "",
+              graduationDate: "",
+            },
+          ],
+
+      foreignExperiences:
+        Array.isArray(w.foreignExperiences) &&
+        (
+          w.foreignExperiences as Array<{
+            visitedCountry: string;
+            durationOfVisit: string;
+            purpose: string;
+            file?: string;
+          }>
+        ).length
+          ? (w.foreignExperiences as Array<{
+              visitedCountry: string;
+              durationOfVisit: string;
+              purpose: string;
+              file?: string;
+            }>)
+          : [
+              {
+                visitedCountry: "",
+                durationOfVisit: "",
+                purpose: "",
+                file: "",
+              },
+            ],
+
+      languageProficiencies: w.languageProficiencies?.length
+        ? w.languageProficiencies
+        : [
+            {
+              language: "",
+              proficiencyLevel: "",
+              speakingLevel: "",
+              writingAndReadingLevel: "",
+              file: "",
+            },
+          ],
+
+      professionalCertificates: w.professionalCertificates?.length
+        ? w.professionalCertificates
+        : [
+            {
+              certificateType: "",
+              issuingInstitution: "",
+              issueDate: "",
+              file: "",
+            },
+          ],
+
+      workplaceInformation: w.workplaceInformation?.length
+        ? w.workplaceInformation.map((job) => ({
+            ...job,
+            workingPeriod: Number(job.workingPeriod) || 0,
+          }))
+        : [
+            {
+              companyName: "",
+              startDate: "",
+              workingPeriod: 0,
+              field: "",
+              position: "",
+              file: "",
+            },
+          ],
+    });
+  }, [worker, reset]);
 
   const {
     fields: universityFields,
@@ -211,46 +348,137 @@ export function AddWorkerForm() {
   });
 
   const onSubmit = async (data: FormData) => {
-    console.log(data);
+    // Bo'sh string va array'larni filtrlash funksiyasi
+    const removeEmptyFields = (obj: any): any => {
+      const result: any = {};
 
-    const isMeaningfulValue = (value: unknown) => {
-      if (value === null || value === undefined) return false;
-      if (typeof value === "string") return value.trim().length > 0;
-      if (typeof value === "number") return value !== 0;
-      return true;
+      Object.keys(obj).forEach((key) => {
+        const value = obj[key];
+
+        // Array bo'lsa
+        if (Array.isArray(value)) {
+          // Ichidagi bo'sh object'larni olib tashlash
+          const filteredArray = value
+            .map((item) => {
+              if (typeof item === "object" && item !== null) {
+                const cleanedItem = removeEmptyFields(item);
+                return Object.keys(cleanedItem).length > 0
+                  ? cleanedItem
+                  : undefined;
+              }
+              return item;
+            })
+            .filter((item) => {
+              if (item === undefined || item === null) return false;
+              if (typeof item === "string") return item.trim().length > 0;
+              if (typeof item === "number") return item !== 0;
+              return true;
+            });
+
+          if (filteredArray.length > 0) {
+            result[key] = filteredArray;
+          }
+        }
+        // Object bo'lsa
+        else if (typeof value === "object" && value !== null) {
+          const cleanedObject = removeEmptyFields(value);
+          if (Object.keys(cleanedObject).length > 0) {
+            result[key] = cleanedObject;
+          }
+        }
+        // String bo'lsa
+        else if (typeof value === "string") {
+          const trimmed = value.trim();
+          if (trimmed.length > 0) {
+            result[key] = trimmed;
+          }
+        }
+        // Number bo'lsa (0 ni ham yuboramiz, chunki ba'zi fieldlar uchun 0 ma'noli)
+        else if (typeof value === "number") {
+          result[key] = value;
+        }
+        // Boolean yoki boshqa qiymat
+        else if (value !== undefined && value !== null) {
+          result[key] = value;
+        }
+      });
+
+      return result;
     };
 
-    const filterEmptyItems = <T extends Record<string, unknown>>(
-      items: T[],
-    ) => {
-      return items.filter((item) =>
-        Object.values(item).some(isMeaningfulValue),
-      );
-    };
-
-    const payloadData = {
+    // Type conversionlar
+    const processedData = {
       ...data,
-      universities: filterEmptyItems(data?.universities || []),
-      foreignExperiences: filterEmptyItems(data?.foreignExperiences || []),
-      languageProficiencies: filterEmptyItems(
-        data?.languageProficiencies || [],
-      ),
-      professionalCertificates: filterEmptyItems(
-        data?.professionalCertificates || [],
-      ),
-      workplaceInformation: filterEmptyItems(data?.workplaceInformation || []),
+      remarried:
+        typeof data.remarried === "string"
+          ? data.remarried === "true"
+            ? true
+            : data.remarried === "false"
+              ? false
+              : undefined
+          : data.remarried,
+      height: data.height ? Number(data.height) : undefined,
+      weight: data.weight ? Number(data.weight) : undefined,
+      shoeSize: data.shoeSize ? Number(data.shoeSize) : undefined,
+      workingPeriod: data.workingPeriod
+        ? Number(data.workingPeriod)
+        : undefined,
     };
 
-    await handleRequest({
-      request: async () => {
-        const res = await addWorker(payloadData as any);
-        return res;
-      },
-      onSuccess: () => {
-        toast.success("Worker added successfully");
-        navigate("/workers");
-      },
-    });
+    // Bo'sh field'larni olib tashlash
+    const cleanedData = removeEmptyFields(processedData);
+
+    if (id) {
+      // UPDATE: faqat backenddagi ma'lumotdan farqli field'larni yuborish
+      const currentData: Record<string, any> = worker?.data || {};
+      const payload: any = {};
+
+      Object.keys(cleanedData).forEach((key) => {
+        const newValue = cleanedData[key];
+        const oldValue = currentData[key];
+
+        // Faqat o'zgartirilgan qiymatlarni yuboramiz
+        if (JSON.stringify(newValue) !== JSON.stringify(oldValue)) {
+          payload[key] = newValue;
+        }
+      });
+
+      // Agar hech narsa o'zgarmagan bo'lsa
+      if (Object.keys(payload).length === 0) {
+        toast.info("No changes to update");
+        return;
+      }
+
+      console.log("Update payload:", payload);
+
+      await handleRequest({
+        request: async () => {
+          const res = await workerUpdate({
+            id: Number(id),
+            body: payload,
+          });
+          return res;
+        },
+        onSuccess: () => {
+          toast.success("Worker updated successfully");
+          navigate("/workers");
+        },
+      });
+    } else {
+      // ADD: to'liq tozalangan ma'lumotni yuborish
+      console.log("Add payload:", cleanedData);
+
+      await handleRequest({
+        request: async () => {
+          const res = await addWorker(cleanedData);
+          return res;
+        },
+        onSuccess: () => {
+          toast.success("Worker added successfully");
+          navigate("/workers");
+        },
+      });
+    }
   };
 
   const handleSingleDateChange =
@@ -314,7 +542,7 @@ export function AddWorkerForm() {
                   <Label>Date of Birth</Label>
                   <DatePicker
                     mode="single"
-                    value={field.value}
+                    value={field.value ? new Date(field.value) : undefined}
                     onChange={(value) => {
                       const date = value instanceof Date ? value : undefined;
                       handleSingleDateChange(field.onChange)(date);
@@ -685,7 +913,7 @@ export function AddWorkerForm() {
                   <Label>Date of Birth</Label>
                   <DatePicker
                     mode="single"
-                    value={field.value}
+                    value={field.value ? new Date(field.value) : undefined}
                     onChange={(value) => {
                       const date = value instanceof Date ? value : undefined;
                       handleSingleDateChange(field.onChange)(date);
@@ -735,7 +963,7 @@ export function AddWorkerForm() {
                   <Label>Start Date</Label>
                   <DatePicker
                     mode="single"
-                    value={field.value}
+                    value={field.value ? new Date(field.value) : undefined}
                     onChange={(value) => {
                       const date = value instanceof Date ? value : undefined;
                       handleSingleDateChange(field.onChange)(date);
@@ -753,7 +981,7 @@ export function AddWorkerForm() {
                   <Label>Graduation Date</Label>
                   <DatePicker
                     mode="single"
-                    value={field.value}
+                    value={field.value ? new Date(field.value) : undefined}
                     onChange={(value) => {
                       const date = value instanceof Date ? value : undefined;
                       handleSingleDateChange(field.onChange)(date);
@@ -847,7 +1075,7 @@ export function AddWorkerForm() {
                       <Label>Start Date</Label>
                       <DatePicker
                         mode="single"
-                        value={field.value}
+                        value={field.value ? new Date(field.value) : undefined}
                         onChange={(value) => {
                           const date =
                             value instanceof Date ? value : undefined;
@@ -866,7 +1094,7 @@ export function AddWorkerForm() {
                       <Label>Graduation Date</Label>
                       <DatePicker
                         mode="single"
-                        value={field.value}
+                        value={field.value ? new Date(field.value) : undefined}
                         onChange={(value) => {
                           const date =
                             value instanceof Date ? value : undefined;
@@ -1348,7 +1576,7 @@ export function AddWorkerForm() {
                       <Label>Issue Date</Label>
                       <DatePicker
                         mode="single"
-                        value={field.value}
+                        value={field.value ? new Date(field.value) : undefined}
                         onChange={(value) => {
                           const date =
                             value instanceof Date ? value : undefined;
@@ -1469,7 +1697,7 @@ export function AddWorkerForm() {
                       <Label>Start Date</Label>
                       <DatePicker
                         mode="single"
-                        value={field.value}
+                        value={field.value ? new Date(field.value) : undefined}
                         onChange={(value) => {
                           const date =
                             value instanceof Date ? value : undefined;
@@ -1517,9 +1745,13 @@ export function AddWorkerForm() {
         </CardContent>
       </Card>
 
-      {/* Submit Button */}
-      <Button type="submit" className="w-full" size="lg" loading={isLoading}>
-        Submit Registration
+      <Button
+        type="submit"
+        className="w-full"
+        size="lg"
+        loading={isLoading || isLoadingUpdate}
+      >
+        {id ? "Update Worker" : "Submit Registration"}
       </Button>
     </form>
   );
