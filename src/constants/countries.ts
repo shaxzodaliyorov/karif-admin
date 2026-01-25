@@ -1,30 +1,30 @@
 export const COUNTRIES = [
   {
-    label: 'Cambodia',
-    value: 'KH',
+    label: "Cambodia",
+    value: "KH",
   },
   {
-    label: 'China',
-    value: 'CN',
+    label: "China",
+    value: "CN",
   },
   {
-    label: 'Indonesia',
-    value: 'ID',
+    label: "Indonesia",
+    value: "ID",
   },
   {
-    label: 'Myanmar',
-    value: 'MM',
+    label: "Myanmar",
+    value: "MM",
   },
   {
-    label: 'Thailand',
-    value: 'TH',
+    label: "Thailand",
+    value: "TH",
   },
   {
-    label: 'Uzbekistan',
-    value: 'UZ',
+    label: "Uzbekistan",
+    value: "UZ",
   },
   {
-    label: 'Viet Nam',
-    value: 'VN',
+    label: "Viet Nam",
+    value: "VN",
   },
 ];

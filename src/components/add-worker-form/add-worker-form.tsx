@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useForm, Controller, useFieldArray } from "react-hook-form";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -18,6 +19,7 @@ import { toast } from "sonner";
 import { format } from "date-fns";
 import { COUNTRIES } from "@/constants/countries";
 import { Button } from "../common/button/button";
+import { useNavigate } from "react-router-dom";
 
 export interface FormData {
   // Personal Information
@@ -160,7 +162,7 @@ export function AddWorkerForm() {
   });
 
   const handleRequest = useHandleRequest();
-
+  const navigate = useNavigate();
   const [addWorker, { isLoading }] = useAddWorkerMutation();
 
   const {
@@ -245,6 +247,7 @@ export function AddWorkerForm() {
       },
       onSuccess: () => {
         toast.success("Worker added successfully");
+        navigate("/workers");
       },
     });
   };
@@ -256,7 +259,6 @@ export function AddWorkerForm() {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="w-full p-0 space-y-8">
-      {/* Personal Information Section */}
       <Card>
         <CardHeader>
           <CardTitle>Personal Information</CardTitle>
@@ -355,7 +357,7 @@ export function AddWorkerForm() {
                 <div>
                   <Label>Country</Label>
                   <Select value={field.value} onValueChange={field.onChange}>
-                    <SelectTrigger>
+                    <SelectTrigger className="w-full">
                       <SelectValue placeholder="Select country" />
                     </SelectTrigger>
                     <SelectContent>
@@ -424,7 +426,24 @@ export function AddWorkerForm() {
               render={({ field }) => (
                 <div>
                   <Label>Shoe Size</Label>
-                  <Input {...field} type="number" placeholder="42" />
+                  <Select
+                    onValueChange={field.onChange}
+                    value={String(field.value) || ""}
+                    defaultValue={String(field.value) || ""}
+                  >
+                    <SelectTrigger className="w-full">
+                      <SelectValue placeholder="Select shoe size" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {Array.from({ length: 15 }, (_, i) => i + 35).map(
+                        (size) => (
+                          <SelectItem key={size} value={size.toString()}>
+                            {size}
+                          </SelectItem>
+                        ),
+                      )}
+                    </SelectContent>
+                  </Select>
                 </div>
               )}
             />
@@ -435,7 +454,27 @@ export function AddWorkerForm() {
               render={({ field }) => (
                 <div>
                   <Label>Blood Group</Label>
-                  <Input {...field} placeholder="A+" />
+                  <Select
+                    onValueChange={field.onChange}
+                    value={String(field.value) || ""}
+                    defaultValue={String(field.value) || ""}
+                  >
+                    <SelectTrigger className="w-full">
+                      <SelectValue placeholder="Select blood group" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectGroup>
+                        <SelectItem value="a+">A+</SelectItem>
+                        <SelectItem value="a-">A-</SelectItem>
+                        <SelectItem value="b+">B+</SelectItem>
+                        <SelectItem value="b-">B-</SelectItem>
+                        <SelectItem value="o+">O+</SelectItem>
+                        <SelectItem value="o-">O-</SelectItem>
+                        <SelectItem value="ab+">AB+</SelectItem>
+                        <SelectItem value="ab-">AB-</SelectItem>
+                      </SelectGroup>
+                    </SelectContent>
+                  </Select>
                 </div>
               )}
             />
@@ -481,7 +520,26 @@ export function AddWorkerForm() {
               render={({ field }) => (
                 <div>
                   <Label>Religion</Label>
-                  <Input {...field} placeholder="Enter religion" />
+                  <Select
+                    onValueChange={field.onChange}
+                    value={String(field.value) || ""}
+                  >
+                    <SelectTrigger className="w-full">
+                      <SelectValue placeholder="Select" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectContent>
+                        <SelectItem value="Islam">Islam</SelectItem>
+                        <SelectItem value="Christianity">
+                          Christianity
+                        </SelectItem>
+                        <SelectItem value="Hinduism">Hinduism</SelectItem>
+                        <SelectItem value="Buddhism">Buddhism</SelectItem>
+                        <SelectItem value="No Religion">No Religion</SelectItem>
+                        <SelectItem value="other">Other</SelectItem>
+                      </SelectContent>
+                    </SelectContent>
+                  </Select>
                 </div>
               )}
             />
@@ -492,7 +550,20 @@ export function AddWorkerForm() {
               render={({ field }) => (
                 <div>
                   <Label>Marital Status</Label>
-                  <Input {...field} placeholder="Single, Married, etc." />
+                  <Select
+                    onValueChange={field.onChange}
+                    value={String(field.value) || ""}
+                  >
+                    <SelectTrigger className="w-full">
+                      <SelectValue placeholder="Select" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="Single">Single</SelectItem>
+                      <SelectItem value="Married">Married</SelectItem>
+                      <SelectItem value="Divorced">Divorced</SelectItem>
+                      <SelectItem value="Widowed">Widowed</SelectItem>
+                    </SelectContent>
+                  </Select>
                 </div>
               )}
             />
@@ -503,7 +574,21 @@ export function AddWorkerForm() {
               render={({ field }) => (
                 <div>
                   <Label>Type of Property Owned</Label>
-                  <Input {...field} placeholder="House, Apartment, etc." />
+                  <Select
+                    onValueChange={field.onChange}
+                    value={String(field.value) || ""}
+                  >
+                    <SelectTrigger className="w-full">
+                      <SelectValue placeholder="Select Type of Property Owned" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="house">House</SelectItem>
+                      <SelectItem value="apartment">Apartment</SelectItem>
+                      <SelectItem value="condo">Condo</SelectItem>
+                      <SelectItem value="land">Land</SelectItem>
+                      <SelectItem value="none">None</SelectItem>
+                    </SelectContent>
+                  </Select>
                 </div>
               )}
             />
@@ -518,8 +603,8 @@ export function AddWorkerForm() {
                     onValueChange={field.onChange}
                     value={String(field.value) || ""}
                   >
-                    <SelectTrigger>
-                      <SelectValue placeholder="Select" />
+                    <SelectTrigger className="w-full">
+                      <SelectValue placeholder="Select Remarried" />
                     </SelectTrigger>
                     <SelectContent>
                       <SelectGroup>
@@ -559,7 +644,23 @@ export function AddWorkerForm() {
               render={({ field }) => (
                 <div>
                   <Label>Relationship</Label>
-                  <Input {...field} placeholder="Family relation" />
+                  <Select
+                    onValueChange={field.onChange}
+                    value={String(field.value) || ""}
+                  >
+                    <SelectTrigger className="w-full">
+                      <SelectValue placeholder="Select relationship" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectGroup>
+                        <SelectItem value="Mother">Mother</SelectItem>
+                        <SelectItem value="Father">Father</SelectItem>
+                        <SelectItem value="Sister">Sister</SelectItem>
+                        <SelectItem value="Brother">Brother</SelectItem>
+                        <SelectItem value="Other">Other</SelectItem>
+                      </SelectGroup>
+                    </SelectContent>
+                  </Select>
                 </div>
               )}
             />
@@ -665,10 +766,13 @@ export function AddWorkerForm() {
               name="qualification"
               control={control}
               render={({ field }) => (
-                <div>
-                  <Label>Qualification</Label>
-                  <Input {...field} placeholder="Bachelor's, Master's, etc." />
-                </div>
+                <FileUpload
+                  label="Qualification "
+                  name="qualification"
+                  value={field.value}
+                  onChange={field.onChange}
+                  accept={["application/pdf"]}
+                />
               )}
             />
           </div>
@@ -921,7 +1025,24 @@ export function AddWorkerForm() {
                   render={({ field }) => (
                     <div>
                       <Label>Visited Country</Label>
-                      <Input {...field} placeholder="Country name" />
+                      <Select
+                        value={field.value}
+                        onValueChange={field.onChange}
+                      >
+                        <SelectTrigger className="w-full">
+                          <SelectValue placeholder="Select country" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          {COUNTRIES.map((country) => (
+                            <SelectItem
+                              key={country.value}
+                              value={country.label}
+                            >
+                              {country.label}
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
                     </div>
                   )}
                 />
@@ -1023,10 +1144,36 @@ export function AddWorkerForm() {
                   render={({ field }) => (
                     <div>
                       <Label>Proficiency Level</Label>
-                      <Input
-                        {...field}
-                        placeholder="Beginner, Intermediate, etc."
-                      />
+                      <Select
+                        value={field.value}
+                        onValueChange={field.onChange}
+                      >
+                        <SelectTrigger className="w-full">
+                          <SelectValue placeholder="Select proficiency level" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectGroup>
+                            <SelectItem value="beginner">
+                              Beginner (A1)
+                            </SelectItem>
+                            <SelectItem value="elementary">
+                              Elementary (A2)
+                            </SelectItem>
+                            <SelectItem value="intermediate">
+                              Intermediate (B1)
+                            </SelectItem>
+                            <SelectItem value="upper-intermediate">
+                              Upper-Intermediate (B2)
+                            </SelectItem>
+                            <SelectItem value="advanced">
+                              Advanced (C1)
+                            </SelectItem>
+                            <SelectItem value="proficient">
+                              Proficient (C2)
+                            </SelectItem>
+                          </SelectGroup>
+                        </SelectContent>
+                      </Select>
                     </div>
                   )}
                 />
@@ -1037,7 +1184,36 @@ export function AddWorkerForm() {
                   render={({ field }) => (
                     <div>
                       <Label>Speaking Level</Label>
-                      <Input {...field} placeholder="Basic, Fluent, etc." />
+                      <Select
+                        value={field.value}
+                        onValueChange={field.onChange}
+                      >
+                        <SelectTrigger className="w-full">
+                          <SelectValue placeholder="Select proficiency level" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectGroup>
+                            <SelectItem value="beginner">
+                              Beginner (A1)
+                            </SelectItem>
+                            <SelectItem value="elementary">
+                              Elementary (A2)
+                            </SelectItem>
+                            <SelectItem value="intermediate">
+                              Intermediate (B1)
+                            </SelectItem>
+                            <SelectItem value="upper-intermediate">
+                              Upper-Intermediate (B2)
+                            </SelectItem>
+                            <SelectItem value="advanced">
+                              Advanced (C1)
+                            </SelectItem>
+                            <SelectItem value="proficient">
+                              Proficient (C2)
+                            </SelectItem>
+                          </SelectGroup>
+                        </SelectContent>
+                      </Select>
                     </div>
                   )}
                 />
@@ -1048,7 +1224,36 @@ export function AddWorkerForm() {
                   render={({ field }) => (
                     <div>
                       <Label>Writing & Reading Level</Label>
-                      <Input {...field} placeholder="Basic, Fluent, etc." />
+                      <Select
+                        value={field.value}
+                        onValueChange={field.onChange}
+                      >
+                        <SelectTrigger className="w-full">
+                          <SelectValue placeholder="Select proficiency level" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectGroup>
+                            <SelectItem value="beginner">
+                              Beginner (A1)
+                            </SelectItem>
+                            <SelectItem value="elementary">
+                              Elementary (A2)
+                            </SelectItem>
+                            <SelectItem value="intermediate">
+                              Intermediate (B1)
+                            </SelectItem>
+                            <SelectItem value="upper-intermediate">
+                              Upper-Intermediate (B2)
+                            </SelectItem>
+                            <SelectItem value="advanced">
+                              Advanced (C1)
+                            </SelectItem>
+                            <SelectItem value="proficient">
+                              Proficient (C2)
+                            </SelectItem>
+                          </SelectGroup>
+                        </SelectContent>
+                      </Select>
                     </div>
                   )}
                 />
