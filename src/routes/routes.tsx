@@ -21,9 +21,12 @@ import {
   SelectRolePage,
   SettingsPage,
   WorkerPage,
+  WorkerRecruitmentNoticePage,
 } from "@/pages";
 import { AddWorkerPage } from "@/pages/add-worker";
 import { RegisterKoreanAgencyPage } from "@/pages/korean-agency/korean-agency";
+import { RecruitmentNoticeDetailsPage } from "@/pages/recruitment-notice-details/recruitment-notice-details";
+import { WorkerRecruitmentNoticeManagementPage } from "@/pages/worker-recruitment-notice-management";
 import { WorkersPage } from "@/pages/workers";
 import { Route, Routes as RouterRoutes, useLocation } from "react-router-dom";
 
@@ -56,6 +59,14 @@ export const AppRoutes = () => {
         <Route path="/agency/:id" element={<AgencyPage />} />
         <Route path="/company/:id" element={<CompanyPage />} />
         <Route path="/recruitment-notice" element={<RecruitmentNoticePage />} />
+        <Route
+          path="/worker-recruitment-notice"
+          element={<WorkerRecruitmentNoticePage />}
+        />
+        <Route
+          path="/recruitment-notice/:id"
+          element={<RecruitmentNoticeDetailsPage />}
+        />
         <Route path="/add-worker" element={<AddWorkerPage />} />
         <Route
           path="/add-recruitment-notice"
@@ -68,6 +79,10 @@ export const AppRoutes = () => {
         <Route
           path="/applied-recruitment-notice"
           element={<AppliedRecruitmentNoticePage />}
+        />
+        <Route
+          path="/recruitment-notice-management/:id"
+          element={<WorkerRecruitmentNoticeManagementPage />}
         />
       </Route>
       <Route path="*" element={<NotFoundPage />} />

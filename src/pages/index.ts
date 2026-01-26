@@ -17,3 +17,4 @@ export * from "./agency";
 export * from "./company";
 export * from "./add-recruitment-notice";
 export * from "./edit-recruitment-notice";
+export * from "./worker-recruitment-notice";

@@ -61,7 +61,7 @@ export const recruitmentNoticeApi = baseApi.injectEndpoints({
       number
     >({
       query: (id) => ({
-        url: "/recruitment-notice/get/" + id,
+        url: "/recruitment-notice/see-more-info/" + id,
         method: "GET",
       }),
       providesTags: ["recruitment-notice"],

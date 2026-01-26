@@ -15,6 +15,7 @@ import { FaListCheck } from "react-icons/fa6";
 import { FaInfoCircle } from "react-icons/fa";
 import { PiBagSimpleFill } from "react-icons/pi";
 import { useUserQuery } from "@/store/auth/auth.api";
+import { LuUserCog } from "react-icons/lu";
 
 interface MenuItem {
   label: string;
@@ -65,6 +66,12 @@ const menuItems: MenuItem[] = [
     href: "/recruitment-notice",
     icon: UserSearch,
     roles: ["agency", "admin"],
+  },
+  {
+    label: "Worker Recruitment Notice",
+    href: "/worker-recruitment-notice",
+    icon: LuUserCog,
+    roles: ["admin"],
   },
   {
     label: "Applied Recruitment Notice",

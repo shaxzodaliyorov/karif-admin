@@ -1,4 +1,5 @@
 import { PageHeader } from "@/components/page-header";
+
 import { useRecruitmentNoticeQuery } from "@/store/RecruitmentNotice/RecruitmentNotice.api";
 import {
   Table,
@@ -14,22 +15,17 @@ import { useQuery } from "@/hooks/useQuery";
 import { Status } from "@/components/common/status";
 import dayjs from "dayjs";
 import { TableNotFound } from "@/components/table-not-found";
-import { Loader2, Pencil, Plus, Trash2 } from "lucide-react";
-import { Dropdown } from "@/components/common/drop-down";
+import { Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { HiOutlineDotsVertical } from "react-icons/hi";
-import { Switch } from "@/components/common/switch";
-import {
-  useDeleteRecruitmentNoticeMutation,
-  useUpdateRecruitmentNoticeSetStatusMutation,
-} from "@/store/recruitment-notice/recruitment-notice.api";
+import { useUpdateRecruitmentNoticeSetStatusMutation } from "@/store/recruitment-notice/recruitment-notice.api";
 import { useHandleRequest } from "@/hooks/use-handle-request";
 import { toast } from "sonner";
 import { Link, useNavigate } from "react-router-dom";
 import { AlertModal } from "@/components/common/alert-modal";
 import { useState } from "react";
+import { FaFlag } from "react-icons/fa";
 
-export const Admin = () => {
+export const WorkerRecruitmentNoticePage = () => {
   const query = useQuery();
   const {
     data: { data: recruitmentNotices = [], page_count } = {},
@@ -37,38 +33,25 @@ export const Admin = () => {
   } = useRecruitmentNoticeQuery({
     page: Number(query.get("page")) || 1,
     per_page: 10,
+    status: "openForWorker",
   });
-  const [deleteId, setDeleteId] = useState<number | null>(null);
+  const [finishedId, setFinishedId] = useState<null | number>(null);
 
   const handleRequest = useHandleRequest();
   const navigate = useNavigate();
-  const [deleteRecruitmentNotice, { isLoading: isLoadingDelete }] =
-    useDeleteRecruitmentNoticeMutation();
-
-  const onDelete = async () => {
-    await handleRequest({
-      request: async () => {
-        const res = await deleteRecruitmentNotice(deleteId as number);
-        return res;
-      },
-      onSuccess: () => {
-        toast.success("Successfully deleted");
-      },
-    });
-  };
 
   const [
     updateRecruitmentNoticeSetStatus,
     { isLoading: isLoadingUpdateSetStatus },
   ] = useUpdateRecruitmentNoticeSetStatusMutation();
 
-  const handleFinishRequest = async (id: number) => {
+  const handleFinishRequest = async () => {
     await handleRequest({
       request: async () => {
         const response = await updateRecruitmentNoticeSetStatus({
-          id,
+          id: finishedId as number,
           body: {
-            status: "openForWorker",
+            status: "closed",
           },
         });
         return response;
@@ -86,16 +69,8 @@ export const Admin = () => {
   return (
     <section>
       <PageHeader
-        title="Recruitment Notice"
-        description="Manage all recruitment notices here."
-        actions={
-          <div>
-            <Button onClick={() => navigate("/add-recruitment-notice")}>
-              <Plus className="mr-2 h-4 w-4" />
-              Add Recruitment Notice
-            </Button>
-          </div>
-        }
+        title="Worker Recruitment Notice"
+        description="A page where workers can see and apply for job notices posted by agencies"
       />
       <div className="hidden md:block rounded-lg border">
         <Table>
@@ -126,11 +101,12 @@ export const Admin = () => {
               recruitmentNotices?.map((c) => (
                 <TableRow
                   key={c.id}
-                  className={`${c.status !== "openForCompany" ? "opacity-50" : ""} cursor-pointer group`}
-                  onClick={() => navigate(`/recruitment-notice/${c.id}`)}
+                  onClick={() =>
+                    navigate(`/recruitment-notice-management/${c.id}`)
+                  }
                 >
                   <TableCell className="font-medium hover:underline group-hover:underline">
-                    <Link to={`/recruitment-notice/${c.id}`}>
+                    <Link to={`/recruitment-notice-management/${c.id}`}>
                       {c.recruitmentTitle}
                     </Link>
                   </TableCell>
@@ -162,35 +138,17 @@ export const Admin = () => {
                     />
                   </TableCell>
                   <TableCell className="text-right">
-                    <div className="flex gap-x-4 justify-end">
-                      <Switch
-                        onChange={() => handleFinishRequest(c.id)}
-                        disabled={
-                          c.status !== "openForCompany" ||
-                          isLoadingUpdateSetStatus
-                        }
-                        defaultChecked={c.status === "openForCompany"}
-                      />
-                      <Dropdown
-                        options={[
-                          {
-                            label: "Delete",
-                            onClick: () => setDeleteId(c.id),
-                            icon: <Trash2 />,
-                          },
-                          {
-                            label: "Edit",
-                            onClick: () =>
-                              navigate(`/edit-recruitment-notice/${c.id}`),
-                            icon: <Pencil />,
-                          },
-                        ]}
-                      >
-                        <Button variant="ghost" size="icon">
-                          <HiOutlineDotsVertical />
-                        </Button>
-                      </Dropdown>
-                    </div>
+                    <Button
+                      disabled={c.status !== "openForWorker"}
+                      size={"sm"}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setFinishedId(c.id);
+                      }}
+                    >
+                      <FaFlag />
+                      Finish
+                    </Button>
                   </TableCell>
                 </TableRow>
               ))
@@ -218,12 +176,12 @@ export const Admin = () => {
         </Table>
       </div>
       <AlertModal
-        title="Delete Recruitment Notice"
-        description="Are you sure you want to delete this recruitment notice? This action cannot be undone."
-        isOpen={!!deleteId}
-        onClose={() => setDeleteId(null)}
-        onConfirm={onDelete}
-        loading={isLoadingDelete}
+        title="Are you sure you want to change it?"
+        description="After changing the status, you won't be able to edit it again."
+        isOpen={finishedId !== null}
+        onClose={() => setFinishedId(null)}
+        onConfirm={handleFinishRequest}
+        loading={isLoadingUpdateSetStatus}
       />
     </section>
   );

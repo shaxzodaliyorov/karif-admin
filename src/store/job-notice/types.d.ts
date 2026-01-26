@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import type { JobNotice } from "../../@types/JobNotice";
 
 export interface AddJobNoticeResponse {
@@ -56,6 +57,7 @@ export interface GetJobNoticeApplicationByIdResponse {
   current_page: number;
   next_page: number;
   after_filtering_count: number;
+  recruitmentNotice: any;
   jobNotice: {
     id: number;
     workerAdId: number;
@@ -79,6 +81,9 @@ export interface GetJobNoticeApplicationByIdResponse {
     note: string;
     createdAt: string;
     updatedAt: string;
+    markScoreA: number;
+    markScoreB: number;
+    markScoreTotalTitle: string;
     worker: {
       id: number;
       email: string;
@@ -259,7 +264,7 @@ export interface GetJobNoticeApplicationByIdRequest {
   search?: string;
   page?: number;
   per_page?: number;
-  status?: string;
+  status?: string | null;
 }
 
 export interface GetJobNoticeApplicationIndividualByIdResponse {
@@ -342,7 +347,7 @@ export interface GetJobNoticeApplicationIndividualByIdResponse {
           major: string;
           startDate: string;
           graduationDate: string;
-        }
+        },
       ];
       foreignExperiences: [
         {
@@ -356,7 +361,7 @@ export interface GetJobNoticeApplicationIndividualByIdResponse {
           durationOfVisit: string;
           purpose: string;
           file: string;
-        }
+        },
       ];
       languageProficiencies: [
         {
@@ -365,7 +370,7 @@ export interface GetJobNoticeApplicationIndividualByIdResponse {
           speakingLevel: string;
           writingAndReadingLevel: string;
           file: string;
-        }
+        },
       ];
       professionalCertificates: [
         {
@@ -379,7 +384,7 @@ export interface GetJobNoticeApplicationIndividualByIdResponse {
           issuingInstitution: string;
           issueDate: string;
           file: string;
-        }
+        },
       ];
       workplaceInformation: [
         {
@@ -389,7 +394,7 @@ export interface GetJobNoticeApplicationIndividualByIdResponse {
           field: string;
           position: string;
           file: string;
-        }
+        },
       ];
       interviewVideo: string;
       skillsVerificationVideo: string;
@@ -442,7 +447,7 @@ export interface UpdateJobNoticeAssignmentsRequest {
           scoreA: number;
           scoreB: number;
         }[];
-      }
+      },
     ];
   };
 }

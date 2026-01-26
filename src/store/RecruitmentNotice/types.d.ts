@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 export interface RecruitmentNotice {
   id: number;
   recruitmentTitle: string;
@@ -125,9 +126,115 @@ export interface GetRecruitmentNoticeByIdResponse {
   data: RecruitmentNotice;
 }
 
+export interface RecruitmentNoticeSeeMoreInfo {
+  applicationId: number;
+  status: string;
+  workerCount: number;
+  appliedAt: string;
+  updatedAt: string;
+  company: Company;
+}
+
+export interface Company {
+  id: number;
+  email: string;
+  password: string;
+  companyName: string;
+  businessRegistrationNumber: string;
+  mainProduct: string;
+  mainService: string;
+  managementBusinessNumber: string;
+  employeesCount: number;
+  representativeName: string;
+  representativeMobilePhone: string;
+  businessPhoneNumber: string;
+  fax: string;
+  address: string;
+  region: string;
+  photoRegistration: string;
+  businessRegistrationCertificate: string;
+  managementBusinessRegistrationCertificate: string;
+  smallAndMediumSizedBusinessConfirmationCertificate: string;
+  localTaxPaymentCertificate: string;
+  nationalTaxPaymentCertificate: string;
+  insuranceCertificate: string;
+  employmentStatusInquiryForm: string;
+  documentStatusMessage: string;
+  sessionToken: string;
+  refreshToken: string;
+  role: string;
+  documentStatus: string;
+  isVerified: boolean;
+  createdAt: string;
+}
+
 export interface GetRecruitmentNoticeSeeMoreInfoResponse {
   success: boolean;
-  data: RecruitmentNotice;
+  data: RecruitmentNoticeSeeMoreInfo[];
+  recruitmentNotice: {
+    id: 9;
+    recruitmentTitle: "1차 베트남";
+    country: "Viet Nam";
+    skill: "판금";
+    startDate: "2025-12-01T00:00:00.000Z";
+    endDate: "2025-12-31T00:00:00.000Z";
+    companyWorkerCount: 50;
+    countType: "byPercent";
+    workerCount: 0;
+    documents: {
+      region: string;
+      ratio: string;
+      numberOfApplicants: string;
+    }[];
+    markId1: number;
+    mark1StartDate: string;
+    mark1EndDate: string;
+    markId2: number;
+    mark2StartDate: string;
+    mark2EndDate: string;
+    foreignWorkerStartDate: string;
+    foreignWorkerEndDate: string;
+    onSiteDeploymentStartDate: string;
+    onSiteDeploymentEndDate: string;
+    description: string;
+    status: string;
+    registeredCompany: number;
+    createdAt: string;
+    mark1: {
+      id: number;
+      title: string;
+      subtitle: string;
+      description: string;
+      documentFile: string;
+      assignments: [
+        {
+          title: string;
+          marks: {
+            title: string;
+            score: number;
+          }[][];
+        },
+      ];
+      createdAt: string;
+    };
+    mark2: {
+      id: number;
+      title: string;
+      subtitle: string;
+      description: string;
+      documentFile: string;
+      assignments: [
+        {
+          title: string;
+          marks: {
+            title: string;
+            score: number;
+          }[][];
+        },
+      ];
+      createdAt: string;
+    };
+  };
 }
 
 export interface GetRecruitmentNoticeByAgencyOwnResponse {
