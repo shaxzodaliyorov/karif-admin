@@ -1,5 +1,6 @@
 import {
   useGetCompaniesQuery,
+  useLoginCompanyWithAdminMutation,
   useVerifyCompanyMutation,
 } from "@/store/company/company.api";
 import {
@@ -22,6 +23,7 @@ import { useHandleRequest } from "@/hooks/use-handle-request";
 import { toast } from "sonner";
 import { Button } from "@/components/common/button/button";
 import { Link, useNavigate } from "react-router-dom";
+import { ACCESS_TOKEN_KEY, REFRESH_TOKEN_KEY } from "@/utils/tokenStorage";
 
 export const Companies = () => {
   const query = useQuery();
@@ -35,6 +37,7 @@ export const Companies = () => {
   });
 
   const [verifyCompany] = useVerifyCompanyMutation();
+  const [loginCompany] = useLoginCompanyWithAdminMutation();
 
   const handleRequest = useHandleRequest();
 
@@ -53,6 +56,23 @@ export const Companies = () => {
         toast.success(
           `Company ${val ? "verified" : "unverified"} successfully`,
         );
+      },
+    });
+  };
+
+  const handleLogin = async (id: number) => {
+    await handleRequest({
+      request: async () => {
+        const response = await loginCompany({
+          companyId: id,
+        });
+        return response;
+      },
+      onSuccess: (result) => {
+        localStorage.setItem(ACCESS_TOKEN_KEY, result?.data?.access_token);
+        localStorage.setItem(REFRESH_TOKEN_KEY, result?.data?.refresh_token);
+        window.open("/dashboard", "_blank");
+        toast.success("Login successfully");
       },
     });
   };
@@ -117,6 +137,10 @@ export const Companies = () => {
                       <Button
                         disabled={companyIsFetching || !c.isVerified}
                         size={"sm"}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleLogin(c.id);
+                        }}
                       >
                         <LogIn /> Login
                       </Button>

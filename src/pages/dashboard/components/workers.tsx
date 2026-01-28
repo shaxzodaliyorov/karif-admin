@@ -14,8 +14,14 @@ import { Pagination } from "@/components/common/pagination";
 import { useQuery } from "@/hooks/useQuery";
 import { Button } from "@/components/common/button/button";
 
-import { useGetAllWorkersQuery } from "@/store/worker/worker.api";
+import {
+  useGetAllWorkersQuery,
+  useLoginWorkerWithAdminMutation,
+} from "@/store/worker/worker.api";
 import { Link, useNavigate } from "react-router-dom";
+import { useHandleRequest } from "@/hooks/use-handle-request";
+import { ACCESS_TOKEN_KEY, REFRESH_TOKEN_KEY } from "@/utils/tokenStorage";
+import { toast } from "sonner";
 
 export const Workers = () => {
   const query = useQuery();
@@ -25,7 +31,27 @@ export const Workers = () => {
       per_page: 10,
     });
 
+  const handleRequest = useHandleRequest();
+
   const navigate = useNavigate();
+  const [loginWorker] = useLoginWorkerWithAdminMutation();
+
+  const handleLogin = async (id: number) => {
+    await handleRequest({
+      request: async () => {
+        const response = await loginWorker({
+          workerId: id,
+        });
+        return response;
+      },
+      onSuccess: (result) => {
+        localStorage.setItem(ACCESS_TOKEN_KEY, result?.data?.access_token);
+        localStorage.setItem(REFRESH_TOKEN_KEY, result?.data?.refresh_token);
+        window.open("/dashboard", "_blank");
+        toast.success("Login successfully");
+      },
+    });
+  };
 
   const handlePageChange = (page: number) => {
     query.set("page", String(page));
@@ -72,7 +98,14 @@ export const Workers = () => {
                   </TableCell>
                   <TableCell className="text-right">
                     <div className="flex gap-x-4 justify-end">
-                      <Button disabled={!c.isVerified} size={"sm"}>
+                      <Button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleLogin(c.id);
+                        }}
+                        disabled={!c.isVerified}
+                        size={"sm"}
+                      >
                         <LogIn /> Login
                       </Button>
                     </div>

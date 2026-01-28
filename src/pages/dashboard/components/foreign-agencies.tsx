@@ -19,9 +19,11 @@ import { toast } from "sonner";
 import { Button } from "@/components/common/button/button";
 import {
   useGetAgenciesQuery,
+  useLoginAgencyWithAdminMutation,
   useVerifyAgencyMutation,
 } from "@/store/agency/agency.api";
 import { Link, useNavigate } from "react-router-dom";
+import { ACCESS_TOKEN_KEY, REFRESH_TOKEN_KEY } from "@/utils/tokenStorage";
 
 export const ForeignAgencies = () => {
   const query = useQuery();
@@ -35,6 +37,7 @@ export const ForeignAgencies = () => {
   });
 
   const [verifyAgency] = useVerifyAgencyMutation();
+  const [loginForeignAgency] = useLoginAgencyWithAdminMutation();
 
   const navigate = useNavigate();
 
@@ -51,6 +54,23 @@ export const ForeignAgencies = () => {
       },
       onSuccess: () => {
         toast.success(`Agency ${val ? "verified" : "unverified"} successfully`);
+      },
+    });
+  };
+
+  const handleLogin = async (id: number) => {
+    await handleRequest({
+      request: async () => {
+        const response = await loginForeignAgency({
+          agencyId: id,
+        });
+        return response;
+      },
+      onSuccess: (result) => {
+        localStorage.setItem(ACCESS_TOKEN_KEY, result?.data?.access_token);
+        localStorage.setItem(REFRESH_TOKEN_KEY, result?.data?.refresh_token);
+        window.open("/dashboard", "_blank");
+        toast.success("Login successfully");
       },
     });
   };
@@ -117,6 +137,7 @@ export const ForeignAgencies = () => {
                       <Button
                         disabled={agencyIsFetching || !c.isVerified}
                         size={"sm"}
+                        onClick={() => handleLogin(c.id)}
                       >
                         <LogIn /> Login
                       </Button>

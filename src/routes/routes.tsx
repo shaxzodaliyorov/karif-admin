@@ -24,6 +24,7 @@ import {
   WorkerRecruitmentNoticePage,
 } from "@/pages";
 import { AddWorkerPage } from "@/pages/add-worker";
+import { CompaniesPage } from "@/pages/companies";
 import { RegisterKoreanAgencyPage } from "@/pages/korean-agency/korean-agency";
 import { RecruitmentNoticeDetailsPage } from "@/pages/recruitment-notice-details/recruitment-notice-details";
 import { WorkerRecruitmentNoticeManagementPage } from "@/pages/worker-recruitment-notice-management";
@@ -84,6 +85,7 @@ export const AppRoutes = () => {
           path="/recruitment-notice-management/:id"
           element={<WorkerRecruitmentNoticeManagementPage />}
         />
+        <Route path="/companies" element={<CompaniesPage />} />
       </Route>
       <Route path="*" element={<NotFoundPage />} />
     </RouterRoutes>

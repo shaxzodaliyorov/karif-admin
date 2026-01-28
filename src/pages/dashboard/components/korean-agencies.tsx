@@ -19,9 +19,11 @@ import { toast } from "sonner";
 import { Button } from "@/components/common/button/button";
 import {
   useGetAllKoreanAgenciesQuery,
+  useLoginKoreanAgencyWithAdminMutation,
   useVerifyKoreanAgencyMutation,
 } from "@/store/agency/agency.api";
 import { Link, useNavigate } from "react-router-dom";
+import { ACCESS_TOKEN_KEY, REFRESH_TOKEN_KEY } from "@/utils/tokenStorage";
 
 export const KoreanAgencies = () => {
   const query = useQuery();
@@ -33,9 +35,8 @@ export const KoreanAgencies = () => {
     page: Number(query.get("page")) || 1,
     per_page: 10,
   });
-
   const [verifyKoreanAgency] = useVerifyKoreanAgencyMutation();
-
+  const [loginKoreanAgency] = useLoginKoreanAgencyWithAdminMutation();
   const handleRequest = useHandleRequest();
 
   const navigate = useNavigate();
@@ -57,6 +58,23 @@ export const KoreanAgencies = () => {
 
   const handlePageChange = (page: number) => {
     query.set("page", String(page));
+  };
+
+  const handleLogin = async (id: number) => {
+    await handleRequest({
+      request: async () => {
+        const response = await loginKoreanAgency({
+          koreanAgencyId: id,
+        });
+        return response;
+      },
+      onSuccess: (result) => {
+        localStorage.setItem(ACCESS_TOKEN_KEY, result?.data?.access_token);
+        localStorage.setItem(REFRESH_TOKEN_KEY, result?.data?.refresh_token);
+        window.open("/dashboard", "_blank");
+        toast.success("Login successfully");
+      },
+    });
   };
 
   return (
@@ -117,6 +135,10 @@ export const KoreanAgencies = () => {
                       <Button
                         disabled={agencyIsFetching || !c.isVerified}
                         size={"sm"}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleLogin(c.id);
+                        }}
                       >
                         <LogIn /> Login
                       </Button>

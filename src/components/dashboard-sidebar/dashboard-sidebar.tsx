@@ -16,6 +16,7 @@ import { FaInfoCircle } from "react-icons/fa";
 import { PiBagSimpleFill } from "react-icons/pi";
 import { useUserQuery } from "@/store/auth/auth.api";
 import { LuUserCog } from "react-icons/lu";
+import { FaBuilding } from "react-icons/fa6";
 
 interface MenuItem {
   label: string;
@@ -71,6 +72,12 @@ const menuItems: MenuItem[] = [
     label: "Worker Recruitment Notice",
     href: "/worker-recruitment-notice",
     icon: LuUserCog,
+    roles: ["admin"],
+  },
+  {
+    label: "Companies",
+    href: "/companies",
+    icon: FaBuilding,
     roles: ["admin"],
   },
   {
@@ -148,7 +155,7 @@ export const DashboardSidebar = () => {
             <Loader2 className="animate-spin" />
           </div>
         ) : (
-          <nav className="space-y-2">
+          <nav className="space-y-3">
             {filteredItems.map((item) => {
               const Icon = item.icon;
               const isActive = location.pathname === item.href;

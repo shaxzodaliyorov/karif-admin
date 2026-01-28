@@ -27,7 +27,7 @@ export interface Company {
   nationalTaxPaymentCertificate: string;
   insuranceCertificate: string;
   employmentStatusInquiryForm: string;
-  documentStatus: 'pending' | 'approved' | 'rejected';
+  documentStatus: "pending" | "approved" | "rejected";
   documentStatusMessage?: string;
   sessionToken: string;
   refreshToken: string;
@@ -36,4 +36,5 @@ export interface Company {
   data?: DocumentFile[];
   description?: string;
   role?: string;
+  employeesCount: number;
 }
