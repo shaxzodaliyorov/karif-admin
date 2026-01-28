@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-empty-object-type */
 import type { Workerad } from "../../@types/workerad";
 
 export interface AddWorkerAdResponse {
@@ -26,7 +27,7 @@ export interface UpdateWorkerAdResponse {
   success: boolean;
 }
 export interface UpdateWorkerAdRequest {
-  id: number;
+  id: string;
   body: {
     experience: string;
     skill: string;
@@ -42,14 +43,14 @@ export interface GetWorkerAdByIdResponse {
   data: Workerad;
 }
 export interface GetWorkerAdByIdRequest {
-  id: number;
+  id: string;
 }
 
 export interface DeleteWorkerAdResponse {
   success: boolean;
 }
 export interface DeleteWorkerAdRequest {
-  id: number;
+  id: string;
 }
 
 export interface AddWorkerResponse {}
@@ -123,6 +124,6 @@ export interface AddWorkerRequest {
 }
 
 export interface WorkerUpdateRequest {
-  id: number;
+  id: string;
   body: Partial<AddWorkerRequest>;
 }

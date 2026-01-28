@@ -36,7 +36,7 @@ export const ApplyModal = ({
     try {
       await handleRequest({
         request: async () => {
-          const workerIds = selectedWorkers.map((id) => Number(id));
+          const workerIds = selectedWorkers.map((id) => String(id));
           const response = await applyWorkers({
             id: recruitmentNoticeId,
             workerIds,
@@ -61,7 +61,7 @@ export const ApplyModal = ({
         <MultiSelect
           options={
             workersResponse?.data?.map((item) => ({
-              value: item?.id?.toString() ?? "",
+              value: item?._id?.toString() ?? "",
               label: item?.name ?? "",
             })) || []
           }

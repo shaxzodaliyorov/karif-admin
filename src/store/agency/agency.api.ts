@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { API_ROUTES } from "@/constants/api-routes";
 import baseApi from "../api";
 import type { LoginResponse } from "../auth/auth";
@@ -50,7 +51,7 @@ export const agencyApi = baseApi.injectEndpoints({
     verifyWorker: builder.mutation<
       VerifyAgencyResponse,
       {
-        workerId: number;
+        workerId: string;
         status: "verified" | "unverified";
       }
     >({
@@ -74,7 +75,7 @@ export const agencyApi = baseApi.injectEndpoints({
     }),
     verifyKoreanAgency: builder.mutation<
       VerifyAgencyResponse,
-      { koreanAgencyId: number; status: string }
+      { koreanAgencyId: string; status: string }
     >({
       query: (body) => ({
         url: API_ROUTES.agency.verifyKoreanAgency,
@@ -85,7 +86,7 @@ export const agencyApi = baseApi.injectEndpoints({
     }),
     loginKoreanAgencyWithAdmin: builder.mutation<
       LoginResponse,
-      { koreanAgencyId: number }
+      { koreanAgencyId: string }
     >({
       query: (body) => ({
         url: API_ROUTES.koreanAgency.loginKoreanAgencyWithAdmin,
@@ -94,7 +95,7 @@ export const agencyApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["agency"],
     }),
-    loginAgencyWithAdmin: builder.mutation<LoginResponse, { agencyId: number }>(
+    loginAgencyWithAdmin: builder.mutation<LoginResponse, { agencyId: string }>(
       {
         query: (body) => ({
           url: API_ROUTES.agency.loginAgencyWithAdmin,
@@ -104,14 +105,14 @@ export const agencyApi = baseApi.injectEndpoints({
         invalidatesTags: ["agency"],
       },
     ),
-    getAgencyById: builder.query<any, number>({
+    getAgencyById: builder.query<any, string>({
       query: (id) => ({
         url: `/agency/get/${id}`,
         method: "GET",
       }),
       providesTags: ["agency"],
     }),
-    getKoreanAgencyById: builder.query<any, number>({
+    getKoreanAgencyById: builder.query<any, string>({
       query: (id) => ({
         url: `/korean-agency/get/${id}`,
         method: "GET",

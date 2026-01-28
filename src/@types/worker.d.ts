@@ -1,5 +1,6 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 export interface Worker {
-  id: number;
+  _id: string;
   email: string;
   password: string;
   name: string;

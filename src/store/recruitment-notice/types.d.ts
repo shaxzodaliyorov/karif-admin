@@ -1,4 +1,4 @@
-import type { RecruitmentNotice } from '../../@types/recruitment-notice';
+import type { RecruitmentNotice } from "../../@types/recruitment-notice";
 
 export interface GetAllRecruitmentNoticeResponse {
   success: boolean;
@@ -13,7 +13,7 @@ export interface GetAllRecruitmentNoticeRequest {
   search?: string;
   page?: number;
   per_page?: number;
-  status?: 'openForCompany' | 'openForWorker' | 'closed';
+  status?: "openForCompany" | "openForWorker" | "closed";
 }
 
 export interface AddRecruitmentNoticeResponse {
@@ -54,7 +54,7 @@ export interface UpdateRecruitmentNoticeResponse {
 }
 
 export interface UpdateRecruitmentNoticeRequest {
-  id: number;
+  id: string;
   body: Partial<AddRecruitmentNoticeRequest>;
 }
 
@@ -64,7 +64,7 @@ export interface GetRecruitmentNoticeByIdResponse {
 }
 
 export interface GetRecruitmentNoticeByIdRequest {
-  id: number;
+  id: string;
 }
 
 export interface GetRecruitmentNoticeSeeMoreInfoResponse {
@@ -74,7 +74,7 @@ export interface GetRecruitmentNoticeSeeMoreInfoResponse {
   next_page: number;
   after_filtering_count: number;
   recruitmentNotice: {
-    id: number;
+    _id: string;
     recruitmentTitle: number;
     country: string;
     skill: string;
@@ -101,7 +101,7 @@ export interface GetRecruitmentNoticeSeeMoreInfoResponse {
     appliedAt: string;
     updatedAt: string;
     company: {
-      id: number;
+      _id: string;
       companyName: string;
       email: string;
       businessRegistrationNumber: string;
@@ -114,14 +114,14 @@ export interface GetRecruitmentNoticeSeeMoreInfoResponse {
       createdAt: string;
       region: string;
       managementBusinessNumber: string;
-      documentStatus: 'pending' | 'approved' | 'rejected';
+      documentStatus: "pending" | "approved" | "rejected";
     };
   }[];
 }
 
 export interface UpdateStatusRecruitmentNoticeSeeMoreInfoRequest {
-  applicationId: number;
-  status: 'process' | 'finish';
+  applicationId: string;
+  status: "process" | "finish";
 }
 
 export interface UpdateRecruitmentNoticeSetStatusResponse {
@@ -129,8 +129,8 @@ export interface UpdateRecruitmentNoticeSetStatusResponse {
 }
 
 export interface UpdateRecruitmentNoticeSetStatusRequest {
-  id: number;
+  id: string;
   body: {
-    status: 'openForCompany' | 'openForWorker' | 'closed';
+    status: "openForCompany" | "openForWorker" | "closed";
   };
 }

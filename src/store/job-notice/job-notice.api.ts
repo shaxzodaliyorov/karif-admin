@@ -52,7 +52,7 @@ export const JobNoticeApi = baseApi.injectEndpoints({
           body: { status },
         }),
         invalidatesTags: ["job-notice-list"],
-      }
+      },
     ),
     getAllJobNoticesOwn: builder.query<
       GetAllJobNoticesOwnResponse,
@@ -65,14 +65,14 @@ export const JobNoticeApi = baseApi.injectEndpoints({
       }),
       providesTags: ["job-notice-list"],
     }),
-    deleteJobNotice: builder.mutation<void, number>({
+    deleteJobNotice: builder.mutation<void, string>({
       query: (id) => ({
         url: `/recruitment-notice/delete/${id}`,
         method: "DELETE",
       }),
       invalidatesTags: ["job-notice-list"],
     }),
-    GetJobNoticeByID: builder.query<GetJobNoticeByIDResponse, number>({
+    GetJobNoticeByID: builder.query<GetJobNoticeByIDResponse, string>({
       query: (id) => ({
         url: `/recruitment-notice/get/${id}`,
         method: "GET",
@@ -120,7 +120,7 @@ export const JobNoticeApi = baseApi.injectEndpoints({
 
     getJobNoticeApplicationNoteById: builder.mutation<
       GetJobNoticeApplicationByIdResponse,
-      { id: number; body: { note: string } }
+      { id: string; body: { note: string } }
     >({
       query: ({ id, body }) => ({
         url: `/recruitment-notice/worker-application/note/${id}`,
@@ -131,7 +131,7 @@ export const JobNoticeApi = baseApi.injectEndpoints({
     }),
     updateJobNoticeApplicationIndividualNoteById: builder.mutation<
       GetJobNoticeApplicationByIdResponse,
-      { id: number; body: { note: string } }
+      { id: string; body: { note: string } }
     >({
       query: ({ id, body }) => ({
         url: `/recruitment-notice/worker-application/note/${id}`,

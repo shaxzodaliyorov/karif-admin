@@ -17,7 +17,7 @@ export type GetAgenciesRequest = {
 };
 
 export interface VerifyAgencyRequest {
-  agencyId: number;
+  agencyId: string;
   status: string;
 }
 

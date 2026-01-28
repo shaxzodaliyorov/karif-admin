@@ -23,7 +23,7 @@ export const WorkerPage = () => {
 
   const { id } = useParams();
   const { data: { data: workerData } = {}, isLoading } =
-    useGetWorkerAdByIdQuery(Number(id));
+    useGetWorkerAdByIdQuery(String(id));
 
   const navigate = useNavigate();
 

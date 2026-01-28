@@ -44,14 +44,14 @@ export const workeradApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["WorkerAds"],
     }),
-    deleteWorkerAd: builder.mutation<void, number>({
+    deleteWorkerAd: builder.mutation<void, string>({
       query: (id) => ({
         url: "/worker/delete/" + id,
         method: "DELETE",
       }),
       invalidatesTags: ["WorkerAds", "worker"],
     }),
-    getWorkerAdById: builder.query<GetWorkerAdByIdResponse, number>({
+    getWorkerAdById: builder.query<GetWorkerAdByIdResponse, string>({
       query: (id) => ({
         url: `/worker/get/${id}`,
         method: "GET",

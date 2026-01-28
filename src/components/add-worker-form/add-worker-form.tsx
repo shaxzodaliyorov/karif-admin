@@ -128,7 +128,7 @@ export function AddWorkerForm() {
   const navigate = useNavigate();
   const [addWorker, { isLoading }] = useAddWorkerMutation();
   const id = useGetQuery({ value: "id" });
-  const { data: worker } = useGetWorkerAdByIdQuery(id as unknown as number, {
+  const { data: worker } = useGetWorkerAdByIdQuery(id as unknown as string, {
     skip: !id,
   });
   const [workerUpdate, { isLoading: isLoadingUpdate }] =
@@ -454,7 +454,7 @@ export function AddWorkerForm() {
       await handleRequest({
         request: async () => {
           const res = await workerUpdate({
-            id: Number(id),
+            id: id as string,
             body: payload,
           });
           return res;

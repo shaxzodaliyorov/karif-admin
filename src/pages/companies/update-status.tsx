@@ -28,7 +28,7 @@ export const UpdateStatusModal = ({
 }: {
   open: boolean;
   onClose: () => void;
-  id: number;
+  id: string;
   status: string;
 }) => {
   const [status, setStatus] = useState(initialStatus);

@@ -43,7 +43,7 @@ export const ForeignAgencies = () => {
 
   const handleRequest = useHandleRequest();
 
-  const handleVerify = async (id: number, val: boolean) => {
+  const handleVerify = async (id: string, val: boolean) => {
     await handleRequest({
       request: async () => {
         const response = await verifyAgency({
@@ -58,7 +58,7 @@ export const ForeignAgencies = () => {
     });
   };
 
-  const handleLogin = async (id: number) => {
+  const handleLogin = async (id: string) => {
     await handleRequest({
       request: async () => {
         const response = await loginForeignAgency({
@@ -106,12 +106,14 @@ export const ForeignAgencies = () => {
             ) : agencies?.length ? (
               agencies?.map((c) => (
                 <TableRow
-                  key={c.id}
+                  key={c._id}
                   className={`${!c.isVerified ? "opacity-50" : ""} cursor-pointer`}
-                  onClick={() => navigate(`/agency/${c.id}?agencyType=foreign`)}
+                  onClick={() =>
+                    navigate(`/agency/${c._id}?agencyType=foreign`)
+                  }
                 >
                   <TableCell className="font-medium hover:underline">
-                    <Link to={`/agency/${c.id}?agencyType=foreign`}>
+                    <Link to={`/agency/${c._id}?agencyType=foreign`}>
                       {c.agencyName}
                     </Link>
                   </TableCell>
@@ -131,13 +133,13 @@ export const ForeignAgencies = () => {
                     <div className="flex gap-x-4 justify-end">
                       <Switch
                         defaultChecked={c.isVerified}
-                        onChange={(val: boolean) => handleVerify(c.id, val)}
+                        onChange={(val: boolean) => handleVerify(c._id, val)}
                         disabled={agencyIsFetching}
                       />
                       <Button
                         disabled={agencyIsFetching || !c.isVerified}
                         size={"sm"}
-                        onClick={() => handleLogin(c.id)}
+                        onClick={() => handleLogin(c._id)}
                       >
                         <LogIn /> Login
                       </Button>

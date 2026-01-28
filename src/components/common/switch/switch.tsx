@@ -26,6 +26,7 @@ export function Switch({
         defaultChecked={defaultChecked}
         disabled={disabled}
         onCheckedChange={onChange}
+        onClick={(e) => e.stopPropagation()}
       />
       {label && <Label className={disabled ? "opacity-50" : ""}>{label}</Label>}
     </div>

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { PageHeader } from "@/components/page-header";
 import { useQuery } from "@/hooks/useQuery";
 import { useRecruitmentNoticeQuery } from "@/store/RecruitmentNotice/RecruitmentNotice.api";
@@ -68,7 +69,7 @@ export const Agency = () => {
               </TableRow>
             ) : employments?.length ? (
               employments?.map((c) => (
-                <TableRow key={c.id}>
+                <TableRow key={c._id}>
                   <TableCell className="font-medium">
                     {c.recruitmentTitle}
                   </TableCell>
@@ -101,7 +102,7 @@ export const Agency = () => {
                   </TableCell>
                   <TableCell className="text-right">
                     <Button
-                      onClick={() => setIsApplyModalOpen(c.id)}
+                      onClick={() => setIsApplyModalOpen(c._id)}
                       size={"sm"}
                     >
                       <Check /> Apply

@@ -1,5 +1,5 @@
 export interface JobNotice {
-  id: number;
+  _id: number;
   workerAdId: number;
   recruitmentNoticeStartDate: string;
   evaluationId1: number;
@@ -13,7 +13,7 @@ export interface JobNotice {
   createdAt: string;
   recruitmentNoticeEndDate: string;
   recruitmentNotice: {
-    id: number;
+    _id: string;
     recruitmentTitle: string;
     country: string;
     skill: string;
@@ -38,7 +38,7 @@ export interface JobNotice {
     createdAt: string;
   };
   evaluation1: {
-    id: number;
+    _id: string;
     evaluationList: string;
     evaluationName: string;
     evaluationStyle: string;
@@ -55,7 +55,7 @@ export interface JobNotice {
     updatedAt: string;
   };
   evaluation2: {
-    id: number;
+    _id: string;
     evaluationList: string;
     evaluationName: string;
     evaluationStyle: string;

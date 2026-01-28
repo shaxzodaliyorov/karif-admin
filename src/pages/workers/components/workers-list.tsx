@@ -39,7 +39,7 @@ export const WorkersLists = ({ status }: WorkersListsProps) => {
   const navigate = useNavigate();
   const query = useQuery();
   const [isOpen, setIsOpen] = useState(false);
-  const [selectedWorkerId, setSelectedWorkerId] = useState<number | null>(null);
+  const [selectedWorkerId, setSelectedWorkerId] = useState<string | null>(null);
   const [deleteWorkerAd] = useDeleteWorkerAdMutation();
 
   const {
@@ -60,7 +60,7 @@ export const WorkersLists = ({ status }: WorkersListsProps) => {
 
   const handleRequest = useHandleRequest();
 
-  const handleVerify = async (id: number, val: boolean) => {
+  const handleVerify = async (id: string, val: boolean) => {
     await handleRequest({
       request: async () => {
         const response = await verifyCompany({
@@ -75,10 +75,10 @@ export const WorkersLists = ({ status }: WorkersListsProps) => {
     });
   };
 
-  const handleDeleteWorker = async ({ id }: { id: number }) => {
+  const handleDeleteWorker = async ({ id }: { id: string }) => {
     await handleRequest({
       request: async () => {
-        const response = await deleteWorkerAd(id as number);
+        const response = await deleteWorkerAd(id as string);
         return response;
       },
       onSuccess: () => {
@@ -115,8 +115,8 @@ export const WorkersLists = ({ status }: WorkersListsProps) => {
             ) : workers?.length ? (
               workers?.map((c) => (
                 <TableRow
-                  key={c.id}
-                  onClick={() => navigate(`/worker/${c.id}`)}
+                  key={c._id}
+                  onClick={() => navigate(`/worker/${c._id}`)}
                   className={`cursor-pointer ${!c.isVerified ? "opacity-50" : ""}`}
                 >
                   <TableCell>
@@ -151,7 +151,7 @@ export const WorkersLists = ({ status }: WorkersListsProps) => {
                       </Button>
                       <Switch
                         defaultChecked={c.isVerified}
-                        onChange={(val: boolean) => handleVerify(c.id, val)}
+                        onChange={(val: boolean) => handleVerify(c._id, val)}
                         disabled={workersIsFetching}
                       />
                       <Dropdown
@@ -160,7 +160,7 @@ export const WorkersLists = ({ status }: WorkersListsProps) => {
                             label: "Edit",
                             icon: <Edit2Icon />,
                             onClick: () => {
-                              navigate(`/add-worker?id=${c.id}`);
+                              navigate(`/add-worker?id=${c._id}`);
                             },
                           },
                           {
@@ -168,7 +168,7 @@ export const WorkersLists = ({ status }: WorkersListsProps) => {
                             icon: <Trash2Icon />,
                             onClick: () => {
                               setIsOpen(true);
-                              setSelectedWorkerId(c.id);
+                              setSelectedWorkerId(c._id);
                             },
                           },
                         ]}

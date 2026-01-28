@@ -33,7 +33,7 @@ export const businessOwnerApi = baseApi.injectEndpoints({
       }),
       providesTags: ["businessOwner"],
     }),
-    deleteBusinessOwner: builder.mutation<void, number>({
+    deleteBusinessOwner: builder.mutation<void, string>({
       query: (id) => ({
         url: `/business-owner/delete/${id}`,
         method: "DELETE",
@@ -48,7 +48,7 @@ export const businessOwnerApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["businessOwner"],
     }),
-    getBusinessOwnerById: builder.query<getBusinessOwnerByIdResponse, number>({
+    getBusinessOwnerById: builder.query<getBusinessOwnerByIdResponse, string>({
       query: (id) => ({
         url: `/business-owner/${id}`,
         method: "GET",

@@ -48,7 +48,7 @@ export const recruitmentNoticeApi = baseApi.injectEndpoints({
     }),
     getRecruitmentNoticeById: builder.query<
       GetRecruitmentNoticeSeeMoreInfoResponse,
-      number
+      string
     >({
       query: (id) => ({
         url: "/recruitment-notice/get-by-id" + id,
@@ -58,7 +58,7 @@ export const recruitmentNoticeApi = baseApi.injectEndpoints({
     }),
     recruitmentNoticeSeeMoreInfo: builder.query<
       GetRecruitmentNoticeSeeMoreInfoResponse,
-      number
+      string
     >({
       query: (id) => ({
         url: "/recruitment-notice/see-more-info/" + id,
@@ -79,7 +79,7 @@ export const recruitmentNoticeApi = baseApi.injectEndpoints({
     }),
     recruitmentNoticeApplyWorkers: builder.mutation<
       void,
-      { id: number; workerIds: number[] }
+      { id: string; workerIds: string[] }
     >({
       query: ({ id, workerIds }) => ({
         url: `/recruitment-notice/apply-agency-workers/${id}`,

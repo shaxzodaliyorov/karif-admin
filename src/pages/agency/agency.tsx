@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 import { PageHeader } from "@/components/page-header";
 import { useNavigate, useParams } from "react-router-dom";
 import { KoreanAgency } from "../my-information/components";
@@ -16,8 +17,8 @@ export const AgencyPage = () => {
 
   const { data: { data: agencyInfo } = {}, isLoading } =
     agencyType === "foreign"
-      ? useGetAgencyByIdQuery(id ? Number(id) : 0)
-      : useGetKoreanAgencyByIdQuery(id ? Number(id) : 0);
+      ? useGetAgencyByIdQuery(id ? String(id) : "")
+      : useGetKoreanAgencyByIdQuery(id ? String(id) : "");
 
   if (isLoading) {
     return (

@@ -38,7 +38,7 @@ export const Admin = () => {
     page: Number(query.get("page")) || 1,
     per_page: 10,
   });
-  const [deleteId, setDeleteId] = useState<number | null>(null);
+  const [deleteId, setDeleteId] = useState<string | null>(null);
 
   const handleRequest = useHandleRequest();
   const navigate = useNavigate();
@@ -48,7 +48,7 @@ export const Admin = () => {
   const onDelete = async () => {
     await handleRequest({
       request: async () => {
-        const res = await deleteRecruitmentNotice(deleteId as number);
+        const res = await deleteRecruitmentNotice(deleteId as string);
         return res;
       },
       onSuccess: () => {
@@ -62,7 +62,7 @@ export const Admin = () => {
     { isLoading: isLoadingUpdateSetStatus },
   ] = useUpdateRecruitmentNoticeSetStatusMutation();
 
-  const handleFinishRequest = async (id: number) => {
+  const handleFinishRequest = async (id: string) => {
     await handleRequest({
       request: async () => {
         const response = await updateRecruitmentNoticeSetStatus({
@@ -125,12 +125,12 @@ export const Admin = () => {
             ) : recruitmentNotices?.length ? (
               recruitmentNotices?.map((c) => (
                 <TableRow
-                  key={c.id}
+                  key={c._id}
                   className={`${c.status !== "openForCompany" ? "opacity-50" : ""} cursor-pointer group`}
-                  onClick={() => navigate(`/recruitment-notice/${c.id}`)}
+                  onClick={() => navigate(`/recruitment-notice/${c._id}`)}
                 >
                   <TableCell className="font-medium hover:underline group-hover:underline">
-                    <Link to={`/recruitment-notice/${c.id}`}>
+                    <Link to={`/recruitment-notice/${c._id}`}>
                       {c.recruitmentTitle}
                     </Link>
                   </TableCell>
@@ -164,7 +164,7 @@ export const Admin = () => {
                   <TableCell className="text-right">
                     <div className="flex gap-x-4 justify-end">
                       <Switch
-                        onChange={() => handleFinishRequest(c.id)}
+                        onChange={() => handleFinishRequest(c._id)}
                         disabled={
                           c.status !== "openForCompany" ||
                           isLoadingUpdateSetStatus
@@ -175,13 +175,13 @@ export const Admin = () => {
                         options={[
                           {
                             label: "Delete",
-                            onClick: () => setDeleteId(c.id),
+                            onClick: () => setDeleteId(c._id),
                             icon: <Trash2 />,
                           },
                           {
                             label: "Edit",
                             onClick: () =>
-                              navigate(`/edit-recruitment-notice/${c.id}`),
+                              navigate(`/edit-recruitment-notice/${c._id}`),
                             icon: <Pencil />,
                           },
                         ]}

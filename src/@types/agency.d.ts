@@ -1,5 +1,5 @@
 export interface Agency {
-  id: number;
+  _id: string;
   email: string;
   password: string;
   agencyName: string;

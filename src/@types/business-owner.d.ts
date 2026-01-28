@@ -5,5 +5,5 @@ export interface BusinessOwner {
   }[];
   description: string;
   createdAt: string;
-  id: number;
+  _id: string;
 }

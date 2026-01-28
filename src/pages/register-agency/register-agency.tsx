@@ -182,7 +182,7 @@ export const RegisterAgencyPage = () => {
                   form={form}
                   name="representativeAddress"
                   label="Representative Address"
-                  placeholder="Tashkent, Chilanzar district..."
+                  placeholder="Your address..."
                   rules={{ required: "Address is required" }}
                 />
 
@@ -202,7 +202,7 @@ export const RegisterAgencyPage = () => {
                   placeholder="Select a korean agency"
                   options={
                     koreanAgencies?.map((agency) => ({
-                      value: agency.id.toString(),
+                      value: agency._id.toString(),
                       label: agency.agencyName,
                     })) || []
                   }

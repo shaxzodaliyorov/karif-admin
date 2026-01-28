@@ -8,7 +8,7 @@ export const CompanyPage = () => {
   const navigate = useNavigate();
   const { id } = useParams();
   const { data: { data: companyInfo } = {}, isLoading } =
-    useGetCompanyByIdQuery(Number(id));
+    useGetCompanyByIdQuery(String(id));
 
   if (isLoading) {
     return (

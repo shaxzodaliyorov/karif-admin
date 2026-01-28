@@ -26,7 +26,7 @@ export const CompaniesPage = () => {
       page: Number(query.get("page")) || 1,
       per_page: 10,
     });
-  const [open, setOpen] = useState<null | number>(null);
+  const [open, setOpen] = useState<null | string>(null);
 
   const navigate = useNavigate();
   const [status, setStatus] = useState("");
@@ -66,12 +66,12 @@ export const CompaniesPage = () => {
             ) : companies?.length ? (
               companies?.map((c) => (
                 <TableRow
-                  key={c.id}
-                  onClick={() => navigate(`/company/${c.id}`)}
+                  key={c._id}
+                  onClick={() => navigate(`/company/${c._id}`)}
                   className="cursor-pointer"
                 >
                   <TableCell className="font-medium hover:underline group-hover:underline">
-                    <Link to={`/company/${c.id}`}>{c.companyName}</Link>
+                    <Link to={`/company/${c._id}`}>{c.companyName}</Link>
                   </TableCell>
                   <TableCell>{c.region}</TableCell>
                   <TableCell>{c.employeesCount}</TableCell>
@@ -174,7 +174,7 @@ export const CompaniesPage = () => {
                     <Button
                       onClick={(e) => {
                         e.stopPropagation();
-                        setOpen(c?.id);
+                        setOpen(c?._id);
                         setStatus(c?.documentStatus);
                       }}
                       size={"sm"}
@@ -211,7 +211,7 @@ export const CompaniesPage = () => {
       <UpdateStatusModal
         open={!!open}
         onClose={() => setOpen(null)}
-        id={open as number}
+        id={open as string}
         status={status}
       />
     </section>

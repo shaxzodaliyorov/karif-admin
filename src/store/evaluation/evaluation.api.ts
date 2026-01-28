@@ -59,7 +59,7 @@ export const evaluationApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["evaluation"],
     }),
-    deleteEvaluation: builder.mutation<DeleteEvaluationResponse, number>({
+    deleteEvaluation: builder.mutation<DeleteEvaluationResponse, string>({
       query: (id) => ({
         url: API_ROUTES.mark.delete + id,
         method: "DELETE",

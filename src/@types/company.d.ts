@@ -5,7 +5,7 @@ export interface DocumentFile {
 }
 
 export interface Company {
-  id: number;
+  _id: string;
   email: string;
   password: string;
   companyName: string;

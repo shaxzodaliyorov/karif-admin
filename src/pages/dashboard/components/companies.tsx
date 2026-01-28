@@ -43,7 +43,7 @@ export const Companies = () => {
 
   const navigate = useNavigate();
 
-  const handleVerify = async (id: number, val: boolean) => {
+  const handleVerify = async (id: string, val: boolean) => {
     await handleRequest({
       request: async () => {
         const response = await verifyCompany({
@@ -60,7 +60,7 @@ export const Companies = () => {
     });
   };
 
-  const handleLogin = async (id: number) => {
+  const handleLogin = async (id: string) => {
     await handleRequest({
       request: async () => {
         const response = await loginCompany({
@@ -108,12 +108,12 @@ export const Companies = () => {
             ) : companies?.length ? (
               companies?.map((c) => (
                 <TableRow
-                  key={c.id}
+                  key={c._id}
                   className={`${!c.isVerified ? "opacity-50" : ""} cursor-pointer`}
-                  onClick={() => navigate(`/company/${c.id}`)}
+                  onClick={() => navigate(`/company/${c._id}`)}
                 >
                   <TableCell className="font-medium hover:cursor-pointer hover:underline">
-                    <Link to={`/company/${c.id}`}>{c.companyName}</Link>
+                    <Link to={`/company/${c._id}`}>{c.companyName}</Link>
                   </TableCell>
                   <TableCell>{c.email}</TableCell>
                   <TableCell>{c.representativeName}</TableCell>
@@ -131,7 +131,7 @@ export const Companies = () => {
                     <div className="flex gap-x-4 justify-end">
                       <Switch
                         defaultChecked={c.isVerified}
-                        onChange={(val: boolean) => handleVerify(c.id, val)}
+                        onChange={(val: boolean) => handleVerify(c._id, val)}
                         disabled={companyIsFetching}
                       />
                       <Button
@@ -139,7 +139,7 @@ export const Companies = () => {
                         size={"sm"}
                         onClick={(e) => {
                           e.stopPropagation();
-                          handleLogin(c.id);
+                          handleLogin(c._id);
                         }}
                       >
                         <LogIn /> Login

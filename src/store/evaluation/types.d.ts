@@ -1,7 +1,8 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-empty-object-type */
 
 export interface Evaluation {
-  id: number;
+  id: string;
   title: string;
   subtitle: string;
   description: string;
@@ -27,7 +28,7 @@ export type GetEvaluationsResponse = {
   after_filtering_count?: number;
 };
 
-export type GetEvaluationByIdRequest = { id: number };
+export type GetEvaluationByIdRequest = { id: string };
 export type GetEvaluationByIdResponse = { data: Evaluation };
 
 export type AddEvaluationRequest = {
@@ -39,8 +40,8 @@ export type AddEvaluationRequest = {
 };
 export type AddEvaluationResponse = { data: Evaluation };
 
-export type UpdateEvaluationRequest = { id: number; body: Partial<Evaluation> };
+export type UpdateEvaluationRequest = { id: string; body: Partial<Evaluation> };
 export type UpdateEvaluationResponse = { data: Evaluation };
 
-export type DeleteEvaluationRequest = { id: number };
+export type DeleteEvaluationRequest = { id: string };
 export interface DeleteEvaluationResponse {}

@@ -9,7 +9,7 @@ import { Button } from "@/components/common/button/button";
 interface NoteModalProps {
   open: boolean;
   onClose: () => void;
-  note?: number;
+  note?: string;
 }
 
 export const NoteModal = ({ open, onClose, note: noteId }: NoteModalProps) => {
@@ -22,7 +22,7 @@ export const NoteModal = ({ open, onClose, note: noteId }: NoteModalProps) => {
     await handleRequest({
       request: async () => {
         const response = await jobNoticeApplicationNote({
-          id: Number(noteId),
+          id: noteId as string,
           body: {
             note,
           },

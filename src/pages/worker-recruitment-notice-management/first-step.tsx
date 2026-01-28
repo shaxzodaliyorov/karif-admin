@@ -34,11 +34,11 @@ export const FirstStep = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const query = useQuery();
-  const [selectedStatus, setSelectedStatus] = useState({ id: 0, status: "" });
-  const [note, setNote] = useState<number | null>(null);
+  const [selectedStatus, setSelectedStatus] = useState({ id: "", status: "" });
+  const [note, setNote] = useState<string | null>(null);
   const { data: jobNotice, isLoading } = useGetJobNoticeApplicationByIdQuery(
     {
-      id: Number(id),
+      id: String(id),
       page: 1,
       per_page: 10,
       status:
@@ -60,7 +60,7 @@ export const FirstStep = () => {
   const handleRequest = useHandleRequest();
 
   const handleUpdateJobNoticeApplicationStatus = async (
-    id: number,
+    id: string,
     status: string,
   ) => {
     await handleRequest({
@@ -70,7 +70,7 @@ export const FirstStep = () => {
       },
       onSuccess: () => {
         toast.success("Status updated successfully");
-        setSelectedStatus({ id: 0, status: "" });
+        setSelectedStatus({ id: "", status: "" });
       },
     });
   };
@@ -118,11 +118,11 @@ export const FirstStep = () => {
             ) : jobNotice?.data?.length ? (
               jobNotice?.data?.map((c) => (
                 <TableRow
-                  key={c.id}
-                  onClick={() => navigate(`/worker/${c.worker?.id}`)}
+                  key={c._id}
+                  onClick={() => navigate(`/worker/${c.worker?._id}`)}
                 >
                   <TableCell className="font-medium hover:underline group-hover:underline">
-                    <Link to={`/worker/${c.worker?.id}`}>
+                    <Link to={`/worker/${c.worker?._id}`}>
                       {c?.worker?.name}
                     </Link>
                   </TableCell>
@@ -143,7 +143,7 @@ export const FirstStep = () => {
                         variant={"outline"}
                         onClick={(e) => {
                           e.stopPropagation();
-                          setNote(c.id);
+                          setNote(c._id);
                         }}
                       >
                         <Pencil className="mr-2 h-4 w-4" />
@@ -151,11 +151,13 @@ export const FirstStep = () => {
                       </Button>
                       <Select
                         onValueChange={(value) => {
-                          setSelectedStatus({ id: c.id, status: value });
-                          handleUpdateJobNoticeApplicationStatus(c.id, value);
+                          setSelectedStatus({ id: c._id, status: value });
+                          handleUpdateJobNoticeApplicationStatus(c._id, value);
                         }}
                         value={c?.status as string}
-                        disabled={isUpdateLoading && selectedStatus.id === c.id}
+                        disabled={
+                          isUpdateLoading && selectedStatus.id === c._id
+                        }
                       >
                         <SelectTrigger className="w-[80px]">
                           <SelectValue placeholder="선택" />
@@ -193,7 +195,7 @@ export const FirstStep = () => {
         </Table>
       </div>
       <NoteModal
-        note={note || 0}
+        note={note || ""}
         open={note !== null}
         onClose={() => setNote(null)}
       />

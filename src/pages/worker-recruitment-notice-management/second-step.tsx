@@ -31,7 +31,7 @@ export const SecondStep = () => {
   const { data: jobNotice, isLoading: jobNoticeLoading } =
     useGetJobNoticeApplicationByIdQuery(
       {
-        id: Number(id),
+        id: String(id),
         page: 1,
         per_page: 10,
         status: "pass",
@@ -53,8 +53,8 @@ export const SecondStep = () => {
     await handleRequest({
       request: async () => {
         const result = await updateJobNoticeAssignment({
-          recruitmentNoticeId: jobNotice?.recruitmentNotice?.id,
-          workerId: openRatingModal.id,
+          recruitmentNoticeId: jobNotice?.recruitmentNotice?._id,
+          workerId: openRatingModal._id,
           body: {
             assignments: data.assignments,
           },
@@ -97,11 +97,11 @@ export const SecondStep = () => {
             ) : jobNotice?.data?.length ? (
               jobNotice?.data?.map((c) => (
                 <TableRow
-                  key={c.id}
-                  onClick={() => navigate(`/worker/${c.worker?.id}`)}
+                  key={c._id}
+                  onClick={() => navigate(`/worker/${c.worker?._id}`)}
                 >
                   <TableCell className="font-medium hover:underline group-hover:underline">
-                    <Link to={`/worker/${c.worker?.id}`}>
+                    <Link to={`/worker/${c.worker?._id}`}>
                       {c?.worker?.name}
                     </Link>
                   </TableCell>

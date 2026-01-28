@@ -1,5 +1,5 @@
 export interface RecruitmentNotice {
-  id: number;
+  _id: string;
   recruitmentTitle: string;
   country: string;
   skill: string;
@@ -26,5 +26,5 @@ export interface RecruitmentNotice {
   mark1EndDate: string;
   mark2StartDate: string;
   mark2EndDate: string;
-  status: 'openForCompany' | 'openForWorker' | 'closed';
+  status: "openForCompany" | "openForWorker" | "closed";
 }

@@ -60,7 +60,7 @@ export const WorkerApplicants = () => {
               </TableRow>
             ) : employments?.length ? (
               employments?.map((c) => (
-                <TableRow key={c.id}>
+                <TableRow key={c._id}>
                   <TableCell className="font-medium">
                     {c.recruitmentTitle}
                   </TableCell>

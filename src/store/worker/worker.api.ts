@@ -27,7 +27,7 @@ export const workerApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["worker"],
     }),
-    loginWorkerWithAdmin: builder.mutation<LoginResponse, { workerId: number }>(
+    loginWorkerWithAdmin: builder.mutation<LoginResponse, { workerId: string }>(
       {
         query: (body) => ({
           url: API_ROUTES.worker.loginWorkerWithAdmin,

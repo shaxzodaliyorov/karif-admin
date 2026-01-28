@@ -33,7 +33,7 @@ export const companyApi = baseApi.injectEndpoints({
     }),
     loginCompanyWithAdmin: builder.mutation<
       LoginResponse,
-      { companyId: number }
+      { companyId: string }
     >({
       query: (body) => ({
         url: API_ROUTES.company.loginCompanyWithAdmin,
@@ -44,7 +44,7 @@ export const companyApi = baseApi.injectEndpoints({
     }),
     companySetStatusDocument: builder.mutation<
       void,
-      { id: number; status: string; documentStatusMessage?: string }
+      { id: string; status: string; documentStatusMessage?: string }
     >({
       query: ({ id, status, documentStatusMessage }) => ({
         url: `/company/set-document-status/${id}`,
@@ -53,7 +53,7 @@ export const companyApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["company"],
     }),
-    getCompanyById: builder.query<any, number>({
+    getCompanyById: builder.query<any, string>({
       query: (id) => ({
         url: `/company/get/${id}`,
         method: "GET",

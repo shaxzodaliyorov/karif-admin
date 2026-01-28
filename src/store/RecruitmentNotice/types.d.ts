@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 export interface RecruitmentNotice {
-  id: number;
+  _id: string;
   recruitmentTitle: string;
   country: string;
   skill: string;
@@ -43,7 +43,7 @@ export interface Document {
 }
 
 export interface Mark1 {
-  id: number;
+  _id: string;
   title: string;
   subtitle: string;
   description: string;
@@ -67,7 +67,7 @@ export interface Item {
 }
 
 export interface Mark2 {
-  id: number;
+  _id: string;
   title: string;
   subtitle: string;
   description: string;
@@ -127,7 +127,7 @@ export interface GetRecruitmentNoticeByIdResponse {
 }
 
 export interface RecruitmentNoticeSeeMoreInfo {
-  applicationId: number;
+  applicationId: string;
   status: string;
   workerCount: number;
   appliedAt: string;
@@ -136,7 +136,7 @@ export interface RecruitmentNoticeSeeMoreInfo {
 }
 
 export interface Company {
-  id: number;
+  _id: string;
   email: string;
   password: string;
   companyName: string;
@@ -172,7 +172,7 @@ export interface GetRecruitmentNoticeSeeMoreInfoResponse {
   success: boolean;
   data: RecruitmentNoticeSeeMoreInfo[];
   recruitmentNotice: {
-    id: 9;
+    _id: string;
     recruitmentTitle: "1차 베트남";
     country: "Viet Nam";
     skill: "판금";
@@ -201,7 +201,7 @@ export interface GetRecruitmentNoticeSeeMoreInfoResponse {
     registeredCompany: number;
     createdAt: string;
     mark1: {
-      id: number;
+      _id: string;
       title: string;
       subtitle: string;
       description: string;
@@ -218,7 +218,7 @@ export interface GetRecruitmentNoticeSeeMoreInfoResponse {
       createdAt: string;
     };
     mark2: {
-      id: number;
+      _id: string;
       title: string;
       subtitle: string;
       description: string;
@@ -255,6 +255,6 @@ export type ApplyJobNoticeResponse = {
 };
 
 export type ApplyJobNoticeRequest = {
-  workerId: number;
-  jobNoticeId: number;
+  workerId: string;
+  jobNoticeId: string;
 };

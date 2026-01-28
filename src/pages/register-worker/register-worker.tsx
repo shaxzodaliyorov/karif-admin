@@ -52,7 +52,7 @@ export const RegisterWorkerPage = () => {
     {
       refetchOnMountOrArgChange: true,
       skip: !form.watch("country"),
-    }
+    },
   );
 
   const navigate = useNavigate();
@@ -231,7 +231,7 @@ export const RegisterWorkerPage = () => {
                   disabled={!agencies || agencies.length === 0}
                   options={
                     agencies?.map((agency) => ({
-                      value: agency.id.toString(),
+                      value: agency._id.toString(),
                       label: agency.agencyName,
                     })) || []
                   }

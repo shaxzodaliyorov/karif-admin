@@ -23,7 +23,7 @@ export interface UpdateJobNoticeResponse {
 }
 
 export interface UpdateJobNoticeRequest {
-  id: number;
+  id: string;
   body: Partial<AddJobNoticeRequest>;
 }
 
@@ -47,7 +47,7 @@ export interface GetJobNoticeListRequest {
 }
 
 export interface UpdateJobNoticeStatusRequest {
-  id: number;
+  id: string;
   status: string;
 }
 
@@ -59,7 +59,7 @@ export interface GetJobNoticeApplicationByIdResponse {
   after_filtering_count: number;
   recruitmentNotice: any;
   jobNotice: {
-    id: number;
+    _id: string;
     workerAdId: number;
     workerAdStartDate: string;
     workerAdEndDate: string;
@@ -74,7 +74,7 @@ export interface GetJobNoticeApplicationByIdResponse {
     createdAt: string;
   };
   data: {
-    id: 1;
+    _id: string;
     workerId: 1;
     recruitmentNoticeId: 2;
     status: string;
@@ -85,7 +85,7 @@ export interface GetJobNoticeApplicationByIdResponse {
     markScoreB: number;
     markScoreTotalTitle: string;
     worker: {
-      id: number;
+      _id: string;
       email: string;
       password: string;
       name: string;
@@ -156,7 +156,7 @@ export interface GetJobNoticeApplicationByIdResponse {
       isVerified: boolean;
       createdAt: string;
       agency: {
-        id: number;
+        _id: string;
         email: string;
         password: string;
         agencyName: string;
@@ -185,7 +185,7 @@ export interface GetJobNoticeApplicationByIdResponse {
       isVerified: boolean;
       createdAt: string;
       agency: {
-        id: number;
+        _id: string;
         email: string;
         password: string;
         agencyName: string;
@@ -206,7 +206,7 @@ export interface GetJobNoticeApplicationByIdResponse {
       };
     };
     recruitmentNotice: {
-      id: number;
+      _id: string;
       recruitmentTitle: string;
       country: string;
       skill: string;
@@ -236,7 +236,7 @@ export interface GetJobNoticeApplicationByIdResponse {
       createdAt: string;
     };
     mark2: {
-      id: number;
+      _id: string;
       title: string;
       subtitle: string;
       description: string;
@@ -255,12 +255,12 @@ export interface GetJobNoticeApplicationByIdResponse {
 }
 
 export interface UpdateJobNoticeApplicationStatusRequest {
-  id: number;
+  id: string;
   status: string;
 }
 
 export interface GetJobNoticeApplicationByIdRequest {
-  id: number;
+  id: string;
   search?: string;
   page?: number;
   per_page?: number;
@@ -274,7 +274,7 @@ export interface GetJobNoticeApplicationIndividualByIdResponse {
   next_page: number;
   after_filtering_count: number;
   jobNotice: {
-    id: number;
+    _id: string;
     workerAdId: number;
     workerAdStartDate: string;
     workerAdEndDate: string;
@@ -289,7 +289,7 @@ export interface GetJobNoticeApplicationIndividualByIdResponse {
     createdAt: string;
   };
   data: {
-    id: number;
+    _id: string;
     workerId: number;
     jobNoticeId: number;
     status: string;
@@ -297,7 +297,7 @@ export interface GetJobNoticeApplicationIndividualByIdResponse {
     createdAt: string;
     updatedAt: string;
     worker: {
-      id: number;
+      _id: string;
       email: string;
       password: string;
       representativeName: string;
@@ -401,7 +401,7 @@ export interface GetJobNoticeApplicationIndividualByIdResponse {
       experienceVideo: string;
     };
     jobNotice: {
-      id: number;
+      _id: string;
       workerAdId: number;
       workerAdStartDate: string;
       workerAdEndDate: string;
@@ -419,7 +419,7 @@ export interface GetJobNoticeApplicationIndividualByIdResponse {
 }
 
 export interface GetJobNoticeApplicationIndividualByIdRequest {
-  id: number;
+  id: string;
   search?: string;
   page?: number;
   per_page?: number;
@@ -427,7 +427,7 @@ export interface GetJobNoticeApplicationIndividualByIdRequest {
 }
 
 export interface UpdateJobNoticeApplicationIndividualStatusRequest {
-  id: number;
+  id: string;
   status: string;
 }
 
@@ -455,7 +455,7 @@ export interface UpdateJobNoticeAssignmentsRequest {
 export interface GetJobNoticeAssignmentsResponse {
   success: boolean;
   data: {
-    id: number;
+    _id: string;
     workerId: number;
     recruitmentNoticeId: number;
     assignments: {

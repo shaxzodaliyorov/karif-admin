@@ -1,4 +1,4 @@
-import type { BusinessOwner } from '../../@types/business-owner';
+import type { BusinessOwner } from "../../@types/business-owner";
 
 /* eslint-disable @typescript-eslint/no-empty-object-type */
 export interface AddBusinessOwnerResponse {}
@@ -27,7 +27,7 @@ export interface GetBusinessOwnerRequest {
 }
 
 export interface UpdateBusinessOwnerRequest {
-  id: number;
+  id: string;
   body: Partial<AddBusinessOwnerRequest>;
 }
 

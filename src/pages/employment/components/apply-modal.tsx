@@ -49,8 +49,8 @@ export const ApplyModal = ({
       await handleRequest({
         request: async () => {
           const response = await applyWorkerJobNotice({
-            workerId: user?.id as number,
-            jobNoticeId: selectedJob.id,
+            workerId: user?._id as string,
+            jobNoticeId: selectedJob._id,
           });
           return response;
         },
@@ -65,7 +65,7 @@ export const ApplyModal = ({
     await handleRequest({
       request: async () => {
         const response = await recruitmentNoticeApply({
-          recruitmentNoticeId: selectedJob.id,
+          recruitmentNoticeId: selectedJob._id,
           workerCount: Number(applicants),
         });
         return response;

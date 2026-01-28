@@ -1,5 +1,5 @@
 export interface User {
-  id: number;
+  _id: string;
   email: string;
   sessionToken: string;
   refreshToken: string;

@@ -25,7 +25,7 @@ import { toast } from "sonner";
 export const RecruitmentNoticeDetailsPage = () => {
   const { id } = useParams();
   const { data: { data: recruitmentNotice } = {}, isLoading } =
-    useRecruitmentNoticeSeeMoreInfoQuery(Number(id));
+    useRecruitmentNoticeSeeMoreInfoQuery(String(id));
 
   const applications = Array.isArray(recruitmentNotice)
     ? recruitmentNotice
@@ -37,7 +37,7 @@ export const RecruitmentNoticeDetailsPage = () => {
   ] = useUpdateStatusRecruitmentNoticeSeeMoreInfoMutation();
   const handleRequest = useHandleRequest();
 
-  const handleUpdateStatus = async (applicationId: number, status: string) => {
+  const handleUpdateStatus = async (applicationId: string, status: string) => {
     await handleRequest({
       request: async () => {
         const result = await updateStatusRecruitmentNoticeSeeMoreInfo({

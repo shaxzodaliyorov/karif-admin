@@ -39,7 +39,7 @@ export const AllGetAgencies = ({ status }: { status?: string }) => {
     query.set("page", String(page));
   };
 
-  const handleVerify = async (id: number, val: boolean) => {
+  const handleVerify = async (id: string, val: boolean) => {
     await handleRequest({
       request: async () => {
         const response = await verifyAgency({
@@ -81,7 +81,7 @@ export const AllGetAgencies = ({ status }: { status?: string }) => {
             ) : agencies?.length ? (
               agencies?.map((c) => (
                 <TableRow
-                  key={c.id}
+                  key={c._id}
                   className={`${!c.isVerified ? "opacity-50" : ""}`}
                 >
                   <TableCell className="font-medium">{c.agencyName}</TableCell>
@@ -101,7 +101,7 @@ export const AllGetAgencies = ({ status }: { status?: string }) => {
                     <div className="flex gap-x-4 justify-end">
                       <Switch
                         defaultChecked={c.isVerified}
-                        onChange={(val: boolean) => handleVerify(c.id, val)}
+                        onChange={(val: boolean) => handleVerify(c._id, val)}
                       />
                     </div>
                   </TableCell>

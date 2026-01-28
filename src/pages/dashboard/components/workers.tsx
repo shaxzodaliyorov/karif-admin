@@ -36,7 +36,7 @@ export const Workers = () => {
   const navigate = useNavigate();
   const [loginWorker] = useLoginWorkerWithAdminMutation();
 
-  const handleLogin = async (id: number) => {
+  const handleLogin = async (id: string) => {
     await handleRequest({
       request: async () => {
         const response = await loginWorker({
@@ -83,12 +83,12 @@ export const Workers = () => {
             ) : workers?.length ? (
               workers?.map((c) => (
                 <TableRow
-                  key={c.id}
-                  onClick={() => navigate(`/worker/${c.id}`)}
+                  key={c._id}
+                  onClick={() => navigate(`/worker/${c._id}`)}
                   className="cursor-pointer"
                 >
                   <TableCell className="font-medium cursor-pointer hover:underline">
-                    <Link to={`/worker/${c.id}`}>{c.name}</Link>
+                    <Link to={`/worker/${c._id}`}>{c.name}</Link>
                   </TableCell>
                   <TableCell>{c.email}</TableCell>
                   <TableCell>{c.phoneNumber}</TableCell>
@@ -101,7 +101,7 @@ export const Workers = () => {
                       <Button
                         onClick={(e) => {
                           e.stopPropagation();
-                          handleLogin(c.id);
+                          handleLogin(c._id);
                         }}
                         disabled={!c.isVerified}
                         size={"sm"}

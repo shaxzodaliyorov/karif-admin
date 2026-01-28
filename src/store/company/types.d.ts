@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-empty-object-type */
-import type { Company } from '../../@types/company';
+import type { Company } from "../../@types/company";
 
 export type GetCompanyResponse = {
   data: Company[];
@@ -19,6 +19,6 @@ export type GetCompanyRequest = {
 export interface VerifyCompanyResponse {}
 
 export interface VerifyCompanyRequest {
-  companyId: number;
+  companyId: string;
   status: string;
 }

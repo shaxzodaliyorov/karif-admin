@@ -35,7 +35,7 @@ export const WorkerRecruitmentNoticePage = () => {
     per_page: 10,
     status: "openForWorker",
   });
-  const [finishedId, setFinishedId] = useState<null | number>(null);
+  const [finishedId, setFinishedId] = useState<null | string>(null);
 
   const handleRequest = useHandleRequest();
   const navigate = useNavigate();
@@ -49,7 +49,7 @@ export const WorkerRecruitmentNoticePage = () => {
     await handleRequest({
       request: async () => {
         const response = await updateRecruitmentNoticeSetStatus({
-          id: finishedId as number,
+          id: finishedId as string,
           body: {
             status: "closed",
           },
@@ -100,13 +100,13 @@ export const WorkerRecruitmentNoticePage = () => {
             ) : recruitmentNotices?.length ? (
               recruitmentNotices?.map((c) => (
                 <TableRow
-                  key={c.id}
+                  key={c._id}
                   onClick={() =>
-                    navigate(`/recruitment-notice-management/${c.id}`)
+                    navigate(`/recruitment-notice-management/${c._id}`)
                   }
                 >
                   <TableCell className="font-medium hover:underline group-hover:underline">
-                    <Link to={`/recruitment-notice-management/${c.id}`}>
+                    <Link to={`/recruitment-notice-management/${c._id}`}>
                       {c.recruitmentTitle}
                     </Link>
                   </TableCell>
@@ -143,7 +143,7 @@ export const WorkerRecruitmentNoticePage = () => {
                       size={"sm"}
                       onClick={(e) => {
                         e.stopPropagation();
-                        setFinishedId(c.id);
+                        setFinishedId(c._id);
                       }}
                     >
                       <FaFlag />
