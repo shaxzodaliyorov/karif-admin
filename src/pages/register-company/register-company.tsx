@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Button } from "@/components/common/button/button";
 import { FormInput } from "@/components/common/form-input";
 import { FormSelect } from "@/components/common/select";
@@ -47,7 +48,7 @@ export const RegisterCompany = () => {
       address: data.address,
       photoRegistration: data.photoRegistration,
       businessRegistrationCertificate:
-        data.managementBusinessRegistrationCertificate,
+        data.businessRegistrationCertificate as string,
       managementBusinessRegistrationCertificate:
         data.managementBusinessRegistrationCertificate,
       smallAndMediumSizedBusinessConfirmationCertificate:

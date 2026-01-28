@@ -3,7 +3,6 @@ import { Link, useLocation } from "react-router-dom";
 import {
   Home,
   Settings,
-  Package,
   Loader2,
   Users,
   UserSearch,
@@ -98,12 +97,12 @@ const menuItems: MenuItem[] = [
     icon: FaInfoCircle,
     roles: ["worker", "company", "korean_agency", "agency"],
   },
-  {
-    label: "New Application",
-    href: "/new-application",
-    icon: Package,
-    roles: ["worker"],
-  },
+  // {
+  //   label: "New Application",
+  //   href: "/new-application",
+  //   icon: Package,
+  //   roles: ["worker"],
+  // },
   // {
   //   label: "My Inbox",
   //   href: "/inbox",

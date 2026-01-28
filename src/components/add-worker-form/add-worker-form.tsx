@@ -592,8 +592,11 @@ export function AddWorkerForm() {
                     <SelectContent>
                       <SelectGroup>
                         {COUNTRIES.map((country) => (
-                          <SelectItem key={country.value} value={country.value}>
-                            {country.label}
+                          <SelectItem
+                            key={country.en_short_name}
+                            value={country.en_short_name}
+                          >
+                            {country.en_short_name}
                           </SelectItem>
                         ))}
                       </SelectGroup>
@@ -1264,10 +1267,10 @@ export function AddWorkerForm() {
                         <SelectContent>
                           {COUNTRIES.map((country) => (
                             <SelectItem
-                              key={country.value}
-                              value={country.label}
+                              key={country.en_short_name}
+                              value={country.en_short_name}
                             >
-                              {country.label}
+                              {country.en_short_name}
                             </SelectItem>
                           ))}
                         </SelectContent>

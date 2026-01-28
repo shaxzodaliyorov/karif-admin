@@ -55,9 +55,7 @@ export const RegisterAgencyPage = () => {
       representativeBusinessPhone: data.representativeBusinessPhone,
       representativeAddress: data.representativeAddress,
       country: data.country,
-      koreanAgencyId: data.koreanAgencyId
-        ? Number(data.koreanAgencyId)
-        : undefined,
+      koreanAgencyId: data.koreanAgencyId as string,
       businessRegistrationCertificate: data.businessRegistrationCertificate,
       license: data.license as string,
     };
@@ -76,6 +74,8 @@ export const RegisterAgencyPage = () => {
       },
     });
   };
+
+  console.log("koreanAgencies", koreanAgencies);
 
   return (
     <div className="min-h-[90vh] pt-32 pb-20 container mx-auto">
@@ -192,7 +192,10 @@ export const RegisterAgencyPage = () => {
                   label="Country"
                   placeholder="Select a country"
                   rules={{ required: "Country is required" }}
-                  options={COUNTRIES}
+                  options={COUNTRIES.map((country) => ({
+                    value: country.en_short_name,
+                    label: country.en_short_name,
+                  }))}
                 />
 
                 <FormSelect
@@ -202,7 +205,7 @@ export const RegisterAgencyPage = () => {
                   placeholder="Select a korean agency"
                   options={
                     koreanAgencies?.map((agency) => ({
-                      value: agency._id.toString(),
+                      value: agency._id,
                       label: agency.agencyName,
                     })) || []
                   }

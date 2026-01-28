@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import baseApi from "@/store/api";
 import type {
   ApplyJobNoticeRequest,
@@ -46,12 +47,9 @@ export const recruitmentNoticeApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["recruitment-notice"],
     }),
-    getRecruitmentNoticeById: builder.query<
-      GetRecruitmentNoticeSeeMoreInfoResponse,
-      string
-    >({
+    getRecruitmentNoticeById: builder.query<any, string>({
       query: (id) => ({
-        url: "/recruitment-notice/get-by-id" + id,
+        url: "/recruitment-notice/get/" + id,
         method: "GET",
       }),
       providesTags: ["recruitment-notice"],

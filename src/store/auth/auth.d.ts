@@ -30,7 +30,7 @@ export interface SignUpWorkerRequest {
   photoRegistration: string;
   graduationCertificate: string;
   qualification: string;
-  agencyId?: number;
+  agencyId?: string;
 }
 
 export interface SignUpAgencyResponse {}
@@ -43,7 +43,7 @@ export interface SignUpAgencyRequest {
   representativeMobilePhone: string;
   representativeBusinessPhone: string;
   representativeAddress: string;
-  koreanAgencyId?: number;
+  koreanAgencyId?: string;
   country?: string;
   businessRegistrationCertificate?: string;
   license?: string;

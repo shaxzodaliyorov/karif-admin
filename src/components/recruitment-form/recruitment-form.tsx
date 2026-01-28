@@ -1,8 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useFieldArray, useForm } from "react-hook-form";
 import dayjs from "dayjs";
-import { RefreshCw } from "lucide-react";
-import { useCallback, useMemo } from "react";
+import { useCallback, useEffect, useMemo } from "react";
 import { DescriptionField } from "./description-field";
 import { DateRangeField } from "./date-range-field";
 import { EvaluationSchedule } from "./evaluation-schedule";
@@ -10,6 +9,9 @@ import { REGIONS } from "@/constants/regions";
 import { BasicFields } from "./basic-fields";
 import { RegionAllocation } from "./region-allocation";
 import { Button } from "../common/button/button";
+import { useGetRecruitmentNoticeByIdQuery } from "@/store/RecruitmentNotice/RecruitmentNotice.api";
+import { useParams } from "react-router-dom";
+import { Loader2 } from "lucide-react";
 
 type RecruitmentFormData = {
   recruitmentTitle: string;
@@ -34,22 +36,20 @@ type RecruitmentFormData = {
   description: string;
   countType: string;
   workerCount?: number;
-  markId1: string;
-  markId2: string;
+  mark1: string;
+  mark2: string;
 };
 
 interface RecruitmentFormProps {
   isEdit: boolean;
   isLoading: boolean;
   onSubmit: (data: RecruitmentFormData) => void;
-  onReset: () => void;
 }
 
 export const RecruitmentForm = ({
   isEdit,
   isLoading,
   onSubmit,
-  onReset,
 }: RecruitmentFormProps) => {
   const defaultDocuments = useMemo(
     () =>
@@ -60,6 +60,13 @@ export const RecruitmentForm = ({
       })),
     [],
   );
+
+  const { id } = useParams();
+
+  const {
+    data: { data: recruitmentNotice = {} } = {},
+    isLoading: isLoadingData,
+  } = useGetRecruitmentNoticeByIdQuery(id as string);
 
   const { control, handleSubmit, setValue, watch, trigger } =
     useForm<RecruitmentFormData>({
@@ -82,12 +89,12 @@ export const RecruitmentForm = ({
         description: "",
         countType: "",
         workerCount: undefined,
-        markId1: "",
-        markId2: "",
+        mark1: "",
+        mark2: "",
       },
     });
 
-  const { fields } = useFieldArray({
+  const { fields, remove, append } = useFieldArray({
     control,
     name: "documents",
   });
@@ -163,8 +170,8 @@ export const RecruitmentForm = ({
         ratio: doc.ratio.toString(),
         numberOfApplicants: doc.numberOfApplicants.toString(),
       })),
-      markId1: Number(formData.markId1),
-      markId2: Number(formData.markId2),
+      mark1: formData.mark1,
+      mark2: formData.mark2,
       mark1StartDate: formData.mark1StartDate
         ? dayjs(formData.mark1StartDate).toISOString()
         : "",
@@ -180,6 +187,71 @@ export const RecruitmentForm = ({
     };
     onSubmit(dataToSend as any);
   };
+
+  useEffect(() => {
+    if (isEdit && recruitmentNotice) {
+      const format = (date: string | null | undefined) =>
+        date ? dayjs(date).format("YYYY-MM-DD") : "";
+      setTimeout(() => {
+        setValue("recruitmentTitle", recruitmentNotice.recruitmentTitle);
+        setValue("mark1StartDate", format(recruitmentNotice?.mark1StartDate));
+        setValue("mark1EndDate", format(recruitmentNotice?.mark1EndDate));
+        setValue("mark2StartDate", format(recruitmentNotice?.mark2StartDate));
+        setValue("mark2EndDate", format(recruitmentNotice?.mark2EndDate));
+        setValue("recruitmentTitle", recruitmentNotice?.recruitmentTitle ?? "");
+        setValue("country", recruitmentNotice?.country ?? "");
+        setValue("skill", recruitmentNotice?.skill ?? "");
+        setValue("startDate", recruitmentNotice?.startDate ?? "");
+        setValue("endDate", recruitmentNotice?.endDate ?? "");
+        setValue(
+          "companyWorkerCount",
+          Number(recruitmentNotice?.companyWorkerCount) || 1,
+        );
+        setValue("countType", recruitmentNotice?.countType ?? "");
+        setValue("workerCount", Number(recruitmentNotice?.workerCount) || 1);
+        setValue(
+          "foreignWorkerStartDate",
+          format(recruitmentNotice?.foreignWorkerStartDate),
+        );
+        setValue(
+          "foreignWorkerEndDate",
+          format(recruitmentNotice?.foreignWorkerEndDate),
+        );
+        setValue(
+          "onSiteDeploymentStartDate",
+          format(recruitmentNotice?.onSiteDeploymentStartDate),
+        );
+
+        setValue(
+          "onSiteDeploymentEndDate",
+          format(recruitmentNotice?.onSiteDeploymentEndDate),
+        );
+        setValue("description", recruitmentNotice?.description ?? "");
+
+        setValue("mark1", recruitmentNotice?.mark1 ?? "");
+        setValue("mark2", recruitmentNotice?.mark2 ?? "");
+
+        const docs: any = Array.isArray(recruitmentNotice.documents)
+          ? recruitmentNotice.documents.map((d: any) => ({
+              region: d.region ?? "",
+              ratio: d.ratio ? Number(d.ratio.replace("%", "")) : 0,
+              numberOfApplicants: Number(d.numberOfApplicants) || 0,
+            }))
+          : defaultDocuments;
+
+        docs.forEach((_: any, i: number) => remove(i));
+        docs.forEach((doc: any) => append(doc));
+      }, 100);
+    }
+  }, [isEdit, recruitmentNotice]);
+
+  if (isLoadingData && isEdit) {
+    return (
+      <div className="w-full h-100 flex items-center justify-center">
+        <Loader2 className="w-10 h-10 animate-spin" />
+      </div>
+    );
+  }
 
   return (
     <div className="mb-6 p-6 border rounded-lg bg-white shadow-none ">
@@ -213,15 +285,8 @@ export const RecruitmentForm = ({
         <DescriptionField control={control} />
 
         <div className="flex justify-end gap-3 mt-6">
-          <button
-            type="button"
-            onClick={onReset}
-            className="flex items-center gap-2 px-4 py-2 border rounded-md hover:bg-gray-50 transition"
-          >
-            <RefreshCw className="w-4 h-4" /> 재설정
-          </button>
           <Button type="submit" disabled={isLoading} loading={isLoading}>
-            {isEdit ? "업데이트" : "제출"}
+            {isEdit ? "Edit" : "Add"}
           </Button>
         </div>
       </form>

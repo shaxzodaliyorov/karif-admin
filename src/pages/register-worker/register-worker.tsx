@@ -70,7 +70,7 @@ export const RegisterWorkerPage = () => {
       photoRegistration: data.photoRegistration,
       graduationCertificate: data.graduationCertificate,
       qualification: data.qualification,
-      agencyId: data.agencyId ? Number(data.agencyId) : undefined,
+      agencyId: data.agencyId ? data.agencyId : undefined,
     };
 
     await handleRequest({
@@ -219,7 +219,10 @@ export const RegisterWorkerPage = () => {
                   label="Country"
                   placeholder="Select a country"
                   rules={{ required: "Country is required" }}
-                  options={COUNTRIES}
+                  options={COUNTRIES.map((country) => ({
+                    value: country.en_short_name,
+                    label: country.en_short_name,
+                  }))}
                 />
 
                 <FormSelect

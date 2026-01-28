@@ -9,6 +9,11 @@ import {
 } from "../../components/ui/select";
 import { COUNTRIES } from "../../constants/countries";
 import { COUNT_TYPES, SKILLS } from "./constants";
+import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
+import { Button } from "../ui/button";
+import { CalendarIcon } from "lucide-react";
+import dayjs from "dayjs";
+import { Calendar } from "../ui/calendar";
 
 interface BasicFieldsProps {
   control: any;
@@ -48,9 +53,9 @@ export const BasicFields = ({ control, watch }: BasicFieldsProps) => {
                   <SelectValue placeholder="Select Country" />
                 </SelectTrigger>
                 <SelectContent>
-                  {COUNTRIES.map(({ value, label }) => (
-                    <SelectItem key={value} value={label}>
-                      {label}
+                  {COUNTRIES.map(({ en_short_name }) => (
+                    <SelectItem key={en_short_name} value={en_short_name}>
+                      {en_short_name}
                     </SelectItem>
                   ))}
                 </SelectContent>
@@ -93,11 +98,29 @@ export const BasicFields = ({ control, watch }: BasicFieldsProps) => {
             name="startDate"
             control={control}
             render={({ field }) => (
-              <input
-                type="date"
-                {...field}
-                className="w-full p-2 border rounded-md focus:ring-2 focus:ring-blue-500"
-              />
+              <Popover>
+                <PopoverTrigger asChild>
+                  <Button
+                    variant="outline"
+                    className="w-full h-11 flex justify-start"
+                  >
+                    <CalendarIcon />
+                    {field.value ? (
+                      dayjs(field.value).format("YYYY-MM-DD")
+                    ) : (
+                      <span>Pick a date</span>
+                    )}
+                  </Button>
+                </PopoverTrigger>
+                <PopoverContent className="w-auto p-0">
+                  <Calendar
+                    mode="single"
+                    selected={dayjs(field.value).toDate()}
+                    onSelect={field.onChange}
+                    captionLayout="dropdown"
+                  />
+                </PopoverContent>
+              </Popover>
             )}
           />
         </div>
@@ -109,11 +132,29 @@ export const BasicFields = ({ control, watch }: BasicFieldsProps) => {
             name="endDate"
             control={control}
             render={({ field }) => (
-              <input
-                type="date"
-                {...field}
-                className="w-full p-2 border rounded-md focus:ring-2 focus:ring-blue-500"
-              />
+              <Popover>
+                <PopoverTrigger asChild>
+                  <Button
+                    variant="outline"
+                    className="w-full h-11 flex justify-start"
+                  >
+                    <CalendarIcon />
+                    {field.value ? (
+                      dayjs(field.value).format("YYYY-MM-DD")
+                    ) : (
+                      <span>Pick a date</span>
+                    )}
+                  </Button>
+                </PopoverTrigger>
+                <PopoverContent className="w-auto p-0">
+                  <Calendar
+                    mode="single"
+                    selected={dayjs(field.value).toDate()}
+                    onSelect={field.onChange}
+                    captionLayout="dropdown"
+                  />
+                </PopoverContent>
+              </Popover>
             )}
           />
         </div>

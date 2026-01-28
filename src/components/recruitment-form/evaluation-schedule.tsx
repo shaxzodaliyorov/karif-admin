@@ -21,7 +21,7 @@ export const EvaluationSchedule = ({ control }: EvaluationScheduleProps) => {
       <div className="grid grid-cols-3 gap-4">
         <div>
           <Controller
-            name="markId1"
+            name="mark1"
             control={control}
             render={({ field }) => (
               <div>
@@ -115,7 +115,7 @@ export const EvaluationSchedule = ({ control }: EvaluationScheduleProps) => {
       <div className="grid grid-cols-3 gap-4">
         <div>
           <Controller
-            name="markId2"
+            name="mark2"
             control={control}
             render={({ field }) => (
               <div>
