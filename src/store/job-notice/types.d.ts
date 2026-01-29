@@ -75,7 +75,6 @@ export interface GetJobNoticeApplicationByIdResponse {
   };
   data: {
     _id: string;
-    workerId: 1;
     recruitmentNoticeId: 2;
     status: string;
     note: string;
@@ -84,7 +83,7 @@ export interface GetJobNoticeApplicationByIdResponse {
     markScoreA: number;
     markScoreB: number;
     markScoreTotalTitle: string;
-    worker: {
+    workerId: {
       _id: string;
       email: string;
       password: string;

@@ -119,17 +119,17 @@ export const FirstStep = () => {
               jobNotice?.data?.map((c) => (
                 <TableRow
                   key={c._id}
-                  onClick={() => navigate(`/worker/${c.worker?._id}`)}
+                  onClick={() => navigate(`/worker/${c.workerId?._id}`)}
                 >
                   <TableCell className="font-medium hover:underline group-hover:underline">
-                    <Link to={`/worker/${c.worker?._id}`}>
-                      {c?.worker?.name}
+                    <Link to={`/worker/${c.workerId?._id}`}>
+                      {c?.workerId?.name}
                     </Link>
                   </TableCell>
-                  <TableCell>{c.worker?.email}</TableCell>
-                  <TableCell>{c.worker?.phoneNumber}</TableCell>
-                  <TableCell>{c.worker?.country}</TableCell>
-                  <TableCell>{c.worker?.address}</TableCell>
+                  <TableCell>{c.workerId?.email}</TableCell>
+                  <TableCell>{c.workerId?.phoneNumber}</TableCell>
+                  <TableCell>{c.workerId?.country}</TableCell>
+                  <TableCell>{c.workerId?.address}</TableCell>
                   <TableCell>{c.note}</TableCell>
                   <TableCell>
                     <Status
