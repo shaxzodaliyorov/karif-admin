@@ -133,3 +133,16 @@
 button{
   cursor: pointer;
 }
+
+.ql-container {
+          min-height: 160px;           /* minimal balandlik */
+          height: 300px !important;    /* yoki siz xohlagan balandlik */
+          border: none !important;     /* borderni tashqaridagi divdan olamiz */
+        }
+
+        .ql-editor {
+          min-height: calc(300px - 42px) !important;  /* toolbar ~42px */
+          max-height: 300px;
+          overflow-y: auto !important;
+        }
+
