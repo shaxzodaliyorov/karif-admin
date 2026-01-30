@@ -71,6 +71,7 @@ export const KoreanAgencies = () => {
       onSuccess: (result) => {
         localStorage.setItem(ACCESS_TOKEN_KEY, result?.data?.access_token);
         localStorage.setItem(REFRESH_TOKEN_KEY, result?.data?.refresh_token);
+        window.location.href = "/dashboard";
         window.open("/dashboard", "_blank");
         toast.success("Login successfully");
       },
