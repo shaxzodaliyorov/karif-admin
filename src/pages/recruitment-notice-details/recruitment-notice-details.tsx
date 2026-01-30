@@ -31,11 +31,6 @@ export const RecruitmentNoticeDetailsPage = () => {
     useRecruitmentNoticeSeeMoreInfoQuery(String(id));
 
   const [open, setOpen] = useState(false);
-
-  const applications = Array.isArray(recruitmentNotice)
-    ? recruitmentNotice
-    : [];
-  const isEmpty = applications.length === 0;
   const [
     updateStatusRecruitmentNoticeSeeMoreInfo,
     { isLoading: isLoadingUpdateStatusRecruitmentNoticeSeeMoreInfo },
@@ -87,7 +82,7 @@ export const RecruitmentNoticeDetailsPage = () => {
         <div className="flex justify-center items-center h-64">
           <Loader2 className="h-10 w-10 animate-spin text-primary" />
         </div>
-      ) : isEmpty ? (
+      ) : !recruitmentNotice?.data?.length ? (
         <TableNotFound title="No applications found for this recruitment notice" />
       ) : (
         <>
