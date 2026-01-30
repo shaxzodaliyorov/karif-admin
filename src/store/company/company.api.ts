@@ -60,6 +60,14 @@ export const companyApi = baseApi.injectEndpoints({
       }),
       providesTags: ["company"],
     }),
+    updateCompany: builder.mutation<any, any>({
+      query: (credentials) => ({
+        url: "/company/update",
+        method: "PUT",
+        body: credentials,
+      }),
+      invalidatesTags: ["user"],
+    }),
   }),
 });
 
@@ -69,4 +77,5 @@ export const {
   useLoginCompanyWithAdminMutation,
   useCompanySetStatusDocumentMutation,
   useGetCompanyByIdQuery,
+  useUpdateCompanyMutation,
 } = companyApi;

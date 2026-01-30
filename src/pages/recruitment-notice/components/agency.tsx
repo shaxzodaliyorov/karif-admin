@@ -84,7 +84,7 @@ export const Agency = () => {
                   <TableCell>{c.workerCount}</TableCell>
                   <TableCell>{c.registeredCompany}</TableCell>
                   <TableCell>
-                    {c.type === "byPercent" ? "By Percent" : "By Count"}
+                    {c.countType === "byPercent" ? "By Percent" : "By Count"}
                   </TableCell>
                   <TableCell>
                     <Status

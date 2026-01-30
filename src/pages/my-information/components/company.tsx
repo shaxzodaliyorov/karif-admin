@@ -3,12 +3,15 @@
 import { PageHeader } from "@/components/page-header";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Building2, MapPin, Phone, User, Users } from "lucide-react";
+import { Building2, Edit, MapPin, Phone, User, Users } from "lucide-react";
 import { InfoCard } from "./info-card";
 import { DocumentItem } from "./document-item";
 import { useGetUser } from "@/hooks/use-get-user";
 import { Image } from "@/components/common/image";
 import { Status } from "@/components/common/status";
+import { Button } from "@/components/ui/button";
+import { useState } from "react";
+import { CompanyEditModal } from "./company-edit-modal";
 
 interface CompanyMyInformationProps {
   companyInfo?: any;
@@ -20,12 +23,20 @@ export const CompanyMyInformation = ({
   hideActions,
 }: CompanyMyInformationProps) => {
   const companyData: any = companyInfo || useGetUser();
+  const [open, setOpen] = useState(false);
   return (
     <div>
       {!hideActions && (
         <PageHeader
           title="Company Information"
           description="Manage your company information"
+          actions={
+            <div>
+              <Button onClick={() => setOpen(true)} variant="outline">
+                <Edit />
+              </Button>
+            </div>
+          }
         />
       )}
       <div>
@@ -194,6 +205,7 @@ export const CompanyMyInformation = ({
           </CardContent>
         </Card>
       </div>
+      <CompanyEditModal open={open} onClose={() => setOpen(false)} />
     </div>
   );
 };

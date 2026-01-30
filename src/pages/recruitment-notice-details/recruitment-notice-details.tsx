@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { PageHeader } from "@/components/page-header";
 import { useRecruitmentNoticeSeeMoreInfoQuery } from "@/store/RecruitmentNotice/RecruitmentNotice.api";
 import {
@@ -9,7 +10,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Button } from "@/components/common/button/button";
-import { DownloadIcon, Printer, Loader2, ChevronDown } from "lucide-react";
+import { Printer, Loader2, ChevronDown } from "lucide-react";
 import dayjs from "dayjs";
 import { TableNotFound } from "@/components/table-not-found";
 import { useParams } from "react-router-dom";
@@ -21,11 +22,15 @@ import { Status } from "@/components/common/status";
 import { useHandleRequest } from "@/hooks/use-handle-request";
 import { useUpdateStatusRecruitmentNoticeSeeMoreInfoMutation } from "@/store/recruitment-notice/recruitment-notice.api";
 import { toast } from "sonner";
+import { DetailsModal } from "./details-modal";
+import { useState } from "react";
 
 export const RecruitmentNoticeDetailsPage = () => {
   const { id } = useParams();
-  const { data: { data: recruitmentNotice } = {}, isLoading } =
+  const { data: recruitmentNotice, isLoading } =
     useRecruitmentNoticeSeeMoreInfoQuery(String(id));
+
+  const [open, setOpen] = useState(false);
 
   const applications = Array.isArray(recruitmentNotice)
     ? recruitmentNotice
@@ -62,14 +67,18 @@ export const RecruitmentNoticeDetailsPage = () => {
         description="Detailed view of the selected recruitment notice"
         actions={
           <div className="flex gap-x-3">
-            <Button variant="outline" disabled={isLoading || isEmpty}>
+            <Button
+              onClick={() => setOpen(true)}
+              variant="outline"
+              disabled={isLoading}
+            >
               <Printer className="mr-2 h-4 w-4" />
               Print
             </Button>
-            <Button variant="outline" disabled={isLoading || isEmpty}>
+            {/* <Button variant="outline" disabled={isLoading || isEmpty}>
               <DownloadIcon className="mr-2 h-4 w-4" />
               Download Excel
-            </Button>
+            </Button> */}
           </div>
         }
       />
@@ -95,7 +104,7 @@ export const RecruitmentNoticeDetailsPage = () => {
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {recruitmentNotice?.map((app) => (
+                {recruitmentNotice?.data?.map((app) => (
                   <TableRow key={app.applicationId}>
                     <TableCell className="font-medium">
                       {app.company.companyName}
@@ -163,6 +172,12 @@ export const RecruitmentNoticeDetailsPage = () => {
           </div>
         </>
       )}
+
+      <DetailsModal
+        open={open}
+        onClose={() => setOpen(false)}
+        recruitmentNotice={recruitmentNotice as any}
+      />
     </div>
   );
 };

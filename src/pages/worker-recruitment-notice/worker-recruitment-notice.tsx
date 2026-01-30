@@ -83,6 +83,7 @@ export const WorkerRecruitmentNoticePage = () => {
               <TableHead>End Date</TableHead>
               <TableHead>Worker Count</TableHead>
               <TableHead>Registered company</TableHead>
+              <TableHead>Company Worker Count</TableHead>
               <TableHead>Type</TableHead>
               <TableHead>Status</TableHead>
               <TableHead className="text-right">Action</TableHead>
@@ -120,8 +121,9 @@ export const WorkerRecruitmentNoticePage = () => {
                   </TableCell>
                   <TableCell>{c.workerCount}</TableCell>
                   <TableCell>{c.registeredCompany}</TableCell>
+                  <TableCell>{c.companyWorkerCount}</TableCell>
                   <TableCell>
-                    {c.type === "byPercent" ? "By Percent" : "By Count"}
+                    {c.countType === "byPercent" ? "By Percent" : "By Count"}
                   </TableCell>
                   <TableCell>
                     <Status

@@ -184,6 +184,8 @@ export const RecruitmentForm = ({
       mark2EndDate: formData.mark2EndDate
         ? dayjs(formData.mark2EndDate).toISOString()
         : "",
+      workerCount:
+        formData?.countType === "byPercent" ? undefined : formData?.workerCount,
     };
     onSubmit(dataToSend as any);
   };

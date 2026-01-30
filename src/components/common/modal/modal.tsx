@@ -14,6 +14,7 @@ interface ModalProps {
   children: React.ReactNode;
   size?: "sm" | "md" | "lg" | "xl" | "full";
   trigger?: React.ReactNode;
+  className?: string;
 }
 
 export const Modal: React.FC<ModalProps> = ({
@@ -23,6 +24,7 @@ export const Modal: React.FC<ModalProps> = ({
   children,
   size = "md",
   trigger,
+  className,
 }) => {
   const sizeClasses = {
     sm: "max-w-md",
@@ -36,7 +38,9 @@ export const Modal: React.FC<ModalProps> = ({
     <Dialog open={open} onOpenChange={onClose}>
       {trigger && <DialogTrigger asChild>{trigger}</DialogTrigger>}
 
-      <DialogContent className={`${sizeClasses[size]} p-0 overflow-hidden`}>
+      <DialogContent
+        className={`${sizeClasses[size]}   p-0 overflow-hidden ${className}`}
+      >
         {(title || !trigger) && (
           <DialogHeader className="px-6 py-4 border-b bg-muted/40 flex flex-row justify-between items-center">
             {title && <DialogTitle>{title}</DialogTitle>}

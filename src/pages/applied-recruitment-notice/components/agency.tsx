@@ -46,6 +46,7 @@ export const Agency = () => {
               <TableHead>End Date</TableHead>
               <TableHead>Worker Count</TableHead>
               <TableHead>Registered company</TableHead>
+              <TableHead>Company Worker Count</TableHead>
               <TableHead>Type</TableHead>
               <TableHead>Status</TableHead>
             </TableRow>
@@ -75,8 +76,9 @@ export const Agency = () => {
                   </TableCell>
                   <TableCell>{c.workerCount}</TableCell>
                   <TableCell>{c.registeredCompany}</TableCell>
+                  <TableCell>{c.companyWorkerCount}</TableCell>
                   <TableCell>
-                    {c.type === "byPercent" ? "By Percent" : "By Count"}
+                    {c.countType === "byPercent" ? "By Percent" : "By Count"}
                   </TableCell>
                   <TableCell>
                     <Status
@@ -96,7 +98,7 @@ export const Agency = () => {
               ))
             ) : (
               <TableRow>
-                <TableCell colSpan={10}>
+                <TableCell colSpan={11}>
                   <TableNotFound />
                 </TableCell>
               </TableRow>
@@ -104,7 +106,7 @@ export const Agency = () => {
           </TableBody>
           <TableFooter>
             <TableRow>
-              <TableCell colSpan={10} className="pb-5">
+              <TableCell colSpan={11} className="pb-5">
                 <Pagination
                   currentPage={
                     query.get("page") ? Number(query.get("page")) : 1

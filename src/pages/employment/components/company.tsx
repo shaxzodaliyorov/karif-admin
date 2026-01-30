@@ -53,6 +53,7 @@ export const CompanyEmployment = () => {
               <TableHead>End Date</TableHead>
               <TableHead>Worker Count</TableHead>
               <TableHead>Registered company</TableHead>
+              <TableHead>Company Worker Count</TableHead>
               <TableHead>Type</TableHead>
               <TableHead>Status</TableHead>
               <TableHead className="text-right">Action</TableHead>
@@ -83,8 +84,9 @@ export const CompanyEmployment = () => {
                   </TableCell>
                   <TableCell>{c.workerCount}</TableCell>
                   <TableCell>{c.registeredCompany}</TableCell>
+                  <TableCell>{c.companyWorkerCount}</TableCell>
                   <TableCell>
-                    {c.type === "byPercent" ? "By Percent" : "By Count"}
+                    {c.countType === "byPercent" ? "By Percent" : "By Count"}
                   </TableCell>
                   <TableCell>
                     <Status
@@ -109,7 +111,7 @@ export const CompanyEmployment = () => {
               ))
             ) : (
               <TableRow>
-                <TableCell colSpan={10}>
+                <TableCell colSpan={11}>
                   <TableNotFound />
                 </TableCell>
               </TableRow>
@@ -117,7 +119,7 @@ export const CompanyEmployment = () => {
           </TableBody>
           <TableFooter>
             <TableRow>
-              <TableCell colSpan={10} className="pb-5">
+              <TableCell colSpan={11} className="pb-5">
                 <Pagination
                   currentPage={
                     query.get("page") ? Number(query.get("page")) : 1

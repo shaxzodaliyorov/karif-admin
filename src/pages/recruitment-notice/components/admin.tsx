@@ -108,6 +108,7 @@ export const Admin = () => {
               <TableHead>End Date</TableHead>
               <TableHead>Worker Count</TableHead>
               <TableHead>Registered company</TableHead>
+              <TableHead>Company Worker Count</TableHead>
               <TableHead>Type</TableHead>
               <TableHead>Status</TableHead>
               <TableHead className="text-right">Action</TableHead>
@@ -116,7 +117,7 @@ export const Admin = () => {
           <TableBody>
             {isLoading ? (
               <TableRow>
-                <TableCell colSpan={10} className="text-center">
+                <TableCell colSpan={11} className="text-center">
                   <div className="w-full h-40 flex justify-center items-center">
                     <Loader2 className="animate-spin" />
                   </div>
@@ -144,6 +145,7 @@ export const Admin = () => {
                   </TableCell>
                   <TableCell>{c.workerCount}</TableCell>
                   <TableCell>{c.registeredCompany}</TableCell>
+                  <TableCell>{c.companyWorkerCount}</TableCell>
                   <TableCell>
                     {c.type === "byPercent" ? "By Percent" : "By Count"}
                   </TableCell>
@@ -196,7 +198,7 @@ export const Admin = () => {
               ))
             ) : (
               <TableRow>
-                <TableCell colSpan={10}>
+                <TableCell colSpan={11}>
                   <TableNotFound />
                 </TableCell>
               </TableRow>
@@ -204,7 +206,7 @@ export const Admin = () => {
           </TableBody>
           <TableFooter>
             <TableRow>
-              <TableCell colSpan={10} className="pb-5">
+              <TableCell colSpan={11} className="pb-5">
                 <Pagination
                   currentPage={
                     query.get("page") ? Number(query.get("page")) : 1

@@ -24,6 +24,7 @@ import {
   useRecruitmentNoticeApplyMutation,
 } from "@/store/RecruitmentNotice/RecruitmentNotice.api";
 import { useGetUser } from "@/hooks/use-get-user";
+import { generateWorkerArray } from "@/utils/getWorkersCount";
 
 type ApplyModalProps = {
   isOpen: boolean;
@@ -40,7 +41,7 @@ export const ApplyModal = ({
   const [recruitmentNoticeApply, { isLoading }] =
     useRecruitmentNoticeApplyMutation();
   const handleRequest = useHandleRequest();
-  const user = useGetUser();
+  const user: any = useGetUser();
   const [applyWorkerJobNotice, { isLoading: applyWorkerJobNoticeLoading }] =
     useApplyWorkerJobNoticeMutation();
 
@@ -77,6 +78,13 @@ export const ApplyModal = ({
     });
   };
 
+  const allWorkerCounts = generateWorkerArray(
+    selectedJob?.documents || [],
+    selectedJob?.countType,
+    selectedJob?.workerCount,
+    user?.employeesCount,
+  );
+
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="sm:max-w-[450px]">
@@ -97,7 +105,7 @@ export const ApplyModal = ({
                     <SelectValue placeholder="Select number of applicants" />
                   </SelectTrigger>
                   <SelectContent>
-                    {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((num) => (
+                    {allWorkerCounts?.map((num) => (
                       <SelectItem key={num} value={num.toString()}>
                         {num}
                       </SelectItem>
