@@ -247,6 +247,20 @@ export const RecruitmentForm = ({
     }
   }, [isEdit, recruitmentNotice]);
 
+  useEffect(() => {
+    if (companyWorkerCount == null || companyWorkerCount <= 0) return;
+
+    documents.forEach((_, index) => {
+      const ratio = Number(watch(`documents.${index}.ratio`)) || 0;
+      if (ratio > 0) {
+        const applicants = Math.round((ratio / 100) * companyWorkerCount);
+        setValue(`documents.${index}.numberOfApplicants`, applicants);
+      }
+    });
+
+    trigger("documents");
+  }, [companyWorkerCount, setValue, watch, trigger]);
+
   if (isLoadingData && isEdit) {
     return (
       <div className="w-full h-100 flex items-center justify-center">
