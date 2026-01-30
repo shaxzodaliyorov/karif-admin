@@ -270,7 +270,11 @@ export const DetailsModal = ({
               <div className="col-span-2">
                 <p className="text-sm text-muted-foreground">기타 문의 :</p>
                 <p className="font-medium">
-                  {recruitmentNotice?.recruitmentNotice?.description}
+                  <div
+                    dangerouslySetInnerHTML={{
+                      __html: recruitmentNotice?.recruitmentNotice?.description,
+                    }}
+                  ></div>
                 </p>
               </div>
             </div>
