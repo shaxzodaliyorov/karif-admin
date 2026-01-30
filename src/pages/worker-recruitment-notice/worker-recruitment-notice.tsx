@@ -92,7 +92,7 @@ export const WorkerRecruitmentNoticePage = () => {
           <TableBody>
             {isLoading ? (
               <TableRow>
-                <TableCell colSpan={10} className="text-center">
+                <TableCell colSpan={11} className="text-center">
                   <div className="w-full h-40 flex justify-center items-center">
                     <Loader2 className="animate-spin" />
                   </div>
@@ -156,7 +156,7 @@ export const WorkerRecruitmentNoticePage = () => {
               ))
             ) : (
               <TableRow>
-                <TableCell colSpan={10}>
+                <TableCell colSpan={11}>
                   <TableNotFound />
                 </TableCell>
               </TableRow>
@@ -164,7 +164,7 @@ export const WorkerRecruitmentNoticePage = () => {
           </TableBody>
           <TableFooter>
             <TableRow>
-              <TableCell colSpan={10} className="pb-5">
+              <TableCell colSpan={11} className="pb-5">
                 <Pagination
                   currentPage={
                     query.get("page") ? Number(query.get("page")) : 1

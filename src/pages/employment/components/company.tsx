@@ -62,7 +62,7 @@ export const CompanyEmployment = () => {
           <TableBody>
             {isLoading ? (
               <TableRow>
-                <TableCell colSpan={10} className="text-center">
+                <TableCell colSpan={11} className="text-center">
                   <div className="w-full h-40 flex justify-center items-center">
                     <Loader2 className="animate-spin" />
                   </div>
