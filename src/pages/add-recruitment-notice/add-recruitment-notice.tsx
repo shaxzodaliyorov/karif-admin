@@ -33,8 +33,8 @@ export const AddRecruitmentNoticePage = () => {
         ratio: doc.ratio.toString(),
         numberOfApplicants: doc.numberOfApplicants.toString(),
       })),
-      mark1: formData.markId1,
-      mark2: formData.markId2,
+      mark1: formData.mark1,
+      mark2: formData.mark2,
       mark1StartDate: formData.mark1StartDate
         ? dayjs(formData.mark1StartDate).toISOString()
         : "",
