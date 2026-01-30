@@ -71,7 +71,7 @@ export const Companies = () => {
       onSuccess: (result) => {
         localStorage.setItem(ACCESS_TOKEN_KEY, result?.data?.access_token);
         localStorage.setItem(REFRESH_TOKEN_KEY, result?.data?.refresh_token);
-        window.open("/dashboard", "_blank");
+        window.open("/employment", "_blank");
         toast.success("Login successfully");
       },
     });

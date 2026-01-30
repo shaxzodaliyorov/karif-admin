@@ -1,13 +1,6 @@
 import { useGetUser } from "@/hooks/use-get-user";
 import { Link, useLocation } from "react-router-dom";
-import {
-  Home,
-  Settings,
-  Loader2,
-  Users,
-  UserSearch,
-  UserCheck,
-} from "lucide-react";
+import { Settings, Loader2, Users, UserSearch, UserCheck } from "lucide-react";
 import { IoGrid } from "react-icons/io5";
 type Role = "admin" | "agency" | "worker" | "company" | "korean_agency";
 import { FaListCheck } from "react-icons/fa6";
@@ -26,16 +19,10 @@ interface MenuItem {
 
 const menuItems: MenuItem[] = [
   {
-    label: "Home",
-    href: "/",
-    icon: Home,
-    roles: ["admin", "agency", "worker", "company", "korean_agency"],
-  },
-  {
     label: "Dashboard",
     href: "/dashboard",
     icon: IoGrid,
-    roles: ["admin", "agency", "worker", "company", "korean_agency"],
+    roles: ["admin", "korean_agency"],
   },
   {
     label: "Workers",

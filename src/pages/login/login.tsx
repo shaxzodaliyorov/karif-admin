@@ -38,7 +38,18 @@ export const LoginPage = () => {
         toast.success("Login successfully");
         localStorage.setItem(ACCESS_TOKEN_KEY, result?.data?.access_token);
         localStorage.setItem(REFRESH_TOKEN_KEY, result?.data?.refresh_token);
-        navigate("/dashboard", { replace: true });
+        if (
+          result?.data?.role === "admin" ||
+          result?.data?.role === "korean_agency"
+        ) {
+          navigate("/dashboard", { replace: true });
+        } else if (result?.data?.role === "worker") {
+          navigate("/employment", { replace: true });
+        } else if (result?.data?.role === "company") {
+          navigate("/employment", { replace: true });
+        } else if (result?.data?.role === "agency") {
+          navigate("/workers", { replace: true });
+        }
       },
     });
   };

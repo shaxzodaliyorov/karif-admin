@@ -196,11 +196,11 @@ export const EditEmergencyContactModal = ({
                         selected={
                           field.value ? dayjs(field.value).toDate() : undefined
                         }
+                        captionLayout="dropdown"
                         onSelect={(date) => {
                           field.onChange(date);
                           setCalendarOpen(false);
                         }}
-                        captionLayout="dropdown"
                       />
                     </PopoverContent>
                   </Popover>

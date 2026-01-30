@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import * as React from "react";
 import { format } from "date-fns";
 import { CalendarIcon } from "lucide-react";
@@ -78,7 +79,7 @@ export function DatePicker({
           className={cn(
             "w-full justify-start text-left font-normal min-w-[260px]",
             !value && "text-muted-foreground",
-            className
+            className,
           )}
           disabled={disabled}
         >
@@ -92,7 +93,7 @@ export function DatePicker({
           mode={mode}
           selected={value as any}
           onSelect={handleSelect as any}
-          captionLayout="dropdown-buttons"
+          captionLayout="dropdown"
           initialFocus
           numberOfMonths={mode === "range" ? 2 : 1}
           {...(calendarProps as any)}
